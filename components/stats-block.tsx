@@ -28,7 +28,7 @@ export default function StatsBlock() {
           {stats.map(({ value, label, delta }) => (
             <div
               key={label}
-              className="flex flex-col items-center border-border px-6 py-8 text-center md:[&:nth-child(2)]:border-r [&:nth-child(odd)]:border-r"
+              className="flex flex-col items-center border-border px-6 py-8 text-center md:nth-2:border-r odd:border-r"
             >
               <dt className="text-4xl font-bold tracking-tight sm:text-5xl">
                 {value}
@@ -44,5 +44,5 @@ export default function StatsBlock() {
         <Separator />
       </div>
     </section>
-  )
+  );
 }
