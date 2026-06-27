@@ -1,8 +1,12 @@
 import React from 'react'
+import { ScrollProgress } from './scroll-progress';
 
 const Provider = ({ children }: { children: React.ReactNode }): React.ReactNode => {
   return (
-    <>{children}</>
+    <>
+      <ScrollProgress />
+      {children}
+    </>
   )
 }
 

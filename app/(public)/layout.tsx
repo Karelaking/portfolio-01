@@ -1,22 +1,24 @@
 
+import FooterBlock from '@/components/footer-block';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetClose, SheetFooter } from '@/components/ui/sheet';
 import { RiArrowRightLine, RiMenuLine } from '@remixicon/react';
-import React from 'react'
+import React from 'react';
 
 const navLinks = [
-  { label: "Products", href: "#" },
-  { label: "Solutions", href: "#" },
-  { label: "Pricing", href: "#" },
-  { label: "Docs", href: "#" },
-  { label: "Blog", href: "#" },
+  { label: "About", href: "/about" },
+  { label: "Projects", href: "/projects" },
+  { label: "Experience", href: "/experience" },
+  { label: "Expertise", href: "/expertise" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const Layout = ({ children }: { children: React.ReactNode }): React.ReactNode => {
   return (
     <>
-      <section className="flex min-h-screen w-full flex-col bg-background text-foreground">
+      <main className="flex min-h-screen w-full flex-col bg-background text-foreground">
         <header className="relative flex h-16 w-full items-center border-b border-border px-6">
           <a href="#" className="flex shrink-0 items-center gap-2.5">
             <div className="grid grid-cols-2 gap-0.5" aria-hidden="true">
@@ -126,10 +128,11 @@ const Layout = ({ children }: { children: React.ReactNode }): React.ReactNode =>
           </div>
         </header>
 
-        <div className="flex-1 px-4">
+        <div className="flex-1 px-6">
           {children}
         </div>
-      </section>
+        <FooterBlock  />
+      </main>
     </>
   );
 }
