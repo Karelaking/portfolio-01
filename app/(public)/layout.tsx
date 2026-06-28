@@ -129,7 +129,7 @@ const Layout = ({ children }: { children: React.ReactNode }): React.ReactNode =>
           </div>
         </header>
 
-        <div className="flex-1 px-6">
+        <div className="flex-1 px-6 mx-auto w-full max-w-6xl">
           {children}
         </div>
         <FooterBlock  />

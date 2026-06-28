@@ -13,7 +13,7 @@ const stats = [
 export default function StatsBlock() {
   return (
     <section className="flex min-h-full w-full items-center justify-center bg-background text-foreground py-16">
-      <div className="mx-auto w-full max-w-5xl">
+      <div className="mx-auto w-full">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             Trusted at scale
@@ -28,7 +28,7 @@ export default function StatsBlock() {
           {stats.map(({ value, label, delta }) => (
             <div
               key={label}
-              className="flex flex-col items-center border-border px-6 py-8 text-center md:nth-2:border-r odd:border-r"
+              className="flex flex-col items-center border-border py-8 text-center odd:border-r odd:border-l even:border-r"
             >
               <dt className="text-4xl font-bold tracking-tight sm:text-5xl">
                 {value}

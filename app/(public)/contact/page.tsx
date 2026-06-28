@@ -26,6 +26,12 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Toaster } from "@/components/ui/sonner";
 import { Textarea } from "@/components/ui/textarea";
+// import { Metadata } from "next";
+
+// export const metadata: Metadata = {
+//   title: "Contact | Get in touch with me",
+//   description: "Have a question or want to work together? Fill out the form below and I'll get back to you as soon as possible."
+// };
 
 const TOPICS = ["General inquiry", "Sales", "Support", "Partnership", "Other"];
 

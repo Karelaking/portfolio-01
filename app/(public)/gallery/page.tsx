@@ -198,16 +198,15 @@ export default function GalleryBlock() {
   return (
     <section className="flex min-h-svh w-full items-center justify-center bg-background py-20 text-foreground">
       <div className="mx-auto w-full max-w-5xl">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="mx-auto max-w-4xl text-center">
           <span className="text-xs font-semibold tracking-[0.18em] text-muted-foreground uppercase">
             Gallery
           </span>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-            Acme in the wild
+          <h2 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl capitalize">
+            Captured moments in a second
           </h2>
-          <p className="mt-3 text-base text-muted-foreground">
-            A curated selection of places and moments captured by our community
-            around the world.
+          <p className="mt-3 text-base text-muted-foreground px-4 sm:px-24">
+            A curated collection of photographs showcasing the beauty and diversity of our world, captured by my mobile device camera.
           </p>
         </div>
 
