@@ -25,6 +25,7 @@
     "@abui": "https://abui.io/r/{name}.json",
     "@animate-ui": "https://animate-ui.com/r/{name}.json",
     "@animbits": "https://animbits.dev/r/{name}.json",
-    "@7ovr": "https://7ovr.com/r/{name}.json"
+    "@7ovr": "https://7ovr.com/r/{name}.json",
+    "@aicanvas": "https://aicanvas.me/r/{name}.json"
   }
 }

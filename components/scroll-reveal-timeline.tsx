@@ -55,22 +55,36 @@ export function ScrollRevealTimeline({ jobs, className, ...props }: ScrollReveal
   });
 
   return (
-    <div className={cn("bg-background", className)} ref={containerRef} {...props}>
+    <div
+      className={cn("bg-background", className)}
+      ref={containerRef}
+      {...props}
+    >
       <div className="max-w-[95vw] sm:max-w-6xl mx-auto">
         <div className="flex w-full mx-auto relative z-20">
-          <div className="sticky top-0 flex flex-col w-full items-start justify-center h-[100vh]">
+          <div className="sticky top-0 flex flex-col w-full items-start justify-center h-screen">
             <div className="flex flex-row gap-8 lg:gap-16 w-full h-full items-center">
               {/* Left Side: Timeline List */}
-              <div className="lg:!w-[55vw] !w-full h-auto flex flex-col justify-center gap-6 md:gap-8">
+              <div className="lg:w-[55vw]! w-full! h-auto flex flex-col justify-center gap-6 md:gap-8">
                 {jobs.map((job, idx) => {
                   const stepSize = 1 / jobs.length;
                   const thresholdStart = idx * stepSize;
                   const thresholdEnd = (idx + 1) * stepSize;
-                  const barHeightPercentage = getBarPercentageHeight(scrollProgress, thresholdStart, thresholdEnd);
+                  const barHeightPercentage = getBarPercentageHeight(
+                    scrollProgress,
+                    thresholdStart,
+                    thresholdEnd,
+                  );
                   const isActive = barHeightPercentage > 0;
 
                   return (
-                    <div key={job.company + idx} className={cn("flex gap-4 md:gap-6 transition-opacity duration-300", isActive ? "opacity-100" : "opacity-40")}>
+                    <div
+                      key={job.company + idx}
+                      className={cn(
+                        "flex gap-4 md:gap-6 transition-opacity duration-300",
+                        isActive ? "opacity-100" : "opacity-40",
+                      )}
+                    >
                       {/* Left Column (Period) - Desktop */}
                       <div className="w-28 text-right shrink-0 hidden md:block pt-5">
                         <span className="text-xs font-mono font-semibold text-primary block leading-none">
@@ -90,10 +104,12 @@ export function ScrollRevealTimeline({ jobs, className, ...props }: ScrollReveal
                             height: `${barHeightPercentage}%`,
                           }}
                         />
-                        <div className={cn(
-                          "relative z-10 mt-6 size-3.5 border border-border bg-background transition-colors rounded-none",
-                          isActive && "border-foreground bg-primary"
-                        )} />
+                        <div
+                          className={cn(
+                            "relative z-10 mt-6 size-3.5 border border-border bg-background transition-colors rounded-none",
+                            isActive && "border-foreground bg-primary",
+                          )}
+                        />
                       </div>
 
                       {/* Right Column (Card) */}
@@ -105,7 +121,10 @@ export function ScrollRevealTimeline({ jobs, className, ...props }: ScrollReveal
                                 <h4 className={defaultTitleClass}>
                                   {job.role}
                                 </h4>
-                                <Badge variant="secondary" className="w-fit md:hidden flex items-center gap-1 rounded-none font-mono text-[9px] py-0 px-1.5">
+                                <Badge
+                                  variant="secondary"
+                                  className="w-fit md:hidden flex items-center gap-1 rounded-none font-mono text-[9px] py-0 px-1.5"
+                                >
                                   <RiCalendarLine className="size-3" />
                                   {job.period}
                                 </Badge>
@@ -145,7 +164,7 @@ export function ScrollRevealTimeline({ jobs, className, ...props }: ScrollReveal
               </div>
 
               {/* Right Side: Sticky Images (Desktop Only) */}
-              <div className="hidden lg:flex flex-col justify-center items-center !w-[45vw] relative h-[70vh]">
+              <div className="hidden lg:flex flex-col justify-center items-center w-[45vw]! relative h-[94vh]!">
                 {jobs.map((job, idx) => {
                   const stepSize = 1 / jobs.length;
                   const thresholdStart = idx * stepSize;
@@ -158,7 +177,10 @@ export function ScrollRevealTimeline({ jobs, className, ...props }: ScrollReveal
                       height={job.image.height}
                       src={job.image.url}
                       alt={job.image.alt}
-                      className={cn(imageClass, isActive ? "opacity-100 z-10" : "opacity-0 z-0")}
+                      className={cn(
+                        imageClass,
+                        isActive ? "opacity-100 z-10" : "opacity-0 z-0",
+                      )}
                     />
                   );
                 })}

@@ -40,7 +40,7 @@ const Layout = ({
             ))}
           </nav>
 
-          <div className="ml-auto flex shrink-0 items-center gap-3 md:ml-0">
+          <div className="ml-auto flex shrink-0 items-center gap-6 md:ml-0">
             <ThemeToggle />
             <MobileNav navLinks={navLinks} />
           </div>
