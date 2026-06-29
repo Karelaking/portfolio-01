@@ -114,7 +114,7 @@ const ScrollRevealContentA = ({
               </div>
             </div>
           </div>
-          <div className="h-[300vh]" />
+          <div className="h-[150vh] lg:h-[300vh]" />
         </div>
       </div>
     </div>
@@ -165,7 +165,7 @@ const PointItem = ({
             style={{ height: `${barHeightPercentage}%` }}
           />
         </div>
-        <div className="w-[calc(100% - 40px)] pl-4">
+        <div className="w-[calc(100%-40px)] pl-4">
           <div className="flex flex-col gap-1">
             <h3 className={cn(defaultTitleClass, isActive ? "opacity-100" : "opacity-50")}>{title}</h3>
             <p className={cn(defaultDescriptionClass, isActive ? "opacity-100" : "opacity-50")}>{description}</p>

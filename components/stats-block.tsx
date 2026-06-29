@@ -24,11 +24,11 @@ export default function StatsBlock() {
         </div>
 
         <Separator className="mt-12" />
-        <dl className="grid grid-cols-2 md:grid-cols-4">
+        <dl className="grid grid-cols-2 gap-px bg-border md:grid-cols-4">
           {stats.map(({ value, label, delta }) => (
             <div
               key={label}
-              className="flex flex-col items-center border-border py-8 text-center odd:border-r odd:border-l even:border-r"
+              className="flex flex-col items-center bg-background py-8 text-center"
             >
               <dt className="text-4xl font-bold tracking-tight sm:text-5xl">
                 {value}

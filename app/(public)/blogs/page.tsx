@@ -13,16 +13,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { RiArrowRightLine, RiBookmarkLine, RiTimeLine } from "@remixicon/react";
+import { RiArrowRightLine, RiTimeLine } from "@remixicon/react";
 
 const featured = {
   category: "Engineering",
-  title: "How we cut API latency by 60% with edge caching",
+  title: "How I cut API latency by 60% with edge caching",
   image:
     "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
   excerpt:
     "Our monolith was fast enough, until it wasn't. We traced the bottleneck to cold database reads on every request and rearchitected the caching layer in three weeks.",
-  author: { name: "Lena Park", initials: "LP", img: 47 },
+  author: { name: "Alex Gonzalez", initials: "AG", img: 47 },
   date: "Jun 9, 2026",
   readTime: "7 Min Read",
 };
@@ -32,7 +32,7 @@ const categories = [
   "Engineering",
   "Design",
   "Product",
-  "Company",
+  "Methodology",
 ] as const;
 
 const posts = [
@@ -43,7 +43,7 @@ const posts = [
       "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
     excerpt:
       "Semantic tokens feel abstract until your brand color changes overnight.",
-    author: { name: "Marcus Webb", initials: "MW", img: 12 },
+    author: { name: "Alex Gonzalez", initials: "AG", img: 12 },
     date: "May 28, 2026",
     readTime: "5 Min Read",
   },
@@ -54,7 +54,7 @@ const posts = [
       "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
     excerpt:
       "Drop-off at step two had nothing to do with the UI, it was a mental model gap.",
-    author: { name: "Sofia Andrade", initials: "SA", img: 45 },
+    author: { name: "Alex Gonzalez", initials: "AG", img: 45 },
     date: "May 14, 2026",
     readTime: "9 Min Read",
   },
@@ -65,18 +65,18 @@ const posts = [
       "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80",
     excerpt:
       "We replaced our codegen pipeline with inferred types and never looked back.",
-    author: { name: "Devon Ross", initials: "DR", img: 13 },
+    author: { name: "Alex Gonzalez", initials: "AG", img: 13 },
     date: "May 2, 2026",
     readTime: "6 Min Read",
   },
   {
-    category: "Company",
-    title: "Why Acme is going remote-first in 2026",
+    category: "Methodology",
+    title: "Why I focus on remote-first engineering workflows",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
     excerpt:
-      "Three years of hybrid taught us where collaboration actually happens.",
-    author: { name: "Priya Nair", initials: "PN", img: 44 },
+      "Three years of hybrid work taught me where collaboration actually happens in distributed projects.",
+    author: { name: "Alex Gonzalez", initials: "AG", img: 44 },
     date: "Apr 19, 2026",
     readTime: "4 Min Read",
   },
@@ -87,7 +87,7 @@ const posts = [
       "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80",
     excerpt:
       "Pass WCAG without sacrificing the palette your brand team fought for.",
-    author: { name: "Theo Lambert", initials: "TL", img: 15 },
+    author: { name: "Alex Gonzalez", initials: "AG", img: 15 },
     date: "Apr 5, 2026",
     readTime: "8 Min Read",
   },
@@ -98,7 +98,7 @@ const posts = [
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
     excerpt:
       "Small framing changes on the pricing page moved the needle more than discounts.",
-    author: { name: "Hana Kim", initials: "HK", img: 41 },
+    author: { name: "Alex Gonzalez", initials: "AG", img: 41 },
     date: "Mar 22, 2026",
     readTime: "5 Min Read",
   },
@@ -111,19 +111,17 @@ export default function BlogBlock() {
     active === "All" ? posts : posts.filter((p) => p.category === active);
 
   return (
-    <section className="flex min-h-svh w-full justify-center bg-background px-6 py-16 text-foreground">
+    <section className="flex min-h-svh w-full justify-center bg-background py-16 text-foreground">
       <div className="mx-auto w-full max-w-6xl">
         <div className="mb-10 flex flex-col gap-3">
           <Badge variant="secondary" className="w-fit">
-            <RiBookmarkLine data-icon="inline-start" />
-            The Acme Blog
+            My Blog
           </Badge>
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Stories from the team building Acme
+          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            Writing about software engineering & web development
           </h1>
           <p className="max-w-2xl text-muted-foreground">
-            Engineering deep dives, design notes, and the product decisions
-            behind the work we ship.
+            Engineering deep dives, design notes, and system architecture decisions from projects I design and build.
           </p>
         </div>
 
@@ -142,21 +140,21 @@ export default function BlogBlock() {
           </div>
           <div className="flex flex-col justify-center gap-4 p-6 sm:p-8">
             <Badge className="w-fit">{featured.category}</Badge>
-            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
               {featured.title}
             </h2>
             <p className="text-muted-foreground">{featured.excerpt}</p>
             <div className="flex items-center gap-3">
               <Avatar className="size-9 border border-border">
                 <AvatarImage
-                  src={`https://i.pravatar.cc/150?img=${featured.author.img}`}
+                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&q=80"
                   alt={featured.author.name}
-                  className="grayscale"
+                  className="grayscale object-cover"
                 />
                 <AvatarFallback>{featured.author.initials}</AvatarFallback>
               </Avatar>
               <div className="text-sm">
-                <p className="font-medium">{featured.author.name}</p>
+                <p className="font-medium text-foreground">{featured.author.name}</p>
                 <p className="text-muted-foreground">{featured.date}</p>
               </div>
             </div>
@@ -179,7 +177,7 @@ export default function BlogBlock() {
                 onClick={() => setActive(category)}
                 aria-pressed={isActive}
                 className={cn(
-                  "rounded-none border px-4 py-1.5 text-sm font-medium transition-colors",
+                  "rounded-none border px-4 py-1.5 text-sm font-medium transition-colors cursor-pointer",
                   isActive
                     ? "border-primary bg-primary text-primary-foreground"
                     : "border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -216,7 +214,7 @@ export default function BlogBlock() {
                 <CardTitle className="text-lg leading-snug">
                   <a
                     href="#"
-                    className="transition-colors group-hover:text-primary"
+                    className="transition-colors group-hover:text-primary font-bold"
                   >
                     {post.title}
                   </a>
@@ -228,9 +226,9 @@ export default function BlogBlock() {
               <CardFooter className="items-center gap-3 px-5 pb-5">
                 <Avatar className="size-8 border border-border">
                   <AvatarImage
-                    src={`https://i.pravatar.cc/150?img=${post.author.img}`}
+                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&q=80"
                     alt={post.author.name}
-                    className="grayscale"
+                    className="grayscale object-cover"
                   />
                   <AvatarFallback className="text-xs">
                     {post.author.initials}

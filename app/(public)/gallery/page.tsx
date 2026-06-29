@@ -305,7 +305,7 @@ export default function GalleryBlock() {
                   {tile.label}, {tile.location}, photographed by{" "}
                   {tile.contributor.name}.
                 </DialogDescription>
-                <div className="aspect-4/3 w-full overflow-hidden border-b border-border bg-muted">
+                <div className="relative aspect-4/3 w-full overflow-hidden border-b border-border bg-muted">
                   <Image
                     src={tile.full}
                     alt={tile.label}

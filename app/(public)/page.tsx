@@ -21,81 +21,81 @@ import {
 } from "@remixicon/react";
 
 const logos = [
-  { name: "Slack", Icon: RiSlackFill },
-  { name: "GitHub", Icon: RiGithubFill },
-  { name: "Notion", Icon: RiNotionFill },
-  { name: "Figma", Icon: RiFigmaFill },
-  { name: "Vercel", Icon: RiVercelFill },
-  { name: "Supabase", Icon: RiSupabaseFill },
-  { name: "Google", Icon: RiGoogleFill },
-  { name: "Discord", Icon: RiDiscordFill },
+  { name: "React / Next.js", Icon: RiVercelFill },
+  { name: "GitHub / CI-CD", Icon: RiGithubFill },
+  { name: "Supabase / DB", Icon: RiSupabaseFill },
+  { name: "Figma UI/UX", Icon: RiFigmaFill },
+  { name: "Slack Collaboration", Icon: RiSlackFill },
+  { name: "Notion Docs", Icon: RiNotionFill },
+  { name: "Google Cloud", Icon: RiGoogleFill },
+  { name: "Discord Support", Icon: RiDiscordFill },
 ];
 
 const faqs = [
   {
-    q: "What is included in each plan?",
-    a: "Every plan includes the core platform, unlimited projects, and access to the component library. Higher tiers add advanced analytics, priority support, and SSO.",
+    q: "What is your primary technology stack?",
+    a: "I specialize in TypeScript, React, Next.js, and Node.js for frontend and full-stack development, combined with Go and Python for high-performance backend microservices and data pipelines.",
   },
   {
-    q: "Can I change my plan later?",
-    a: "Yes. You can upgrade or downgrade at any time from your billing settings, and changes are prorated automatically.",
+    q: "Do you work with remote teams and agencies?",
+    a: "Yes, absolutely. I have worked with distributed teams across Europe and the US, adapting seamlessly to agile workflows, async communication, and tight development sprints.",
   },
   {
-    q: "Do you offer a free trial?",
-    a: "All paid plans come with a 14-day free trial. No credit card is required to get started.",
+    q: "What is your approach to code quality and testing?",
+    a: "I follow DRY and SOLID design principles, maintain a clean repository structure, write comprehensive unit and integration tests, and utilize CI/CD workflows to ensure stable, production-ready deployments.",
   },
   {
-    q: "How does billing work?",
-    a: "We bill monthly or annually, and annual plans save you two months. You can cancel anytime with no hidden fees.",
+    q: "How do we collaborate on a new project?",
+    a: "We start with a discovery call to align on technical requirements and design specs. I then outline a clear implementation roadmap, set up staging previews, and maintain full transparency through regular demo sessions.",
   },
   {
-    q: "Is my data secure?",
-    a: "Your data is encrypted in transit and at rest, and we run regular third-party security audits to keep it safe.",
+    q: "Are you open to full-time opportunities or contract roles?",
+    a: "I am open to contract engagements, freelance consultancies, and select full-time roles where I can build impactful products with passionate teams.",
   },
 ];
 
-const members = [
+const specialties = [
   {
-    name: "Clara Hoffmann",
-    role: "Co-founder & CEO",
-    avatar: "https://i.pravatar.cc/150?img=5",
-    bio: "Shapes strategy and culture. Previously founded two B2B SaaS companies and led growth at Stripe.",
-    social: { linkedin: "#", twitter: "#", github: null },
+    name: "Frontend Engineering",
+    role: "Next.js / TypeScript / Tailwind CSS",
+    avatar: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=150&q=80",
+    bio: "Crafting beautiful, accessible (WCAG compliant), and lightning-fast user interfaces with modern React paradigms, server-side rendering, and micro-interactions.",
+    social: { linkedin: "#", github: "#", twitter: null },
   },
   {
-    name: "Marcus Tran",
-    role: "Co-founder & CTO",
-    avatar: "https://i.pravatar.cc/150?img=12",
-    bio: "Architect behind the platform. Open-source contributor with a decade of distributed-systems experience.",
-    social: { linkedin: "#", twitter: "#", github: "#" },
+    name: "Backend Architecture",
+    role: "Go / Node.js / PostgreSQL / REST & gRPC",
+    avatar: "https://images.unsplash.com/photo-1605379399642-870262d3d051?w=150&q=80",
+    bio: "Designing robust database schemas, secure REST/GraphQL APIs, rate-limiting layers, and high-throughput server runtimes that scale effortlessly.",
+    social: { linkedin: "#", github: "#", twitter: null },
   },
   {
-    name: "Amara Osei",
-    role: "Head of Design",
-    avatar: "https://i.pravatar.cc/150?img=49",
-    bio: "Crafts interfaces that feel inevitable. Former principal designer at Figma and Linear.",
-    social: { linkedin: "#", twitter: "#", github: null },
+    name: "UI/UX & Design Systems",
+    role: "Figma / Component Library Design",
+    avatar: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=150&q=80",
+    bio: "Bridging the gap between design and engineering by designing scalable design systems, design tokens, and highly reusable, pixel-perfect UI component libraries.",
+    social: { linkedin: "#", github: null, twitter: "#" },
   },
   {
-    name: "Lena Kovač",
-    role: "VP of Engineering",
-    avatar: "https://i.pravatar.cc/150?img=24",
-    bio: "Scales teams and codebases with equal care. Led engineering at three Series B startups.",
-    social: { linkedin: "#", twitter: null, github: "#" },
+    name: "Performance & SEO Audit",
+    role: "Next.js Optimization / Lighthouse Analysis",
+    avatar: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=150&q=80",
+    bio: "Diagnosing rendering bottlenecks, optimizing bundle sizes, implementing edge caching, and ensuring SEO best practices to hit perfect Core Web Vitals.",
+    social: { linkedin: "#", github: null, twitter: null },
   },
   {
-    name: "Daniel Reyes",
-    role: "Head of Product",
-    avatar: "https://i.pravatar.cc/150?img=33",
-    bio: "Turns customer problems into elegant solutions. Background in product management at Notion and Vercel.",
-    social: { linkedin: "#", twitter: "#", github: null },
+    name: "DevOps & Cloud Pipelines",
+    role: "Docker / GitHub Actions / Vercel / AWS",
+    avatar: "https://images.unsplash.com/photo-1618401471353-b98aedd07871?w=150&q=80",
+    bio: "Configuring automated test runs, multi-stage Docker builds, staging environments, and self-healing cloud deployments for seamless delivery pipelines.",
+    social: { linkedin: "#", github: "#", twitter: null },
   },
   {
-    name: "Yuna Park",
-    role: "Head of Marketing",
-    avatar: "https://i.pravatar.cc/150?img=44",
-    bio: "Builds brand from zero to recognizable. Previously ran marketing at Loom through their acquisition by Atlassian.",
-    social: { linkedin: "#", twitter: "#", github: null },
+    name: "Consultancy & System Design",
+    role: "Tech Stack Decisions / Rearchitecture",
+    avatar: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=150&q=80",
+    bio: "Evaluating legacy systems, defining technical migration plans, advising on headless transitions, and mapping complex business requirements into clean architectures.",
+    social: { linkedin: "#", github: null, twitter: "#" },
   },
 ];
 
@@ -108,14 +108,14 @@ function getInitials(name: string) {
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen h-full flex-col items-center justify-center">
-      <div className="mx-auto w-full">
+    <div className="flex min-h-screen h-full flex-col items-center justify-center py-16">
+      <div className="mx-auto w-full max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">
-            Trusted by teams at
+          <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+            My Tech Stack
           </p>
           <h2 className="mt-3 text-2xl font-bold tracking-tight text-balance sm:text-3xl">
-            Powering the tools your team already loves
+            Building modern, high-performance web applications
           </h2>
         </div>
 
@@ -126,30 +126,30 @@ export default function Home() {
               className="flex items-center justify-center gap-2.5 bg-background px-4 py-8 text-muted-foreground transition-colors hover:text-foreground"
             >
               <Icon className="size-6 shrink-0" aria-hidden="true" />
-              <span className="text-lg font-semibold tracking-tight">
+              <span className="text-base font-semibold tracking-tight">
                 {name}
               </span>
             </div>
           ))}
         </div>
       </div>
-      {/* teams section */}
-      <div className="mx-auto w-full mt-24">
+      {/* specialties section */}
+      <div className="mx-auto w-full max-w-5xl mt-24">
         <div className="mx-auto max-w-xl text-center">
           <span className="inline-block border border-border px-3 py-1 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
-            Our Team
+            Specialties
           </span>
           <h2 className="mt-5 text-4xl capitalize font-bold tracking-tight">
-            The people behind me
+            How I can help you
           </h2>
           <p className="mt-4 leading-relaxed text-muted-foreground">
-            A small, focused team that cares deeply about craft, reliability,
-            and the people who use what we build.
+            A software engineer focused on code craftsmanship, system reliability,
+            and delivering rich, premium user experiences.
           </p>
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-px border border-border bg-border sm:grid-cols-2 md:grid-cols-3">
-          {members.map(({ name, role, avatar, bio, social }) => (
+          {specialties.map(({ name, role, avatar, bio, social }) => (
             <Card
               key={name}
               className="flex flex-col border-0 bg-card p-0 transition-colors duration-150 hover:bg-muted/40"
@@ -160,7 +160,7 @@ export default function Home() {
                     <AvatarImage
                       src={avatar}
                       alt={name}
-                      className="grayscale"
+                      className="grayscale object-cover"
                     />
                     <AvatarFallback className="text-sm font-medium">
                       {getInitials(name)}
@@ -232,46 +232,41 @@ export default function Home() {
         </div>
       </div>
       {/* CTA section */}
-      <div className="w-full border border-border bg-muted/30 px-6 py-12 text-center sm:px-12 sm:py-16">
+      <div className="w-full max-w-5xl mt-24 border border-border bg-muted/30 px-6 py-12 text-center sm:px-12 sm:py-16">
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          Start building faster today.
+          Let&apos;s build something exceptional together.
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground">
-          Ship production-ready interfaces in minutes with composable blocks,
-          sensible defaults, and zero configuration.
+          Looking for a freelance engineer, a contract developer, or a new teammate? Let&apos;s discuss how I can add value to your project.
         </p>
 
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Button
-            render={<a href="#" />}
+            render={<a href="/contact" />}
             nativeButton={false}
             className="w-full sm:w-auto"
           >
-            Get Started
+            Get In Touch
             <RiArrowRightLine data-icon="inline-end" aria-hidden="true" />
           </Button>
           <Button
             variant="secondary"
-            render={<a href="#" />}
+            render={<a href="/projects" />}
             nativeButton={false}
             className="w-full sm:w-auto"
           >
-            Read the Docs
+            View Projects
           </Button>
         </div>
-
-        <p className="mt-6 text-xs text-muted-foreground">
-          No credit card required.
-        </p>
       </div>
       {/* FAQ section */}
-      <div className="w-full mt-24">
+      <div className="w-full max-w-5xl mt-24">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             Frequently asked questions
           </h2>
           <p className="mt-3 text-muted-foreground">
-            Answers to the questions we hear most often.
+            Have questions about how we can work together? Here are some quick answers.
           </p>
         </div>
         <Accordion defaultValue={[faqs[0].q]} className="mt-10">

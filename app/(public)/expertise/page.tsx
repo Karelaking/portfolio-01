@@ -78,8 +78,8 @@ const Page = (): React.JSX.Element => {
 
   function handleConnect() {
     if (selected) {
-      toast.success(`${selected.name} connected`, {
-        description: `Added to your ${selected.category} integrations.`,
+      toast.success(`${selected.name} integration configured`, {
+        description: `Added to your ${selected.category} workflows.`,
       });
     }
     setSelected(null);
@@ -92,14 +92,13 @@ const Page = (): React.JSX.Element => {
       <div className="w-full max-w-4xl">
         <div className="mx-auto max-w-xl text-center">
           <Badge variant="outline" className="mb-4">
-            100+ Integrations
+            Ecosystem Integrations
           </Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             Plug in to everything your team uses
           </h2>
           <p className="mt-4 text-sm text-muted-foreground">
-            Acme connects with the tools already in your workflow, no custom
-            code or middleware required.
+            I build workflows that integrate seamlessly with the tools already in your pipeline, requiring no custom middleware or complex configurations.
           </p>
         </div>
 
@@ -137,7 +136,7 @@ const Page = (): React.JSX.Element => {
               <button
                 type="button"
                 onClick={() => setSelected(integration)}
-                aria-label={`Connect ${integration.name}`}
+                aria-label={`Integrate ${integration.name}`}
                 className="w-full cursor-pointer text-left focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
               >
                 <CardContent className="flex flex-col items-center gap-2 py-5">
@@ -166,19 +165,16 @@ const Page = (): React.JSX.Element => {
             <span className="flex size-10 items-center justify-center border border-border bg-background">
               {Icon && <Icon className="size-5" aria-hidden="true" />}
             </span>
-            <DialogTitle className="mt-3">Connect {selected?.name}</DialogTitle>
+            <DialogTitle className="mt-3">Integrate {selected?.name}</DialogTitle>
             <DialogDescription>
-              Authorize Acme to access your {selected?.name} account. This adds
-              it to your{" "}
-              <span className="text-foreground">{selected?.category}</span>{" "}
-              integrations. You can disconnect any time.
+              Configure automated pipelines to sync datasets and deployment triggers directly to your {selected?.name} workspaces. This enables streamlined team collaboration and async status updates.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <DialogClose render={<Button variant="outline" />}>
               Cancel
             </DialogClose>
-            <Button onClick={handleConnect}>Connect {selected?.name}</Button>
+            <Button onClick={handleConnect}>Integrate {selected?.name}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

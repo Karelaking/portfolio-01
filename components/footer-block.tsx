@@ -1,52 +1,55 @@
 import { Separator } from "@/components/ui/separator"
+import Link from "next/link"
 
-const NAV_LINKS = [
-  { label: "Product", href: "#" },
-  { label: "Pricing", href: "#" },
-  { label: "Docs", href: "#" },
-  { label: "Blog", href: "#" },
-  { label: "Privacy", href: "#" },
-  { label: "Terms", href: "#" },
+import { AppRoutes } from "@/.next/dev/types/routes"
+
+const NAV_LINKS: { label: string; href: AppRoutes }[] = [
+  { label: "About", href: "/about" },
+  { label: "Projects", href: "/projects" },
+  { label: "Experience", href: "/experience" },
+  { label: "Expertise", href: "/expertise" },
+  { label: "Blogs", href: "/blogs" },
+  { label: "Contact", href: "/contact" },
 ]
 
 export default function FooterBlock() {
   return (
     <section className="flex w-full flex-col items-stretch bg-background text-foreground">
       <Separator />
-      <footer className="w-full px-6 py-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-3">
+      <footer className="w-full px-4 py-8 sm:px-6 sm:py-10">
+        <div className="flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col items-center gap-3 md:flex-row md:text-left text-center">
             <div
               className="flex size-6 items-center justify-center bg-primary"
               aria-hidden="true"
             >
               <div className="size-2.5 bg-primary-foreground" />
             </div>
-            <div className="flex flex-col leading-none">
-              <span className="text-sm font-bold tracking-tight">Acme</span>
+            <div className="flex flex-col items-center md:items-start leading-none">
+              <span className="text-sm font-bold tracking-tight">Alex Gonzalez</span>
               <span className="text-xs text-muted-foreground">
-                Build fast. Ship faster.
+                Software Engineer & Web Developer
               </span>
             </div>
           </div>
 
           <nav
             aria-label="Footer"
-            className="flex flex-wrap items-center gap-x-5 gap-y-1"
+            className="flex flex-wrap items-center justify-center md:justify-start gap-x-5 gap-y-2 text-xs"
           >
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.label}
                 href={link.href}
-                className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+                className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
-          <p className="shrink-0 text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} Acme, Inc.
+          <p className="text-xs text-muted-foreground text-center md:text-right md:shrink-0">
+            &copy; {new Date().getFullYear()} Alex Gonzalez. All rights reserved.
           </p>
         </div>
       </footer>

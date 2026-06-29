@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "Learn more about Alex Gonzalez, a software engineer and web developer specializing in building exceptional digital experiences. Discover his journey, skills, and the passion that drives his work.",
 }
 
-const tags = ["TypeScript", "Go", "Python", "Rust", "CLI", "REST"];
+const tags = ["TypeScript", "Next.js", "Go", "Python", "Rust", "Tailwind CSS", "PostgreSQL", "Docker"];
 
 const Page = (): React.ReactNode => {
   return (
@@ -27,7 +27,7 @@ const Page = (): React.ReactNode => {
           <Image
             fill
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80"
-            alt="The Acme team collaborating in the office"
+            alt="Alex Gonzalez working on software development projects"
             className="aspect-4/3 w-full object-cover grayscale"
           />
           <div
@@ -42,21 +42,19 @@ const Page = (): React.ReactNode => {
 
         <div className="flex flex-col">
           <Badge variant="outline" className="mb-4 w-fit">
-            Our story
+            My Journey
           </Badge>
           <h2 className="text-3xl font-bold tracking-tight text-balance">
-            From a side project to a platform teams trust
+            Crafting elegant software architectures and intuitive interfaces
           </h2>
           <div className="mt-5 flex flex-col gap-4 text-[15px]/relaxed text-muted-foreground">
             <p>
-              We were two engineers tired of rebuilding the same interfaces on
-              every project. So we started collecting the patterns that worked
-              and shaped them into something anyone could reach for.
+              I am a software engineer dedicated to building clean, maintainable, and highly performant digital systems. 
+              My passion lies in bridging the gap between intricate backend systems and beautiful frontend designs.
             </p>
             <p>
-              Seven years later, that collection has grown into a platform used
-              by teams in more than forty countries, from solo founders to
-              enterprises shipping at scale.
+              Over the past seven years, I have collaborated with startups and established teams to design and implement 
+              scalable component libraries, automated CI/CD pipelines, and high-performance server architectures.
             </p>
           </div>
         </div>
@@ -65,14 +63,13 @@ const Page = (): React.ReactNode => {
       <div className="mx-auto w-full">
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-sm font-medium tracking-widest text-muted-foreground uppercase">
-            Why teams switch
+            Development Principles
           </span>
           <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-            Everything you need to ship
+            Clean code, scalable systems
           </h2>
           <p className="mt-3 text-muted-foreground">
-            A focused toolkit that scales from your first commit to your
-            millionth request.
+            A developer toolkit designed for maintainability, speed, and standard compliance.
           </p>
         </div>
 
@@ -84,11 +81,10 @@ const Page = (): React.ReactNode => {
                 <RiSparkling2Line className="size-7" aria-hidden="true" />
               </span>
               <h3 className="mt-6 text-2xl font-semibold tracking-tight">
-                Intelligent build pipeline
+                Modern build & automation pipelines
               </h3>
               <p className="mt-3 max-w-md text-base leading-relaxed text-muted-foreground">
-                Caching, parallelism, and preview environments work out of the
-                box. Push a branch and get a live URL in seconds.
+                Optimized bundling, static site rendering, and automated deployment integrations. I build tooling and pipelines that accelerate team productivity.
               </p>
             </div>
 
@@ -97,15 +93,15 @@ const Page = (): React.ReactNode => {
               aria-hidden="true"
             >
               <p className="text-muted-foreground">
-                <span className="text-foreground">$</span> acme deploy
+                <span className="text-foreground">$</span> alex-cli deploy --prod
               </p>
               <p className="mt-2 flex items-center gap-1.5 text-muted-foreground">
                 <RiCheckLine className="size-3.5 text-foreground" />
-                Built in 8.2s
+                Bundle optimized in 2.4s
               </p>
               <p className="mt-1 flex items-center gap-1.5 text-muted-foreground">
                 <RiCheckLine className="size-3.5 text-foreground" />
-                Live at acme.app
+                Deployed to production at gonzalez.dev
               </p>
             </div>
           </div>
@@ -117,10 +113,10 @@ const Page = (): React.ReactNode => {
             </span>
             <div>
               <p className="text-4xl font-bold tracking-tight tabular-nums">
-                99.99%
+                7+ Years
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Uptime over the last 90 days
+                Professional software engineering experience
               </p>
             </div>
           </div>
@@ -131,9 +127,9 @@ const Page = (): React.ReactNode => {
               <RiShieldKeyholeLine className="size-5" aria-hidden="true" />
             </span>
             <div>
-              <h3 className="text-base font-semibold">Secure by default</h3>
+              <h3 className="text-base font-semibold">Secure & standard compliant</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Automatic TLS, secrets, and access controls.
+                Implementing secure authentication protocols, CORS limits, TLS compliance, and strict input validation.
               </p>
             </div>
           </div>
@@ -145,11 +141,10 @@ const Page = (): React.ReactNode => {
                 <RiCodeBoxLine className="size-5" aria-hidden="true" />
               </span>
               <h3 className="mt-4 text-base font-semibold">
-                A developer experience you will not fight
+                An engineered developer experience
               </h3>
               <p className="mt-2 max-w-lg text-sm leading-relaxed text-muted-foreground">
-                Typed SDKs, a fast CLI, and clear logs mean less time reading
-                docs and more time building.
+                Using strongly-typed structures, comprehensive documentation, clear component hierarchy, and automated linting.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">

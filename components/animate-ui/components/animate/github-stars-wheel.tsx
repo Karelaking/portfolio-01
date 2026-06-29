@@ -1,8 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { StarIcon } from 'lucide-react';
-
+import { cn } from '@/lib/utils';
 import {
   ScrollingNumber as ScrollingNumberPrimitive,
   ScrollingNumberContainer as ScrollingNumberContainerPrimitive,
@@ -10,11 +9,25 @@ import {
   ScrollingNumberHighlight as ScrollingNumberHighlightPrimitive,
   type ScrollingNumberContainerProps as ScrollingNumberContainerPrimitiveProps,
 } from '@/components/animate-ui/primitives/texts/scrolling-number';
-import { cn } from '@/lib/utils';
 import {
   Particles,
   ParticlesEffect,
 } from '@/components/animate-ui/primitives/effects/particles';
+
+function StarIcon({ className, style, ...props }: React.ComponentProps<'svg'>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      style={style}
+      {...props}
+    >
+      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+    </svg>
+  );
+}
 
 function percentageBetween(value: number, min: number, max: number): number {
   return ((value - min) / (max - min)) * 100;

@@ -1,6 +1,6 @@
 "use client";
 
-import { RiMailSendLine, RiMapPin2Line, RiPhoneLine } from "@remixicon/react";
+import { RiMailSendLine, RiMapPin2Line, RiPhoneLine, RiEarthLine } from "@remixicon/react";
 import { toast } from "sonner";
 
 import { Badge } from "@/components/ui/badge";
@@ -26,36 +26,12 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Toaster } from "@/components/ui/sonner";
 import { Textarea } from "@/components/ui/textarea";
-// import { Metadata } from "next";
 
-// export const metadata: Metadata = {
-//   title: "Contact | Get in touch with me",
-//   description: "Have a question or want to work together? Fill out the form below and I'll get back to you as soon as possible."
-// };
-
-const TOPICS = ["General inquiry", "Sales", "Support", "Partnership", "Other"];
-
-const OFFICES = [
-  {
-    city: "San Francisco",
-    address: "548 Market St, Suite 200, CA 94104",
-    phone: "+1 (415) 555-0188",
-  },
-  {
-    city: "Berlin",
-    address: "Torstraße 35, 10119 Berlin, Germany",
-    phone: "+49 30 555 0142",
-  },
-  {
-    city: "Singapore",
-    address: "12 Marina Blvd, #18-01, 018982",
-    phone: "+65 6555 0117",
-  },
-];
+const TOPICS = ["Freelance Project", "Full-time / Contract Role", "General Inquiry", "Collaboration / Open Source"];
 
 const Page = (): React.ReactNode => {
   return (
-    <section className="flex min-h-svh w-full items-center justify-center bg-muted/30 py-8 text-foreground">
+    <section className="flex min-h-svh w-full items-center justify-center bg-muted/30 py-12 sm:py-16 text-foreground">
       <Toaster />
       <div className="mx-auto w-full max-w-5xl">
         <div className="mb-10 max-w-2xl">
@@ -67,8 +43,7 @@ const Page = (): React.ReactNode => {
             Let&apos;s talk about your project
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Send the Acme team a message or drop by one of our offices. We reply
-            within one business day.
+            Send me a message regarding collaboration opportunities, job offers, or freelancing. I typically respond within one business day.
           </p>
         </div>
 
@@ -79,7 +54,7 @@ const Page = (): React.ReactNode => {
               onSubmit={(event) => {
                 event.preventDefault();
                 toast.success(
-                  "Message sent. We'll reply within one business day.",
+                  "Message sent successfully. I'll get back to you shortly!",
                 );
               }}
             >
@@ -88,7 +63,7 @@ const Page = (): React.ReactNode => {
                   Send a message
                 </CardTitle>
                 <CardDescription>
-                  Tell us a bit about what you need.
+                  Tell me a bit about what you need.
                 </CardDescription>
               </CardHeader>
 
@@ -98,15 +73,16 @@ const Page = (): React.ReactNode => {
                 <FieldGroup>
                   <Field>
                     <FieldLabel htmlFor="name">Full name</FieldLabel>
-                    <Input id="name" type="text" placeholder="Jane Doe" />
+                    <Input id="name" type="text" placeholder="Jane Doe" required />
                   </Field>
 
                   <Field>
-                    <FieldLabel htmlFor="email">Work email</FieldLabel>
+                    <FieldLabel htmlFor="email">Email address</FieldLabel>
                     <Input
                       id="email"
                       type="email"
-                      placeholder="jane@company.com"
+                      placeholder="jane@example.com"
+                      required
                     />
                   </Field>
 
@@ -132,7 +108,8 @@ const Page = (): React.ReactNode => {
                       id="message"
                       rows={6}
                       className="min-h-32 resize-none"
-                      placeholder="How can we help?"
+                      placeholder="How can I help you?"
+                      required
                     />
                   </Field>
                 </FieldGroup>
@@ -195,29 +172,57 @@ const Page = (): React.ReactNode => {
               </span>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-1">
-              {OFFICES.map((office) => (
-                <Card key={office.city}>
-                  <CardContent className="flex items-start gap-3">
-                    <span className="flex size-8 shrink-0 items-center justify-center border border-border bg-muted">
-                      <RiMapPin2Line
-                        className="size-4 text-muted-foreground"
-                        aria-hidden="true"
-                      />
-                    </span>
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium">{office.city}</p>
-                      <p className="mt-0.5 text-xs text-muted-foreground">
-                        {office.address}
-                      </p>
-                      <p className="mt-1.5 flex items-center gap-1.5 text-xs text-muted-foreground">
-                        <RiPhoneLine className="size-3.5" aria-hidden="true" />
-                        {office.phone}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="flex flex-col gap-4">
+              <Card>
+                <CardContent className="flex items-start gap-3 py-5">
+                  <span className="flex size-8 shrink-0 items-center justify-center border border-border bg-muted">
+                    <RiMapPin2Line
+                      className="size-4 text-muted-foreground"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium">Location</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      Berlin, Germany
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="flex items-start gap-3 py-5">
+                  <span className="flex size-8 shrink-0 items-center justify-center border border-border bg-muted">
+                    <RiEarthLine
+                      className="size-4 text-muted-foreground"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium">Remote Work</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      Available worldwide (UTC+1 / UTC+2 timezone alignment)
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="flex items-start gap-3 py-5">
+                  <span className="flex size-8 shrink-0 items-center justify-center border border-border bg-muted">
+                    <RiPhoneLine
+                      className="size-4 text-muted-foreground"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium">Primary Contact</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      alex@gonzalez.dev
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
