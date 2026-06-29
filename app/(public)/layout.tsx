@@ -1,6 +1,7 @@
 import { AppRoutes } from "@/.next/dev/types/routes";
 import FooterBlock from "@/components/footer-block";
 import MobileNav from "@/components/mobile-nav";
+import { ThemeToggle } from "@/components/theme-toggle";
 import Link from "next/link";
 import React from "react";
 
@@ -40,6 +41,7 @@ const Layout = ({
           </nav>
 
           <div className="ml-auto flex shrink-0 items-center gap-3 md:ml-0">
+            <ThemeToggle />
             <MobileNav navLinks={navLinks} />
           </div>
         </header>
