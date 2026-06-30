@@ -59,32 +59,17 @@ export function HeroSection() {
         />
 
         {/* Ambient grid design (CSS grid background) */}
-        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] mask-[radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
       </div>
 
       <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
         {/* Left Side: Typography and Call to Action */}
         <div className="lg:col-span-7 flex flex-col items-start text-left space-y-4 sm:space-y-6 max-w-2xl">
           {/* Animated greeting badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="flex items-center gap-2 border border-border bg-muted/40 px-2.5 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-xs font-mono tracking-wider text-muted-foreground uppercase rounded-none"
-          >
-            <motion.span
-              animate={{ rotate: [0, 14, 0] }}
-              transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut", repeatDelay: 1 }}
-              className="inline-block origin-bottom-right"
-            >
-              👋
-            </motion.span>
-            PORTFOLIO SITE
-          </motion.div>
 
           {/* Main Headline with multi-language ZoomHollowText */}
           <div className="w-full flex flex-col space-y-1">
-            <div className="h-[70px] sm:h-[80px] lg:h-[100px] flex items-center overflow-visible">
+            <div className="h-17.5 sm:h-20 lg:h-25 flex items-center overflow-visible">
               <ZoomHollowText
                 words={greetings}
                 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-primary uppercase"
@@ -118,9 +103,9 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.35, ease: "easeOut" }}
             className="text-sm sm:text-base lg:text-lg leading-relaxed text-muted-foreground max-w-xl"
           >
-            Specialized in crafting premium web applications, custom interactive UI animations, 
-            and scalable backend architectures. I translate complex logic into clean, 
-            performant, and stunning user experiences.
+            Specialized in crafting premium web applications, custom interactive
+            UI animations, and scalable backend architectures. I translate
+            complex logic into clean, performant, and stunning user experiences.
           </motion.p>
 
           {/* Action Buttons with Micro-animations */}
@@ -152,15 +137,14 @@ export function HeroSection() {
         </div>
 
         {/* Right Side: Animated Portrait and Tech Badges */}
-        <div className="lg:col-span-5 flex justify-center items-center relative h-[320px] sm:h-[380px] lg:h-[460px] w-full mt-4 lg:mt-0">
-          
+        <div className="lg:col-span-5 flex justify-center items-center relative h-80 sm:h-95 lg:h-115 w-full mt-4 lg:mt-0">
           {/* Clean Image Container */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             whileHover={{ scale: 1.02, y: -4, rotate: 1 }}
-            className="relative size-[230px] sm:size-[260px] lg:size-[310px] bg-card border border-border shadow-2xl p-2 sm:p-3 z-10 rounded-none group"
+            className="relative size-57.5 sm:size-65 lg:size-77.5 bg-card border border-border shadow-2xl p-2 sm:p-3 z-10 rounded-none group"
           >
             <div className="relative w-full h-full overflow-hidden bg-muted">
               <Image
@@ -186,7 +170,9 @@ export function HeroSection() {
             <StrokeDraw>
               <RiNextjsLine className="size-3.5 sm:size-4" />
             </StrokeDraw>
-            <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight">NEXT.JS</span>
+            <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight">
+              NEXT.JS
+            </span>
           </motion.div>
 
           {/* Badge 2: React */}
@@ -200,7 +186,9 @@ export function HeroSection() {
             <StrokeDraw>
               <RiReactjsLine className="size-3.5 sm:size-4 text-[#61DAFB]" />
             </StrokeDraw>
-            <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight text-[#61DAFB]">REACT</span>
+            <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight text-[#61DAFB]">
+              REACT
+            </span>
           </motion.div>
 
           {/* Badge 3: Tailwind */}
@@ -214,7 +202,9 @@ export function HeroSection() {
             <StrokeDraw>
               <RiTailwindCssLine className="size-3.5 sm:size-4 text-[#38BDF8]" />
             </StrokeDraw>
-            <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight text-[#38BDF8]">TAILWIND</span>
+            <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight text-[#38BDF8]">
+              TAILWIND
+            </span>
           </motion.div>
 
           {/* Badge 4: TypeScript */}
@@ -225,8 +215,12 @@ export function HeroSection() {
             whileHover={{ y: -3 }}
             className="absolute bottom-8 sm:bottom-16 right-4 sm:right-10 z-20 flex items-center gap-1 sm:gap-1.5 bg-background border border-border px-2 py-1 sm:px-2.5 sm:py-1.5 shadow-sm hover:shadow-md rounded-none select-none transition-shadow duration-300"
           >
-            <span className="text-[9px] sm:text-[10px] font-black text-[#3178C6] border border-[#3178C6]/30 px-1 py-0.5 rounded-none font-mono leading-none">TS</span>
-            <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight text-[#3178C6]">TYPESCRIPT</span>
+            <span className="text-[9px] sm:text-[10px] font-black text-[#3178C6] border border-[#3178C6]/30 px-1 py-0.5 rounded-none font-mono leading-none">
+              TS
+            </span>
+            <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight text-[#3178C6]">
+              TYPESCRIPT
+            </span>
           </motion.div>
         </div>
       </div>

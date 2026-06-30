@@ -54,6 +54,7 @@ export function StrokeDraw({ children, className, ...props }: StrokeDrawProps) {
         "[&_svg_path]:[stroke-dasharray:100] [&_svg_path]:[stroke-dashoffset:100] [&_svg_path]:[stroke:currentColor] [&_svg_path]:[stroke-width:0.8px]",
         "[&_svg_path]:[animation:svg-icon-draw_1.5s_ease-in-out_forwards] [&_svg_path]:[transition:fill-opacity_0.3s]",
         "hover:[&_svg_path]:[animation:none] hover:[&_svg_path]:[animation:svg-icon-draw_1.2s_ease-in-out_forwards]",
+        "group-hover:[&_svg_path]:[animation:none] group-hover:[&_svg_path]:[animation:svg-icon-draw_1.2s_ease-in-out_forwards]",
         className
       )}
       {...props}

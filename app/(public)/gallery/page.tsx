@@ -1,5 +1,8 @@
 "use client";
 
+import { useId, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,8 +15,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { RiArrowRightLine, RiMapPinLine } from "@remixicon/react";
-import { useState } from "react";
+import { StrokeDraw } from "@/components/stroke-draw";
+import { 
+  RiArrowRightLine, 
+  RiMapPinLine,
+  RiLayoutGridLine,
+  RiListUnordered
+} from "@remixicon/react";
 import Image from "next/image";
 const tiles = [
   {
@@ -191,6 +199,8 @@ const tags = [ALL_TAG, ...Array.from(new Set(tiles.map((t) => t.tag)))];
 
 export default function GalleryBlock() {
   const [active, setActive] = useState(ALL_TAG);
+  const [view, setView] = useState<"grid" | "list">("grid");
+  const id = useId();
 
   const visible =
     active === ALL_TAG ? tiles : tiles.filter((t) => t.tag === active);
@@ -210,7 +220,7 @@ export default function GalleryBlock() {
           </p>
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-2 border-b border-border pb-6">
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-border pb-6">
           <ToggleGroup
             variant="outline"
             size="sm"
@@ -220,7 +230,7 @@ export default function GalleryBlock() {
               if (next) setActive(next);
             }}
             aria-label="Filter photos by tag"
-            className="flex-wrap justify-center"
+            className="flex-wrap justify-center sm:justify-start"
           >
             {tags.map((tag) => (
               <ToggleGroupItem
@@ -233,20 +243,80 @@ export default function GalleryBlock() {
               </ToggleGroupItem>
             ))}
           </ToggleGroup>
+
+          <div className="flex bg-muted/30 rounded-md p-1 border border-border">
+            <button
+              onClick={() => setView("grid")}
+              className={`group p-1.5 sm:p-2 rounded-sm transition-colors relative z-10 flex items-center justify-center ${
+                view === "grid"
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              aria-label="Grid view"
+            >
+              {view === "grid" && (
+                <motion.div
+                  layoutId={`${id}-bg`}
+                  className="absolute inset-0 bg-background rounded-sm -z-10 shadow-sm border border-border/50"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              <StrokeDraw>
+                <RiLayoutGridLine className="size-4" />
+              </StrokeDraw>
+            </button>
+            <button
+              onClick={() => setView("list")}
+              className={`group p-1.5 sm:p-2 rounded-sm transition-colors relative z-10 flex items-center justify-center ${
+                view === "list"
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              aria-label="List view"
+            >
+              {view === "list" && (
+                <motion.div
+                  layoutId={`${id}-bg`}
+                  className="absolute inset-0 bg-background rounded-sm -z-10 shadow-sm border border-border/50"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              <StrokeDraw>
+                <RiListUnordered className="size-4" />
+              </StrokeDraw>
+            </button>
+          </div>
         </div>
 
-        <div className="mt-8 grid grid-cols-2 gap-2 bg-border sm:grid-cols-3 md:grid-cols-4">
-          {visible.map((tile) => (
-            <Dialog key={tile.id}>
-              <DialogTrigger
-                render={
-                  <button
-                    type="button"
-                    aria-label={`View ${tile.label}`}
-                    className="group relative aspect-square overflow-hidden bg-muted text-left focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none rounded-xs"
-                  />
-                }
+        <motion.div 
+          layout
+          className={`mt-8 grid gap-2 ${
+            view === "grid" 
+              ? "grid-cols-2 bg-border sm:grid-cols-3 md:grid-cols-4" 
+              : "grid-cols-1 sm:grid-cols-2"
+          }`}
+        >
+          <AnimatePresence>
+            {visible.map((tile, index) => (
+              <motion.div
+                key={tile.id}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ type: "spring", bounce: 0.2, duration: 0.6, delay: index * 0.05 }}
+                className={view === "grid" ? "aspect-square" : "aspect-video"}
               >
+                <Dialog>
+                  <DialogTrigger
+                    render={
+                      <button
+                        type="button"
+                        aria-label={`View ${tile.label}`}
+                        className="group size-full relative overflow-hidden bg-muted text-left focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none rounded-xs"
+                      />
+                    }
+                  >
                 <Image
                   fill
                   src={tile.src}
@@ -356,11 +426,13 @@ export default function GalleryBlock() {
                       Close
                     </DialogClose>
                   </div>
-                </div>
-              </DialogContent>
-            </Dialog>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </motion.div>
           ))}
-        </div>
+          </AnimatePresence>
+        </motion.div>
 
         <div className="mt-8 flex items-center justify-between border-t border-border pt-6">
           <p className="text-xs text-muted-foreground">

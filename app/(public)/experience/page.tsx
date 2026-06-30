@@ -3,6 +3,7 @@
 import React from "react";
 import { RiArrowDownLine } from "@remixicon/react";
 import { ScrollRevealTimeline, TimelineJob } from "@/components/scroll-reveal-timeline";
+import RoadmapBlock from "@/components/roadmap-block";
 
 const timelineJobs: TimelineJob[] = [
   {
@@ -70,6 +71,11 @@ const Page = (): React.ReactNode => {
 
       {/* Unified Scroll Reveal Timeline Component */}
       <ScrollRevealTimeline jobs={timelineJobs} />
+
+      {/* Skills Roadmap Block */}
+      <div className="mt-20">
+        <RoadmapBlock />
+      </div>
     </section>
   );
 };

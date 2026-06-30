@@ -1,0 +1,274 @@
+"use client";
+
+import { useState, useId } from "react"
+import { motion } from "motion/react"
+import {
+  RiCpuLine,
+  RiLayout3Line,
+  RiRocketLine,
+  RiServerLine,
+  RiDatabase2Line,
+  RiExchangeBoxLine,
+  RiLayoutMasonryLine,
+  RiMagicLine,
+  RiSmartphoneLine,
+  RiHardDrive2Line,
+  RiShieldKeyholeLine,
+  RiArrowRightLine,
+  RiLayoutGridLine,
+  RiListUnordered
+} from "@remixicon/react"
+import Link from "next/link"
+
+import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
+import { Button } from "@/components/ui/button"
+import { StrokeDraw } from "@/components/stroke-draw"
+import { cn } from "@/lib/utils"
+
+type Item = {
+  title: string
+  description: string
+  tag: string
+  progress: number
+  techIcon: typeof RiServerLine
+}
+
+const columns: {
+  status: string
+  icon: typeof RiCpuLine
+  items: Item[]
+}[] = [
+  {
+    status: "System Architecture",
+    icon: RiCpuLine,
+    items: [
+      {
+        title: "Microservices & Serverless",
+        description: "Designing decoupled, highly available systems utilizing edge computing and serverless architectures.",
+        tag: "Scalability",
+        progress: 95,
+        techIcon: RiServerLine,
+      },
+      {
+        title: "Database Design",
+        description: "Architecting normalized relational databases and NoSQL structures optimized for read/write performance.",
+        tag: "Data Modeling",
+        progress: 90,
+        techIcon: RiDatabase2Line,
+      },
+      {
+        title: "API Design & GraphQL",
+        description: "Building robust, versioned REST APIs and flexible GraphQL endpoints with strict type-safety.",
+        tag: "Interfaces",
+        progress: 85,
+        techIcon: RiExchangeBoxLine,
+      },
+    ],
+  },
+  {
+    status: "UI/UX & Design Systems",
+    icon: RiLayout3Line,
+    items: [
+      {
+        title: "Component Libraries",
+        description: "Crafting highly reusable, accessible (WCAG compliant) component libraries from scratch using Radix and Tailwind.",
+        tag: "Design Systems",
+        progress: 95,
+        techIcon: RiLayoutMasonryLine,
+      },
+      {
+        title: "Micro-Interactions",
+        description: "Implementing fluid, physics-based animations with Framer Motion to elevate user experience.",
+        tag: "Motion Design",
+        progress: 90,
+        techIcon: RiMagicLine,
+      },
+      {
+        title: "Responsive Layouts",
+        description: "Building complex, adaptive layouts that provide seamless experiences across all device form factors.",
+        tag: "Responsive UI",
+        progress: 95,
+        techIcon: RiSmartphoneLine,
+      },
+    ],
+  },
+  {
+    status: "Performance & Security",
+    icon: RiRocketLine,
+    items: [
+      {
+        title: "Core Web Vitals",
+        description: "Optimizing LCP, CLS, and INP metrics to achieve perfect Lighthouse scores and improve SEO.",
+        tag: "Optimization",
+        progress: 90,
+        techIcon: RiRocketLine,
+      },
+      {
+        title: "Caching Strategies",
+        description: "Implementing advanced edge caching, stale-while-revalidate, and optimized CDN delivery.",
+        tag: "Networking",
+        progress: 85,
+        techIcon: RiHardDrive2Line,
+      },
+      {
+        title: "Web Security",
+        description: "Securing applications against XSS, CSRF, and implementing robust OAuth/SAML authentication flows.",
+        tag: "Security",
+        progress: 90,
+        techIcon: RiShieldKeyholeLine,
+      },
+    ],
+  },
+]
+
+export default function ExpertiseBlock() {
+  const [view, setView] = useState<"grid" | "list">("grid");
+  const id = useId();
+
+  return (
+    <section className="flex w-full items-center justify-center bg-background px-6 py-16 text-foreground">
+      <div className="mx-auto w-full max-w-5xl">
+        <div className="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+          <div className="text-center sm:text-left">
+            <Badge variant="outline" className="mb-4">
+              Domain Expertise
+            </Badge>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Areas of Specialization
+            </h2>
+            <p className="mt-3 text-muted-foreground max-w-2xl mx-auto sm:mx-0">
+              A high-level overview of my specialized domains, focusing on architecture, design systems, and performance optimization.
+            </p>
+          </div>
+
+          <div className="bg-muted/30 rounded-md p-1 border border-border shrink-0 hidden sm:flex self-center sm:self-end">
+            <button
+              onClick={() => setView("grid")}
+              className={`group p-1.5 sm:p-2 rounded-sm transition-colors relative z-10 flex items-center justify-center ${
+                view === "grid"
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              aria-label="Grid view"
+            >
+              {view === "grid" && (
+                <motion.div
+                  layoutId={`${id}-bg`}
+                  className="absolute inset-0 bg-background rounded-sm -z-10 shadow-sm border border-border/50"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              <StrokeDraw>
+                <RiLayoutGridLine className="size-4" />
+              </StrokeDraw>
+            </button>
+            <button
+              onClick={() => setView("list")}
+              className={`group p-1.5 sm:p-2 rounded-sm transition-colors relative z-10 flex items-center justify-center ${
+                view === "list"
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              aria-label="List view"
+            >
+              {view === "list" && (
+                <motion.div
+                  layoutId={`${id}-bg`}
+                  className="absolute inset-0 bg-background rounded-sm -z-10 shadow-sm border border-border/50"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              <StrokeDraw>
+                <RiListUnordered className="size-4" />
+              </StrokeDraw>
+            </button>
+          </div>
+        </div>
+
+        <motion.div 
+          layout 
+          className={cn(
+            "grid gap-6",
+            view === "grid" ? "grid-cols-1 md:grid-cols-3" : "grid-cols-1"
+          )}
+        >
+          {columns.map((column) => (
+            <motion.div layout key={column.status} className="flex flex-col gap-4">
+              <motion.div layout className="flex items-center gap-2 border-b border-border pb-2">
+                <column.icon
+                  className="size-5 text-primary"
+                  aria-hidden="true"
+                />
+                <h3 className="text-lg font-bold">{column.status}</h3>
+              </motion.div>
+
+              <motion.ul layout className="flex flex-col gap-4">
+                {column.items.map((item) => (
+                  <motion.li
+                    key={item.title}
+                    layout
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    className={cn(
+                      "group flex border border-border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-sm rounded-xl overflow-hidden",
+                      view === "grid" 
+                        ? "flex-col gap-4" 
+                        : "flex-col sm:flex-row justify-between gap-6"
+                    )}
+                  >
+                    {/* Left Block: Tag, Icon+Title, Description */}
+                    <motion.div layout className={cn("flex flex-col gap-2", view === "list" && "sm:flex-1")}>
+                      <motion.div layout className="flex justify-start items-start">
+                        <Badge variant="secondary" className="w-fit text-[10px] tracking-wide uppercase">
+                          {item.tag}
+                        </Badge>
+                      </motion.div>
+                      
+                      <motion.div layout className="flex items-center gap-3 mt-1">
+                        <motion.div layout className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-muted text-muted-foreground transition-colors group-hover:bg-primary/10 group-hover:text-primary">
+                          <item.techIcon className="size-5" />
+                        </motion.div>
+                        <motion.h4 layout className="text-base font-bold text-foreground transition-colors group-hover:text-primary">{item.title}</motion.h4>
+                      </motion.div>
+                      
+                      <motion.p layout className="text-sm/relaxed text-muted-foreground mt-2">
+                        {item.description}
+                      </motion.p>
+                    </motion.div>
+
+                    {/* Right Block: Proficiency & Button */}
+                    <motion.div layout className={cn("flex flex-col gap-4 justify-end", view === "list" && "sm:w-[220px] shrink-0 sm:pb-1")}>
+                      <motion.div layout className="flex flex-col gap-2">
+                        <motion.div layout className="flex justify-between items-center">
+                          <motion.span layout className="text-[10px] uppercase font-bold text-muted-foreground">Proficiency</motion.span>
+                          <motion.span layout className="text-xs font-bold text-primary tabular-nums">
+                            {item.progress}%
+                          </motion.span>
+                        </motion.div>
+                        <motion.div layout>
+                          <Progress
+                            value={item.progress}
+                            aria-label={`${item.title} proficiency`}
+                            className="h-1.5"
+                          />
+                        </motion.div>
+                      </motion.div>
+                      <motion.div layout>
+                        <Button variant="outline" size="sm" className="w-full gap-2 text-xs font-semibold" asChild>
+                          <Link href="/projects">
+                            Browse Projects
+                            <RiArrowRightLine className="size-3.5" />
+                          </Link>
+                        </Button>
+                      </motion.div>
+                    </motion.div>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  )
+}
