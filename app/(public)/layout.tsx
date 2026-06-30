@@ -1,11 +1,11 @@
-import { AppRoutes } from "@/.next/dev/types/routes";
 import FooterBlock from "@/components/footer-block";
 import MobileNav from "@/components/mobile-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 import Link from "next/link";
+import type { Route } from "next";
 import React from "react";
 
-const navLinks: { label: string; href: AppRoutes }[] = [
+const navLinks: { label: string; href: Route }[] = [
   { label: "About", href: "/about" },
   { label: "Projects", href: "/projects" },
   { label: "Experience", href: "/experience" },

@@ -1,9 +1,8 @@
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
+import type { Route } from "next"
 
-import { AppRoutes } from "@/.next/dev/types/routes"
-
-const NAV_LINKS: { label: string; href: AppRoutes }[] = [
+const NAV_LINKS: { label: string; href: Route }[] = [
   { label: "About", href: "/about" },
   { label: "Projects", href: "/projects" },
   { label: "Experience", href: "/experience" },
