@@ -1,33 +1,12 @@
-"use client";
-
 import { RiMailSendLine, RiMapPin2Line, RiPhoneLine, RiEarthLine } from "@remixicon/react";
-import { toast } from "sonner";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import { Toaster } from "@/components/ui/sonner";
-import { Textarea } from "@/components/ui/textarea";
-
-const TOPICS = ["Freelance Project", "Full-time / Contract Role", "General Inquiry", "Collaboration / Open Source"];
+import ContactForm from "@/components/contact-form";
 
 const Page = (): React.ReactNode => {
   return (
@@ -48,97 +27,7 @@ const Page = (): React.ReactNode => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <Card className="w-full">
-            <form
-              className="flex flex-col gap-(--card-spacing)"
-              onSubmit={(event) => {
-                event.preventDefault();
-                toast.success(
-                  "Message sent successfully. I'll get back to you shortly!",
-                );
-              }}
-            >
-              <CardHeader>
-                <CardTitle className="text-sm font-semibold">
-                  Send a message
-                </CardTitle>
-                <CardDescription>
-                  Tell me a bit about what you need.
-                </CardDescription>
-              </CardHeader>
-
-              <Separator />
-
-              <CardContent>
-                <FieldGroup>
-                  <Field>
-                    <FieldLabel htmlFor="name">Full name</FieldLabel>
-                    <Input id="name" type="text" placeholder="Jane Doe" required />
-                  </Field>
-
-                  <Field>
-                    <FieldLabel htmlFor="email">Email address</FieldLabel>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="jane@example.com"
-                      required
-                    />
-                  </Field>
-
-                  <Field>
-                    <FieldLabel htmlFor="topic">Topic</FieldLabel>
-                    <Select name="topic">
-                      <SelectTrigger id="topic" className="w-full">
-                        <SelectValue placeholder="Select a topic…" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {TOPICS.map((topic) => (
-                          <SelectItem key={topic} value={topic}>
-                            {topic}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </Field>
-
-                  <Field>
-                    <FieldLabel htmlFor="message">Message</FieldLabel>
-                    <Textarea
-                      id="message"
-                      rows={6}
-                      className="min-h-32 resize-none"
-                      placeholder="How can I help you?"
-                      required
-                    />
-                  </Field>
-                </FieldGroup>
-              </CardContent>
-
-              <CardFooter className="flex flex-col items-stretch gap-4">
-                <div className="flex items-center gap-2.5">
-                  <Checkbox id="consent" name="consent" required />
-                  <label
-                    htmlFor="consent"
-                    className="text-xs leading-snug font-normal text-muted-foreground"
-                  >
-                    I agree to the{" "}
-                    <a
-                      href="#"
-                      className="underline underline-offset-4 hover:text-foreground"
-                    >
-                      Privacy Policy
-                    </a>
-                    .
-                  </label>
-                </div>
-                <Button type="submit" className="w-full">
-                  <RiMailSendLine data-icon="inline-start" />
-                  Send Message
-                </Button>
-              </CardFooter>
-            </form>
-          </Card>
+          <ContactForm />
 
           <div className="flex flex-col gap-6">
             <div

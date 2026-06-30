@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { RiArrowDownLine } from "@remixicon/react";
 import { ScrollRevealTimeline, TimelineJob } from "@/components/scroll-reveal-timeline";

@@ -254,11 +254,9 @@ export default function ExpertiseBlock() {
                         </motion.div>
                       </motion.div>
                       <motion.div layout>
-                        <Button variant="outline" size="sm" className="w-full gap-2 text-xs font-semibold" asChild>
-                          <Link href="/projects">
-                            Browse Projects
-                            <RiArrowRightLine className="size-3.5" />
-                          </Link>
+                        <Button variant="outline" size="sm" className="w-full gap-2 text-xs font-semibold" render={<Link href="/projects" />} nativeButton={false}>
+                          Browse Projects
+                          <RiArrowRightLine className="size-3.5" />
                         </Button>
                       </motion.div>
                     </motion.div>
