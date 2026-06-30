@@ -41,6 +41,22 @@ const HeroPortrait = memo(function HeroPortrait() {
       className="lg:col-span-5 flex justify-center items-center relative h-80 sm:h-95 lg:h-115 w-full mt-4 lg:mt-0"
       style={{ isolation: "isolate", willChange: "transform" }}
     >
+      {/* Dot-grid background — offset behind the frame to create depth */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 translate-x-4 translate-y-4 sm:translate-x-6 sm:translate-y-6"
+        style={{
+          zIndex: 0,
+          backgroundImage: `radial-gradient(circle, var(--border) 1.5px, transparent 1.5px)`,
+          backgroundSize: "20px 20px",
+          maskImage:
+            "radial-gradient(ellipse 85% 85% at 50% 50%, black 30%, transparent 80%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 85% 85% at 50% 50%, black 30%, transparent 80%)",
+          opacity: 0.7,
+        }}
+      />
+
       {/* Clean Image Container */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
