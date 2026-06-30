@@ -25,7 +25,7 @@ const Layout = ({
       <main className="flex min-h-screen w-full flex-col bg-background text-foreground">
         <header className="relative flex h-16 w-full items-center border-b border-border px-6 gap-6">
           <Link href="/" className="flex shrink-0 items-center gap-2.5">
-            <span className="text-base font-bold tracking-tight">Alex Gonzalez</span>
+            <span className="text-lg font-bold uppercase tracking-tight">Alex Gonzalez</span>
           </Link>
 
           <nav className="ml-auto hidden items-center gap-4 md:flex">

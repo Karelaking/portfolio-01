@@ -33,13 +33,16 @@ export function ZoomHollowText({
   }, [words.length, interval]);
 
   return (
-    <div className={cn("relative inline-block", className)}>
+    <div
+      className={cn("relative inline-block", className)}
+      style={{ isolation: "isolate", contain: "layout style" }}
+    >
       <AnimatePresence mode="wait">
         <motion.span
           key={words[index]}
           initial={{ scale: 0.5, opacity: 0, filter: "blur(10px)" }}
           animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-          exit={{ scale: 1.5, opacity: 0, filter: "blur(10px)" }}
+          exit={{ scale: 1.1, opacity: 0, filter: "blur(8px)" }}
           transition={{
             duration,
             ease: [0.22, 1, 0.36, 1],

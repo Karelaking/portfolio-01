@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "motion/react";
@@ -15,19 +15,122 @@ import {
   RiTailwindCssLine,
 } from "@remixicon/react";
 
-export function HeroSection() {
-  const greetings = [
-    "HOLA",
-    "BONJOUR",
-    "CIAO",
-    "नमस्ते",
-    "こんにちは",
-    "你好",
-    "مَرْحَبًا",
-    "ПРИВЕТ",
-    "ΓΕΙΑ",
-  ];
+// Stable constant — defined outside component to avoid recreation on every render
+const GREETINGS = [
+  "HOLA",
+  "BONJOUR",
+  "CIAO",
+  "नमस्ते",
+  "こんにちは",
+  "你好",
+  "مَرْحَبًا",
+  "ПРИВЕТ",
+  "ΓΕΙΑ",
+  "HELLO",
+  "안녕하세요",
+];
 
+/**
+ * Memoized portrait panel — isolated from parent re-renders caused by
+ * ZoomHollowText cycling its index state. Without memo, every word change
+ * would re-trigger the entrance animation on the image on mobile.
+ */
+const HeroPortrait = memo(function HeroPortrait() {
+  return (
+    <div
+      className="lg:col-span-5 flex justify-center items-center relative h-80 sm:h-95 lg:h-115 w-full mt-4 lg:mt-0"
+      style={{ isolation: "isolate", willChange: "transform" }}
+    >
+      {/* Clean Image Container */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        whileHover={{ scale: 1.02, y: -4, rotate: 1 }}
+        className="relative size-57.5 sm:size-65 lg:size-77.5 bg-card border border-border shadow-2xl p-2 sm:p-3 z-10 rounded-none group"
+      >
+        <div className="relative w-full h-full overflow-hidden bg-muted">
+          <Image
+            src="/developer_portrait.png"
+            alt="Alex Gonzalez Portrait"
+            fill
+            sizes="(max-width: 640px) 230px, (max-width: 1024px) 260px, 310px"
+            priority
+            className="object-cover transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-105"
+            suppressHydrationWarning
+          />
+        </div>
+      </motion.div>
+
+      {/* Staggered Static Technology Badges Overlapping the Corners */}
+      {/* Badge 1: Next.js */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
+        whileHover={{ y: -3 }}
+        className="absolute top-4 sm:top-10 left-4 sm:left-12 z-20 flex items-center gap-1 sm:gap-1.5 bg-background border border-border px-2 py-1 sm:px-2.5 sm:py-1.5 shadow-sm hover:shadow-md rounded-none select-none transition-shadow duration-300"
+      >
+        <StrokeDraw>
+          <RiNextjsLine className="size-3.5 sm:size-4" />
+        </StrokeDraw>
+        <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight">
+          NEXT.JS
+        </span>
+      </motion.div>
+
+      {/* Badge 2: React */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.5 }}
+        whileHover={{ y: -3 }}
+        className="absolute bottom-4 sm:bottom-12 left-2 sm:left-8 z-20 flex items-center gap-1 sm:gap-1.5 bg-background border border-border px-2 py-1 sm:px-2.5 sm:py-1.5 shadow-sm hover:shadow-md rounded-none select-none transition-shadow duration-300"
+      >
+        <StrokeDraw>
+          <RiReactjsLine className="size-3.5 sm:size-4 text-[#61DAFB]" />
+        </StrokeDraw>
+        <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight text-[#61DAFB]">
+          REACT
+        </span>
+      </motion.div>
+
+      {/* Badge 3: Tailwind */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.6 }}
+        whileHover={{ y: -3 }}
+        className="absolute top-10 sm:top-20 right-2 sm:right-6 z-20 flex items-center gap-1 sm:gap-1.5 bg-background border border-border px-2 py-1 sm:px-2.5 sm:py-1.5 shadow-sm hover:shadow-md rounded-none select-none transition-shadow duration-300"
+      >
+        <StrokeDraw>
+          <RiTailwindCssLine className="size-3.5 sm:size-4 text-[#38BDF8]" />
+        </StrokeDraw>
+        <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight text-[#38BDF8]">
+          TAILWIND
+        </span>
+      </motion.div>
+
+      {/* Badge 4: TypeScript */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.7 }}
+        whileHover={{ y: -3 }}
+        className="absolute bottom-8 sm:bottom-16 right-4 sm:right-10 z-20 flex items-center gap-1 sm:gap-1.5 bg-background border border-border px-2 py-1 sm:px-2.5 sm:py-1.5 shadow-sm hover:shadow-md rounded-none select-none transition-shadow duration-300"
+      >
+        <span className="text-[9px] sm:text-[10px] font-black text-[#3178C6] border border-[#3178C6]/30 px-1 py-0.5 rounded-none font-mono leading-none">
+          TS
+        </span>
+        <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight text-[#3178C6]">
+          TYPESCRIPT
+        </span>
+      </motion.div>
+    </div>
+  );
+});
+
+export function HeroSection() {
   return (
     <section className="relative w-full min-h-[80vh] lg:min-h-[85vh] flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-20">
       {/* Background Gradients & Effects */}
@@ -65,14 +168,12 @@ export function HeroSection() {
       <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
         {/* Left Side: Typography and Call to Action */}
         <div className="lg:col-span-7 flex flex-col items-start text-left space-y-4 sm:space-y-6 max-w-2xl">
-          {/* Animated greeting badge */}
-
           {/* Main Headline with multi-language ZoomHollowText */}
           <div className="w-full flex flex-col space-y-1">
-            <div className="h-17.5 sm:h-20 lg:h-25 flex items-center overflow-visible">
+            <div className="h-17.5 sm:h-20 lg:h-25 flex items-center overflow-hidden">
               <ZoomHollowText
-                words={greetings}
-                className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-primary uppercase"
+                words={GREETINGS}
+                className="text-5xl sm:text-6xl lg:text-7xl font-black sm:tracking-tight text-primary uppercase"
                 strokeWidth={1.5}
                 interval={2000}
                 duration={0.7}
@@ -92,7 +193,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.25, ease: "easeOut" }}
               className="text-xs sm:text-base lg:text-lg font-medium text-primary tracking-wide font-mono mt-1"
             >
-              FULL-STACK DEVELOPER & SOFTWARE ENGINEER
+              FULL-STACK DEVELOPER &amp; SOFTWARE ENGINEER
             </motion.p>
           </div>
 
@@ -116,6 +217,7 @@ export function HeroSection() {
             className="flex flex-wrap gap-3 sm:gap-4 pt-2 sm:pt-4"
           >
             <Button
+              nativeButton={false}
               className="group h-11 sm:h-12 px-5 sm:px-6 text-sm font-semibold rounded-none relative overflow-hidden transition-all duration-300 gap-2"
               render={<Link href="/about" />}
             >
@@ -125,6 +227,7 @@ export function HeroSection() {
 
             <Button
               variant="outline"
+              nativeButton={false}
               className="group h-11 sm:h-12 px-5 sm:px-6 text-sm font-semibold border-border bg-background hover:bg-muted/10 rounded-none relative overflow-hidden transition-all duration-300 gap-2"
               render={<a href="/resume.pdf" download />}
             >
@@ -136,93 +239,8 @@ export function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Right Side: Animated Portrait and Tech Badges */}
-        <div className="lg:col-span-5 flex justify-center items-center relative h-80 sm:h-95 lg:h-115 w-full mt-4 lg:mt-0">
-          {/* Clean Image Container */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            whileHover={{ scale: 1.02, y: -4, rotate: 1 }}
-            className="relative size-57.5 sm:size-65 lg:size-77.5 bg-card border border-border shadow-2xl p-2 sm:p-3 z-10 rounded-none group"
-          >
-            <div className="relative w-full h-full overflow-hidden bg-muted">
-              <Image
-                src="/developer_portrait.png"
-                alt="Alex Gonzalez Portrait"
-                fill
-                sizes="(max-width: 640px) 230px, (max-width: 1024px) 260px, 310px"
-                priority
-                className="object-cover transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-105"
-              />
-            </div>
-          </motion.div>
-
-          {/* Staggered Static Technology Badges Overlapping the Corners */}
-          {/* Badge 1: Next.js */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
-            whileHover={{ y: -3 }}
-            className="absolute top-4 sm:top-10 left-4 sm:left-12 z-20 flex items-center gap-1 sm:gap-1.5 bg-background border border-border px-2 py-1 sm:px-2.5 sm:py-1.5 shadow-sm hover:shadow-md rounded-none select-none transition-shadow duration-300"
-          >
-            <StrokeDraw>
-              <RiNextjsLine className="size-3.5 sm:size-4" />
-            </StrokeDraw>
-            <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight">
-              NEXT.JS
-            </span>
-          </motion.div>
-
-          {/* Badge 2: React */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.5 }}
-            whileHover={{ y: -3 }}
-            className="absolute bottom-4 sm:bottom-12 left-2 sm:left-8 z-20 flex items-center gap-1 sm:gap-1.5 bg-background border border-border px-2 py-1 sm:px-2.5 sm:py-1.5 shadow-sm hover:shadow-md rounded-none select-none transition-shadow duration-300"
-          >
-            <StrokeDraw>
-              <RiReactjsLine className="size-3.5 sm:size-4 text-[#61DAFB]" />
-            </StrokeDraw>
-            <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight text-[#61DAFB]">
-              REACT
-            </span>
-          </motion.div>
-
-          {/* Badge 3: Tailwind */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.6 }}
-            whileHover={{ y: -3 }}
-            className="absolute top-10 sm:top-20 right-2 sm:right-6 z-20 flex items-center gap-1 sm:gap-1.5 bg-background border border-border px-2 py-1 sm:px-2.5 sm:py-1.5 shadow-sm hover:shadow-md rounded-none select-none transition-shadow duration-300"
-          >
-            <StrokeDraw>
-              <RiTailwindCssLine className="size-3.5 sm:size-4 text-[#38BDF8]" />
-            </StrokeDraw>
-            <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight text-[#38BDF8]">
-              TAILWIND
-            </span>
-          </motion.div>
-
-          {/* Badge 4: TypeScript */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.7 }}
-            whileHover={{ y: -3 }}
-            className="absolute bottom-8 sm:bottom-16 right-4 sm:right-10 z-20 flex items-center gap-1 sm:gap-1.5 bg-background border border-border px-2 py-1 sm:px-2.5 sm:py-1.5 shadow-sm hover:shadow-md rounded-none select-none transition-shadow duration-300"
-          >
-            <span className="text-[9px] sm:text-[10px] font-black text-[#3178C6] border border-[#3178C6]/30 px-1 py-0.5 rounded-none font-mono leading-none">
-              TS
-            </span>
-            <span className="text-[9px] sm:text-[10px] font-bold font-mono tracking-tight text-[#3178C6]">
-              TYPESCRIPT
-            </span>
-          </motion.div>
-        </div>
+        {/* Right Side: Memoized Portrait — isolated from text state changes */}
+        <HeroPortrait />
       </div>
     </section>
   );

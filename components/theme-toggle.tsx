@@ -10,20 +10,18 @@ export function ThemeToggle() {
   const controls = useAnimation();
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Avoid hydration mismatch by waiting until mounted
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Reserve the exact same space as the mounted toggle to prevent layout shift,
+  // but render no SVG — avoids server/client DOM structure mismatch.
   if (!mounted) {
     return (
-      <div className="relative w-8 h-16 flex justify-center items-start overflow-visible">
-        {/* Placeholder cord & handle */}
-        <svg width="24" height="64" className="text-muted-foreground/30">
-          <line x1="12" y1="0" x2="12" y2="30" stroke="currentColor" strokeWidth="1.5" />
-          <rect x="8" y="30" width="8" height="18" rx="1" fill="currentColor" />
-        </svg>
-      </div>
+      <div
+        className="relative w-8 h-16 flex justify-center items-start overflow-visible"
+        aria-hidden="true"
+      />
     );
   }
 
@@ -90,8 +88,14 @@ export function ThemeToggle() {
         className="relative flex flex-col items-center"
         style={{ originY: 0 }}
       >
-        {/* Hanging string */}
-        <svg width="24" height="64" className="overflow-visible">
+        {/* Hanging string — suppressHydrationWarning prevents Dark Reader
+            extension attributes from triggering a hydration mismatch */}
+        <svg
+          width="24"
+          height="64"
+          className="overflow-visible"
+          suppressHydrationWarning
+        >
           {/* The string cord */}
           <line
             x1="12"
@@ -101,6 +105,7 @@ export function ThemeToggle() {
             className="stroke-muted-foreground/60 dark:stroke-muted-foreground/40"
             strokeWidth="1.5"
             strokeDasharray="1.5 1.5"
+            suppressHydrationWarning
           />
 
           {/* Cylinder handle (the blind pull) */}
@@ -113,6 +118,7 @@ export function ThemeToggle() {
               fill="none"
               className="stroke-muted-foreground/80 dark:stroke-muted-foreground/60"
               strokeWidth="1.2"
+              suppressHydrationWarning
             />
 
             {/* Main handle */}
@@ -129,6 +135,7 @@ export function ThemeToggle() {
                   : "fill-neutral-100 stroke-neutral-300"
               )}
               strokeWidth="1"
+              suppressHydrationWarning
             />
 
             {/* Glowing Indicator dot */}
@@ -143,8 +150,12 @@ export function ThemeToggle() {
                   : "fill-neutral-400"
               )}
               style={{
-                filter: currentTheme === "dark" ? "drop-shadow(0 0 3px rgba(251, 191, 36, 0.8))" : "none"
+                filter:
+                  currentTheme === "dark"
+                    ? "drop-shadow(0 0 3px rgba(251, 191, 36, 0.8))"
+                    : "none",
               }}
+              suppressHydrationWarning
             />
           </g>
         </svg>
