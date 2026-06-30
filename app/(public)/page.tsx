@@ -1,3 +1,4 @@
+import { HeroSection } from "@/components/hero-section";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -117,9 +118,11 @@ function getInitials(name: string) {
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen h-full flex-col items-center justify-center py-16">
+    <div className="flex min-h-screen h-full flex-col items-center justify-center">
+      <HeroSection />
+
       {/* Logos section */}
-      <div className="mx-auto w-full max-w-5xl">
+      <div className="mx-auto w-full max-w-5xl mt-24">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
             My Tech Stack

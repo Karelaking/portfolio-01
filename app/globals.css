@@ -210,3 +210,18 @@
     display: none;
   }
 }
+
+@keyframes svg-icon-draw {
+  0% {
+    stroke-dashoffset: 100;
+    fill-opacity: 0;
+  }
+  70% {
+    fill-opacity: 0;
+    stroke-dashoffset: 0;
+  }
+  100% {
+    fill-opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}

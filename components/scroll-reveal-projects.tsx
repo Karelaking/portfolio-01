@@ -8,6 +8,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { RiGithubLine, RiLink } from "@remixicon/react";
 import { cn } from "@/lib/utils";
+import { StrokeDraw } from "@/components/stroke-draw";
 
 export interface ProjectItem {
   title: string;
@@ -195,7 +196,9 @@ export function ScrollRevealProjects({ projects, className, ...props }: ScrollRe
                                   }
                                   nativeButton={false}
                                 >
-                                  <RiGithubLine className="size-3.5" />
+                                  <StrokeDraw>
+                                    <RiGithubLine className="size-3.5" />
+                                  </StrokeDraw>
                                   Source
                                 </Button>
                                 {project.demo && (
@@ -209,7 +212,9 @@ export function ScrollRevealProjects({ projects, className, ...props }: ScrollRe
                                     nativeButton={false}
                                   >
                                     Demo
-                                    <RiLink className="size-3" />
+                                    <StrokeDraw>
+                                      <RiLink className="size-3" />
+                                    </StrokeDraw>
                                   </Button>
                                 )}
                               </div>
