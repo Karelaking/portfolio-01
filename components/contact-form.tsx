@@ -29,6 +29,8 @@ import { Separator } from "@/components/ui/separator";
 import { Toaster } from "@/components/ui/sonner";
 import { Textarea } from "@/components/ui/textarea";
 
+import { submitContactForm } from "@/app/actions/contact";
+
 const TOPICS = ["Freelance Project", "Full-time / Contract Role", "General Inquiry", "Collaboration / Open Source"];
 
 const contactFormSchema = z.object({
@@ -63,11 +65,15 @@ export default function ContactForm() {
   });
 
   const onSubmit = async (data: ContactFormValues) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log("Form data submitted:", data);
-    toast.success("Message sent successfully. I'll get back to you shortly!");
-    reset();
+    try {
+      const response = await submitContactForm(data);
+      if (response.success) {
+        toast.success(response.message);
+        reset();
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
+    }
   };
 
   const topicValue = watch("topic");

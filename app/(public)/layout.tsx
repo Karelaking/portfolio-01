@@ -23,7 +23,7 @@ const Layout = ({
   return (
     <>
       <main className="flex min-h-screen w-full flex-col bg-background text-foreground">
-        <header className="relative flex h-16 w-full items-center border-b border-border px-6">
+        <header className="relative flex h-16 w-full items-center border-b border-border px-6 gap-6">
           <Link href="/" className="flex shrink-0 items-center gap-2.5">
             <span className="text-base font-bold tracking-tight">Alex Gonzalez</span>
           </Link>
@@ -40,7 +40,7 @@ const Layout = ({
             ))}
           </nav>
 
-          <div className="ml-auto flex shrink-0 items-center gap-6 md:ml-0">
+          <div className="ml-auto flex shrink-0 items-center gap-6! md:ml-0">
             <ThemeToggle />
             <MobileNav navLinks={navLinks} />
           </div>

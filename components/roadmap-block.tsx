@@ -3,17 +3,6 @@
 import { useState, useId } from "react"
 import { motion } from "motion/react"
 import {
-  RiTerminalBoxLine,
-  RiDatabase2Line,
-  RiToolsLine,
-  RiReactjsLine,
-  RiJavascriptLine,
-  RiTailwindCssFill,
-  RiNodejsLine,
-  RiTerminalWindowLine,
-  RiGithubLine,
-  RiUbuntuLine,
-  RiCloudWindyLine,
   RiArrowRightLine,
   RiLayoutGridLine,
   RiListUnordered
@@ -26,103 +15,21 @@ import { Button } from "@/components/ui/button"
 import { StrokeDraw } from "@/components/stroke-draw"
 import { cn } from "@/lib/utils"
 
-type Item = {
+export type Item = {
   title: string
   description: string
   tag: string
   progress: number
-  techIcon: typeof RiReactjsLine
+  techIcon: React.ElementType
 }
 
-const columns: {
+export type RoadmapColumn = {
   status: string
-  icon: typeof RiTerminalBoxLine
+  icon: React.ElementType
   items: Item[]
-}[] = [
-  {
-    status: "Frontend Development",
-    icon: RiTerminalBoxLine,
-    items: [
-      {
-        title: "React & Next.js",
-        description: "Building highly interactive and performant web applications with server-side rendering, RSC, and dynamic routing.",
-        tag: "Core Framework",
-        progress: 95,
-        techIcon: RiReactjsLine,
-      },
-      {
-        title: "TypeScript",
-        description: "Enforcing type safety, improving developer experience, and building scalable codebases with strict type checking.",
-        tag: "Language",
-        progress: 90,
-        techIcon: RiJavascriptLine,
-      },
-      {
-        title: "Tailwind CSS & Motion",
-        description: "Rapidly styling modern user interfaces and crafting fluid, physics-based micro-animations for premium user experiences.",
-        tag: "Styling & UI",
-        progress: 85,
-        techIcon: RiTailwindCssFill,
-      },
-    ],
-  },
-  {
-    status: "Backend & Systems",
-    icon: RiDatabase2Line,
-    items: [
-      {
-        title: "Node.js & Express",
-        description: "Designing RESTful APIs and robust microservices for scalable data processing and high-throughput networking.",
-        tag: "Core Runtime",
-        progress: 85,
-        techIcon: RiNodejsLine,
-      },
-      {
-        title: "PostgreSQL & Prisma",
-        description: "Designing relational database schemas, optimizing complex queries, and managing type-safe migrations.",
-        tag: "Database",
-        progress: 80,
-        techIcon: RiDatabase2Line,
-      },
-      {
-        title: "GraphQL & tRPC",
-        description: "Implementing efficient, strictly-typed data fetching endpoints for complex client applications.",
-        tag: "API Layer",
-        progress: 75,
-        techIcon: RiTerminalWindowLine,
-      },
-    ],
-  },
-  {
-    status: "DevOps & Tooling",
-    icon: RiToolsLine,
-    items: [
-      {
-        title: "Git & CI/CD Pipelines",
-        description: "Managing version control, code reviews, and automated deployment workflows via GitHub Actions.",
-        tag: "Workflow",
-        progress: 90,
-        techIcon: RiGithubLine,
-      },
-      {
-        title: "Docker & Containers",
-        description: "Containerizing applications for consistent development, testing, and isolated deployment environments.",
-        tag: "Infrastructure",
-        progress: 75,
-        techIcon: RiUbuntuLine,
-      },
-      {
-        title: "AWS & Vercel",
-        description: "Deploying, monitoring, and scaling edge functions, serverless architectures, and managed databases.",
-        tag: "Cloud Services",
-        progress: 80,
-        techIcon: RiCloudWindyLine,
-      },
-    ],
-  },
-]
+}
 
-export default function RoadmapBlock() {
+export default function RoadmapBlock({ columns }: { columns: RoadmapColumn[] }) {
   const [view, setView] = useState<"grid" | "list">("grid");
   const id = useId();
 

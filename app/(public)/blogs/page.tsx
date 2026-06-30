@@ -7,155 +7,88 @@ import {
 } from "@/components/ui/card";
 import { RiArrowRightLine, RiTimeLine } from "@remixicon/react";
 import BlogList from "@/components/blog-list";
+import { getBlogFeatured, getBlogCategories, getBlogPosts } from "@/lib/data";
 
-const featured = {
-  category: "Engineering",
-  title: "How I cut API latency by 60% with edge caching",
-  image:
-    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
-  excerpt:
-    "Our monolith was fast enough, until it wasn't. We traced the bottleneck to cold database reads on every request and rearchitected the caching layer in three weeks.",
-  author: { name: "Alex Gonzalez", initials: "AG", img: 47 },
-  date: "Jun 9, 2026",
-  readTime: "7 Min Read",
-};
+export default async function BlogBlock() {
+  const featured = await getBlogFeatured();
+  const categories = await getBlogCategories();
+  const posts = await getBlogPosts();
 
-const categories = [
-  "All",
-  "Engineering",
-  "Design",
-  "Product",
-  "Methodology",
-] as const;
-
-const posts = [
-  {
-    category: "Design",
-    title: "Building a token system that survives a rebrand",
-    image:
-      "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
-    excerpt:
-      "Semantic tokens feel abstract until your brand color changes overnight.",
-    author: { name: "Alex Gonzalez", initials: "AG", img: 12 },
-    date: "May 28, 2026",
-    readTime: "5 Min Read",
-  },
-  {
-    category: "Product",
-    title: "What 1,200 user interviews taught us about onboarding",
-    image:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
-    excerpt:
-      "Drop-off at step two had nothing to do with the UI, it was a mental model gap.",
-    author: { name: "Alex Gonzalez", initials: "AG", img: 45 },
-    date: "May 14, 2026",
-    readTime: "9 Min Read",
-  },
-  {
-    category: "Engineering",
-    title: "Shipping a type-safe API layer without a build step",
-    image:
-      "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80",
-    excerpt:
-      "We replaced our codegen pipeline with inferred types and never looked back.",
-    author: { name: "Alex Gonzalez", initials: "AG", img: 13 },
-    date: "May 2, 2026",
-    readTime: "6 Min Read",
-  },
-  {
-    category: "Methodology",
-    title: "Why I focus on remote-first engineering workflows",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-    excerpt:
-      "Three years of hybrid work taught me where collaboration actually happens in distributed projects.",
-    author: { name: "Alex Gonzalez", initials: "AG", img: 44 },
-    date: "Apr 19, 2026",
-    readTime: "4 Min Read",
-  },
-  {
-    category: "Design",
-    title: "A practical guide to accessible color contrast",
-    image:
-      "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80",
-    excerpt:
-      "Pass WCAG without sacrificing the palette your brand team fought for.",
-    author: { name: "Alex Gonzalez", initials: "AG", img: 15 },
-    date: "Apr 5, 2026",
-    readTime: "8 Min Read",
-  },
-  {
-    category: "Product",
-    title: "Pricing experiments that doubled our trial conversion",
-    image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
-    excerpt:
-      "Small framing changes on the pricing page moved the needle more than discounts.",
-    author: { name: "Alex Gonzalez", initials: "AG", img: 41 },
-    date: "Mar 22, 2026",
-    readTime: "5 Min Read",
-  },
-];
-
-export default function BlogBlock() {
   return (
-    <section className="flex min-h-svh w-full justify-center bg-background py-16 text-foreground">
-      <div className="mx-auto w-full max-w-6xl">
-        <div className="mb-10 flex flex-col gap-3">
-          <Badge variant="secondary" className="w-fit">
-            My Blog
-          </Badge>
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Writing about software engineering & web development
-          </h1>
-          <p className="max-w-2xl text-muted-foreground">
-            Engineering deep dives, design notes, and system architecture decisions from projects I design and build.
+    <section className="flex min-h-svh w-full items-center justify-center bg-background py-20 text-foreground">
+      <div className="mx-auto w-full max-w-5xl">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="text-xs font-semibold tracking-[0.18em] text-muted-foreground uppercase">
+            Writings
+          </span>
+          <h2 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl capitalize">
+            Notes on engineering and design
+          </h2>
+          <p className="mt-3 text-base text-muted-foreground px-4 sm:px-24">
+            A collection of technical articles, deep dives, and thoughts on building modern software architectures and design systems.
           </p>
         </div>
 
-        <Card className="group mb-12 overflow-hidden p-0 md:grid md:grid-cols-2">
-          <div className="relative aspect-video overflow-hidden bg-muted md:aspect-auto md:h-full">
-            <Image
-              fill
-              src={featured.image}
-              alt={featured.title}
-              className="size-full object-cover grayscale transition-all duration-300 group-hover:grayscale-0"
-            />
-            <span className="absolute top-4 right-4 flex items-center gap-1 bg-background/85 px-2 py-0.5 text-xs font-medium text-foreground backdrop-blur-sm">
-              <RiTimeLine className="size-3" />
-              {featured.readTime}
-            </span>
-          </div>
-          <div className="flex flex-col justify-center gap-4 p-6 sm:p-8">
-            <Badge className="w-fit">{featured.category}</Badge>
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              {featured.title}
-            </h2>
-            <p className="text-muted-foreground">{featured.excerpt}</p>
-            <div className="flex items-center gap-3">
-              <Avatar className="size-9 border border-border">
-                <AvatarImage
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&q=80"
-                  alt={featured.author.name}
-                  className="grayscale object-cover"
-                />
-                <AvatarFallback>{featured.author.initials}</AvatarFallback>
-              </Avatar>
-              <div className="text-sm">
-                <p className="font-medium text-foreground">{featured.author.name}</p>
-                <p className="text-muted-foreground">{featured.date}</p>
+        {/* Featured Post */}
+        <div className="mt-14 w-full">
+          <Card className="flex flex-col md:flex-row overflow-hidden border border-border bg-card p-0 transition-colors duration-150 hover:bg-muted/40">
+            <div className="w-full md:w-1/2 relative min-h-[300px]">
+              <Image
+                src={featured.image}
+                alt={featured.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+            <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+              <Badge variant="outline" className="w-fit mb-4">
+                {featured.category}
+              </Badge>
+              <h3 className="text-2xl font-bold tracking-tight mb-3">
+                {featured.title}
+              </h3>
+              <p className="text-muted-foreground mb-6 line-clamp-3 leading-relaxed">
+                {featured.excerpt}
+              </p>
+
+              <div className="flex items-center gap-4 mt-auto">
+                <Avatar className="size-10 border border-border">
+                  <AvatarImage
+                    src={`https://i.pravatar.cc/150?img=${featured.author.img}`}
+                    alt={featured.author.name}
+                    className="grayscale object-cover"
+                  />
+                  <AvatarFallback className="text-xs font-medium">
+                    {featured.author.initials}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <span className="text-sm font-semibold">
+                    {featured.author.name}
+                  </span>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>{featured.date}</span>
+                    <span>&middot;</span>
+                    <span className="flex items-center gap-1">
+                      <RiTimeLine className="size-3" />
+                      {featured.readTime}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div>
-              <Button render={<a href="#" />} nativeButton={false}>
-                Read Article
-                <RiArrowRightLine data-icon="inline-end" />
-              </Button>
-            </div>
-          </div>
-        </Card>
+          </Card>
+        </div>
 
-        <BlogList categories={categories} posts={posts} />
+        <BlogList posts={posts} categories={categories} />
+
+        <div className="mt-16 flex justify-center">
+          <Button variant="outline" size="lg" className="w-full sm:w-auto">
+            Load More Articles
+            <RiArrowRightLine data-icon="inline-end" />
+          </Button>
+        </div>
       </div>
     </section>
   );

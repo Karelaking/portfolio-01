@@ -3,17 +3,6 @@
 import { useState, useId } from "react"
 import { motion } from "motion/react"
 import {
-  RiCpuLine,
-  RiLayout3Line,
-  RiRocketLine,
-  RiServerLine,
-  RiDatabase2Line,
-  RiExchangeBoxLine,
-  RiLayoutMasonryLine,
-  RiMagicLine,
-  RiSmartphoneLine,
-  RiHardDrive2Line,
-  RiShieldKeyholeLine,
   RiArrowRightLine,
   RiLayoutGridLine,
   RiListUnordered
@@ -26,103 +15,21 @@ import { Button } from "@/components/ui/button"
 import { StrokeDraw } from "@/components/stroke-draw"
 import { cn } from "@/lib/utils"
 
-type Item = {
+export type Item = {
   title: string
   description: string
   tag: string
   progress: number
-  techIcon: typeof RiServerLine
+  techIcon: React.ElementType
 }
 
-const columns: {
+export type ExpertiseColumn = {
   status: string
-  icon: typeof RiCpuLine
+  icon: React.ElementType
   items: Item[]
-}[] = [
-  {
-    status: "System Architecture",
-    icon: RiCpuLine,
-    items: [
-      {
-        title: "Microservices & Serverless",
-        description: "Designing decoupled, highly available systems utilizing edge computing and serverless architectures.",
-        tag: "Scalability",
-        progress: 95,
-        techIcon: RiServerLine,
-      },
-      {
-        title: "Database Design",
-        description: "Architecting normalized relational databases and NoSQL structures optimized for read/write performance.",
-        tag: "Data Modeling",
-        progress: 90,
-        techIcon: RiDatabase2Line,
-      },
-      {
-        title: "API Design & GraphQL",
-        description: "Building robust, versioned REST APIs and flexible GraphQL endpoints with strict type-safety.",
-        tag: "Interfaces",
-        progress: 85,
-        techIcon: RiExchangeBoxLine,
-      },
-    ],
-  },
-  {
-    status: "UI/UX & Design Systems",
-    icon: RiLayout3Line,
-    items: [
-      {
-        title: "Component Libraries",
-        description: "Crafting highly reusable, accessible (WCAG compliant) component libraries from scratch using Radix and Tailwind.",
-        tag: "Design Systems",
-        progress: 95,
-        techIcon: RiLayoutMasonryLine,
-      },
-      {
-        title: "Micro-Interactions",
-        description: "Implementing fluid, physics-based animations with Framer Motion to elevate user experience.",
-        tag: "Motion Design",
-        progress: 90,
-        techIcon: RiMagicLine,
-      },
-      {
-        title: "Responsive Layouts",
-        description: "Building complex, adaptive layouts that provide seamless experiences across all device form factors.",
-        tag: "Responsive UI",
-        progress: 95,
-        techIcon: RiSmartphoneLine,
-      },
-    ],
-  },
-  {
-    status: "Performance & Security",
-    icon: RiRocketLine,
-    items: [
-      {
-        title: "Core Web Vitals",
-        description: "Optimizing LCP, CLS, and INP metrics to achieve perfect Lighthouse scores and improve SEO.",
-        tag: "Optimization",
-        progress: 90,
-        techIcon: RiRocketLine,
-      },
-      {
-        title: "Caching Strategies",
-        description: "Implementing advanced edge caching, stale-while-revalidate, and optimized CDN delivery.",
-        tag: "Networking",
-        progress: 85,
-        techIcon: RiHardDrive2Line,
-      },
-      {
-        title: "Web Security",
-        description: "Securing applications against XSS, CSRF, and implementing robust OAuth/SAML authentication flows.",
-        tag: "Security",
-        progress: 90,
-        techIcon: RiShieldKeyholeLine,
-      },
-    ],
-  },
-]
+}
 
-export default function ExpertiseBlock() {
+export default function ExpertiseBlock({ columns }: { columns: ExpertiseColumn[] }) {
   const [view, setView] = useState<"grid" | "list">("grid");
   const id = useId();
 
