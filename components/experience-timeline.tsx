@@ -82,7 +82,7 @@ export default function ExperienceTimeline({ jobs }: ExperienceTimelineProps) {
 
           {/* Scroll Line Tracer for desktop */}
           <motion.div
-            className="absolute left-1/2 top-4 bottom-4 w-[2px] bg-primary origin-top -translate-x-1/2 pointer-events-none shadow-[0_0_8px_var(--primary)]"
+            className="absolute left-1/2 top-4 bottom-4 w-0.5 bg-primary origin-top -translate-x-1/2 pointer-events-none shadow-[0_0_8px_var(--primary)]"
             style={{ scaleY }}
           />
 
@@ -166,7 +166,7 @@ export default function ExperienceTimeline({ jobs }: ExperienceTimelineProps) {
                       className="object-cover z-10 transition-all duration-700 grayscale group-hover/img:grayscale-0 group-hover/img:scale-105"
                       sizes="400px"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent z-20 pointer-events-none" />
+                    <div className="absolute inset-0 bg-linear-to-t from-background/40 to-transparent z-20 pointer-events-none" />
                   </div>
                 </div>
 
@@ -224,11 +224,11 @@ export default function ExperienceTimeline({ jobs }: ExperienceTimelineProps) {
           className="relative flex flex-col gap-12 pl-8"
         >
           {/* Left connector line for mobile */}
-          <div className="absolute left-[16px] top-2 bottom-2 w-px bg-border/60 pointer-events-none" />
+          <div className="absolute left-4 top-2 bottom-2 w-px bg-border/60 pointer-events-none" />
 
           {/* Scroll Line Tracer for mobile */}
           <motion.div
-            className="absolute left-[16px] top-2 bottom-2 w-[2px] bg-primary origin-top pointer-events-none shadow-[0_0_8px_var(--primary)]"
+            className="absolute left-4 top-2 bottom-2 w-0.5 bg-primary origin-top pointer-events-none shadow-[0_0_8px_var(--primary)]"
             style={{ scaleY }}
           />
 
@@ -239,7 +239,7 @@ export default function ExperienceTimeline({ jobs }: ExperienceTimelineProps) {
               className="relative flex flex-col gap-4"
             >
               {/* Node connector on the line */}
-              <div className="absolute left-[-16px] top-2 -translate-x-1/2 flex items-center justify-center z-20">
+              <div className="absolute -left-4 top-2 -translate-x-1/2 flex items-center justify-center z-20">
                 <div className="relative flex items-center justify-center">
                   <div className="absolute size-6 rounded-full bg-primary/20 animate-ping" />
                   <div className="relative size-3.5 border-2 border-primary bg-background rounded-full z-10 flex items-center justify-center">

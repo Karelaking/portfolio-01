@@ -8,22 +8,32 @@ import {
 import { RiArrowRightLine, RiTimeLine } from "@remixicon/react";
 import BlogList from "@/components/blog-list";
 import { getBlogFeatured, getBlogCategories, getBlogPosts } from "@/lib/data";
+import { Metadata } from "next";
+import { JsonLd, getBlogCollectionSchema } from "@/components/json-ld";
+
+export const metadata: Metadata = {
+  title: "Writings",
+  description: "Deep dives on software engineering, UI animation design, databases, API designs, and scalable architectures by Alex Gonzalez.",
+};
 
 export default async function BlogBlock() {
   const featured = await getBlogFeatured();
   const categories = await getBlogCategories();
   const posts = await getBlogPosts();
 
+  const allPosts = [featured, ...posts];
+
   return (
     <section className="flex min-h-svh w-full items-center justify-center bg-background py-20 text-foreground">
+      <JsonLd schema={getBlogCollectionSchema(allPosts)} />
       <div className="mx-auto w-full max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-xs font-semibold tracking-[0.18em] text-muted-foreground uppercase">
             Writings
           </span>
-          <h2 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl capitalize">
+          <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl capitalize">
             Notes on engineering and design
-          </h2>
+          </h1>
           <p className="mt-3 text-base text-muted-foreground px-4 sm:px-24">
             A collection of technical articles, deep dives, and thoughts on building modern software architectures and design systems.
           </p>

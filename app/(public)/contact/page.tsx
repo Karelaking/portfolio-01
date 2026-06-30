@@ -7,6 +7,12 @@ import {
 } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/sonner";
 import ContactForm from "@/components/contact-form";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description: "Get in touch with Alex Gonzalez to discuss collaboration opportunities, software engineering projects, or job openings.",
+};
 
 const Page = (): React.ReactNode => {
   return (
@@ -18,9 +24,9 @@ const Page = (): React.ReactNode => {
             <RiMailSendLine data-icon="inline-start" />
             Contact
           </Badge>
-          <h2 className="mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
+          <h1 className="mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
             Let&apos;s talk about your project
-          </h2>
+          </h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Send me a message regarding collaboration opportunities, job offers, or freelancing. I typically respond within one business day.
           </p>

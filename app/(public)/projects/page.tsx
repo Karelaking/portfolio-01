@@ -3,6 +3,13 @@ import { RiArrowDownLine } from "@remixicon/react";
 import { ScrollRevealProjects } from "@/components/scroll-reveal-projects";
 import { getProjects } from "@/lib/data";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description: "Browse the selected open-source applications, tools, and technical developer resources created by Alex Gonzalez.",
+};
+
 const Page = async (): Promise<React.ReactNode> => {
   const projects = await getProjects();
 
@@ -13,9 +20,9 @@ const Page = async (): Promise<React.ReactNode> => {
         <span className="text-xs font-semibold tracking-[0.18em] text-muted-foreground uppercase">
           Portfolio
         </span>
-        <h2 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl capitalize">
+        <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl capitalize">
           Selected Open-Source Work
-        </h2>
+        </h1>
         <p className="mt-3 text-base text-muted-foreground px-4 sm:px-24">
           Scroll down to explore some of the most impactful open-source projects, tools, and systems I have designed and built.
         </p>

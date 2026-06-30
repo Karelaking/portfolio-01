@@ -10,18 +10,20 @@ import {
   RiSparkling2Line,
 } from "@remixicon/react";
 import { Metadata } from "next";
+import { JsonLd, getPersonSchema } from "@/components/json-ld";
 
 export const metadata: Metadata = {
-  title: "About - Alex Gonzalez",
+  title: "About",
   description:
-    "Learn more about Alex Gonzalez, a software engineer and web developer specializing in building exceptional digital experiences. Discover his journey, skills, and the passion that drives his work.",
-}
+    "Learn more about Alex Gonzalez, his journey as a software engineer, core design principles, and building modern, high-performance web systems.",
+};
 
 const tags = ["TypeScript", "Next.js", "Go", "Python", "Rust", "Tailwind CSS", "PostgreSQL", "Docker"];
 
 const Page = (): React.ReactNode => {
   return (
     <section className="flex w-full min-h-svh items-center justify-center bg-background py-16 text-foreground flex-col gap-16">
+      <JsonLd schema={getPersonSchema()} />
       <div className="mx-auto grid w-full max-w-6xl items-center gap-10 md:grid-cols-2 md:gap-16 md:my-16 mb-34">
         <div className="relative overflow-hidden border border-border w-full h-full rounded-lg aspect-video">
           <Image
@@ -44,9 +46,9 @@ const Page = (): React.ReactNode => {
           <Badge variant="outline" className="mb-4 w-fit">
             My Journey
           </Badge>
-          <h2 className="text-3xl font-bold tracking-tight text-balance">
+          <h1 className="text-3xl font-bold tracking-tight text-balance">
             Crafting elegant software architectures and intuitive interfaces
-          </h2>
+          </h1>
           <div className="mt-5 flex flex-col gap-4 text-[15px]/relaxed text-muted-foreground">
             <p>
               I am a software engineer dedicated to building clean, maintainable, and highly performant digital systems. 

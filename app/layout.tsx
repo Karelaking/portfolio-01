@@ -17,8 +17,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Alex Gonzalez - Portfolio",
-  description: "Alex Gonzalez is a software engineer and web developer specializing in building exceptional digital experiences. Explore his portfolio to see his work and get in touch.",
+  metadataBase: new URL("https://alexgonzalez.dev"),
+  title: {
+    default: "Alex Gonzalez | Senior Software Engineer & Designer",
+    template: "%s | Alex Gonzalez"
+  },
+  description: "Alex Gonzalez is a senior software engineer and designer specializing in building premium Next.js apps, robust microservices, and interactive UI systems.",
+  keywords: ["Software Engineer", "Frontend Architect", "Next.js Developer", "React Developer", "Full-Stack Developer", "Web Designer"],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    title: "Alex Gonzalez | Senior Software Engineer & Designer",
+    description: "Explore the portfolio, open-source projects, and technical writings of Alex Gonzalez.",
+    url: "https://alexgonzalez.dev",
+    siteName: "Alex Gonzalez Portfolio",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Alex Gonzalez | Senior Software Engineer & Designer",
+    description: "Explore the portfolio, open-source projects, and technical writings of Alex Gonzalez.",
+  },
 };
 
 export default function RootLayout({

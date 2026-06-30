@@ -136,7 +136,7 @@ export default function ExpertiseBlock({ columns }: { columns: SkillColumn[] }) 
                         </motion.div>
 
                         {/* Right Block: Proficiency & Button */}
-                        <motion.div layout className={cn("flex flex-col gap-4 justify-end", view === "list" && "sm:w-[220px] shrink-0 sm:pb-1")}>
+                        <motion.div layout className={cn("flex flex-col gap-4 justify-end", view === "list" && "sm:w-55 shrink-0 sm:pb-1")}>
                           <motion.div layout className="flex flex-col gap-2">
                             <motion.div layout className="flex justify-between items-center">
                               <motion.span layout className="text-[10px] uppercase font-bold text-muted-foreground">Proficiency</motion.span>
