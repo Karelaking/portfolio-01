@@ -29,9 +29,6 @@ interface ScrollRevealProjectsProps extends React.ComponentProps<"div"> {
   projects: ProjectItem[];
 }
 
-const imageClass =
-  "absolute top-0 right-0 ml-auto w-auto h-full object-cover rounded-none transition-opacity duration-300 border border-border";
-
 const getBarPercentageHeight = (scrollProgress: number, thresholdStart: number, thresholdEnd: number) => {
   if (scrollProgress < thresholdStart) {
     return 0;
@@ -100,8 +97,8 @@ export function ScrollRevealProjects({ projects, className, ...props }: ScrollRe
     };
   }, [isDesktop, handleMobileScroll]);
 
-  // 28vh is the height of a single card slot on desktop
-  const slotHeightVal = 28;
+  // Height of a single card slot on desktop
+  const slotHeightVal = 30;
 
   const desktopActiveIdx = Math.min(
     Math.max(Math.round(scrollProgress * (projects.length - 1)), 0),
@@ -125,7 +122,7 @@ export function ScrollRevealProjects({ projects, className, ...props }: ScrollRe
                   className="flex flex-col gap-0 w-full transition-transform duration-300 ease-out"
                   style={{
                     transform: isDesktop
-                      ? `translateY(${-scrollProgress * Math.max(projects.length - 3, 0) * slotHeightVal}vh)`
+                      ? `translateY(${-scrollProgress * Math.max(projects.length - 2.5, 0) * slotHeightVal}vh)`
                       : "none",
                   }}
                 >
@@ -140,80 +137,96 @@ export function ScrollRevealProjects({ projects, className, ...props }: ScrollRe
                       <div
                         key={project.title + idx}
                         data-project-card
-                        className="flex gap-4 md:gap-6 transition-all duration-300 opacity-40 data-[active=true]:opacity-100 lg:h-[28vh] h-auto lg:items-center shrink-0 w-full py-4 lg:py-0"
+                        className="flex gap-4 md:gap-6 transition-all duration-350 opacity-40 data-[active=true]:opacity-100 lg:h-[30vh] h-auto lg:items-center shrink-0 w-full py-4 lg:py-3.5"
                         data-active={isActive}
                       >
                         {/* Middle Line & Node */}
                         <div className="relative flex flex-col items-center shrink-0 w-6 h-full">
-                          <div className="absolute top-0 bottom-0 w-px bg-border" />
+                          <div className="absolute top-0 bottom-0 w-px bg-border/60" />
                           <div
-                            className="absolute top-0 w-px bg-foreground transition-all"
+                            className="absolute top-0 w-px bg-primary transition-all shadow-[0_0_8px_var(--primary)]"
                             style={{
                               height: `${barHeightPercentage}%`,
                             }}
                           />
                           <div className={cn(
-                            "relative z-10 size-3.5 border border-border bg-background transition-colors rounded-none",
-                            isActive && "border-foreground bg-primary",
-                            "bg-muted-foreground/20"
-                          )} />
+                            "relative z-10 size-3 border border-border bg-background transition-all duration-300 rounded-full flex items-center justify-center",
+                            isActive ? "border-primary scale-110 shadow-[0_0_8px_var(--primary)]" : ""
+                          )}>
+                            <div className={cn(
+                              "size-1 rounded-full transition-colors",
+                              isActive ? "bg-primary" : "bg-muted-foreground/35"
+                            )} />
+                          </div>
                         </div>
 
-                        {/* Right Column (Project Card) */}
+                        {/* Right Column (Refined Project Card) */}
                         <div className="flex-1">
-                          <Card className="border border-border bg-card shadow-none hover:bg-muted/10 transition-colors duration-150 rounded-none max-h-none lg:max-h-[26vh] overflow-visible lg:overflow-hidden">
-                            <CardHeader className="gap-1 p-3 sm:p-4 pb-1">
+                          <Card className={cn(
+                            "border border-border/80 bg-card/45 backdrop-blur-xs shadow-xs transition-all duration-300 rounded-xl overflow-hidden hover:scale-[1.01] hover:shadow-sm relative group/card",
+                            isActive ? "border-primary/45 bg-card/85 shadow-xs" : "hover:border-border-hover"
+                          )}>
+                            {/* Decorative Glow Overlay */}
+                            <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                            <CardHeader className="gap-0.5 p-3 sm:p-3.5 pb-0.5">
                               <div className="flex items-center justify-between">
-                                <Badge variant="outline" className="rounded-none text-[9px] py-0 px-1.5">{project.tag}</Badge>
+                                <Badge variant="secondary" className="rounded-full text-[7.5px] font-mono tracking-wide py-0 px-2 border border-primary/10 text-primary bg-primary/5">
+                                  {project.tag}
+                                </Badge>
                               </div>
-                              <CardTitle className="text-sm font-bold text-foreground leading-snug mt-1">
+                              <CardTitle className="text-xs sm:text-sm font-bold text-foreground leading-snug mt-0.5 group-hover/card:text-primary transition-colors">
                                 {project.title}
                               </CardTitle>
                             </CardHeader>
-                            <CardContent className="px-3 sm:px-4 pb-2">
-                              <p className="text-[11px]/relaxed text-muted-foreground line-clamp-none lg:line-clamp-2">
+                            
+                            <CardContent className="px-3 sm:px-3.5 pb-1.5">
+                              <p className="text-[10px]/relaxed text-muted-foreground line-clamp-none lg:line-clamp-2">
                                 {project.description}
                               </p>
                             </CardContent>
-                            <CardFooter className="flex flex-col items-stretch gap-2 p-3 sm:p-4 border-t border-border/40">
+
+                            <CardFooter className="flex flex-col items-stretch gap-2 p-2.5 sm:p-3 border-t border-border/30 bg-muted/15">
+                              {/* Tech Badges */}
                               <div className="flex flex-wrap gap-1">
                                 {project.tags.map((t) => (
                                   <span
                                     key={t}
-                                    className="border border-border bg-muted/40 px-1.5 py-0.2 font-mono text-[9px] text-muted-foreground font-medium rounded-none"
+                                    className="border border-border bg-background px-1.5 py-0.1 font-mono text-[7px] text-muted-foreground font-semibold rounded-full hover:border-primary/30 hover:text-primary transition-colors duration-200"
                                   >
                                     {t}
                                   </span>
                                 ))}
                               </div>
+                              {/* Source/Demo Buttons */}
                               <div className="flex items-center justify-between gap-3 pt-0.5">
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  className="text-[10px] h-7 px-2 font-medium gap-1 rounded-none"
+                                  className="text-[8.5px] h-6 px-2.5 font-semibold gap-1 rounded-lg hover:bg-muted group/btn"
                                   render={
                                     <a href={project.github} target="_blank" rel="noopener noreferrer" />
                                   }
                                   nativeButton={false}
                                 >
                                   <StrokeDraw>
-                                    <RiGithubLine className="size-3.5" />
+                                    <RiGithubLine className="size-2.5 group-hover/btn:rotate-12 transition-transform duration-200" />
                                   </StrokeDraw>
-                                  Source
+                                  Source Code
                                 </Button>
                                 {project.demo && (
                                   <Button
                                     variant="outline"
                                     size="sm"
-                                    className="text-[10px] h-7 px-2 font-medium gap-1 rounded-none"
+                                    className="text-[8.5px] h-6 px-2.5 font-semibold gap-1 rounded-lg border-primary/20 hover:border-primary/50 text-primary hover:bg-primary/5 group/btn"
                                     render={
                                       <a href={project.demo} target="_blank" rel="noopener noreferrer" />
                                     }
                                     nativeButton={false}
                                   >
-                                    Demo
+                                    Live Demo
                                     <StrokeDraw>
-                                      <RiLink className="size-3" />
+                                      <RiLink className="size-2.5 group-hover/btn:translate-x-0.5 transition-transform duration-200" />
                                     </StrokeDraw>
                                   </Button>
                                 )}
@@ -227,23 +240,47 @@ export function ScrollRevealProjects({ projects, className, ...props }: ScrollRe
                 </div>
               </div>
 
-              {/* Right Side: Sticky Images (Desktop Only) */}
-              <div className="hidden lg:flex flex-col justify-center items-center w-[45vw]! relative h-[84vh]">
-                {projects.map((project, idx) => {
-                  const isActive = idx === activeIdx;
+              {/* Right Side: Sticky Images (Desktop Only) with premium floating frame */}
+              <div className="hidden lg:flex flex-col justify-center items-center w-[45vw]! relative h-[84vh] px-8">
+                {/* Floating dot-grid background for depth */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 translate-x-12 translate-y-12 opacity-[0.03] pointer-events-none"
+                  style={{
+                    backgroundImage: "radial-gradient(circle, var(--foreground) 1px, transparent 1px)",
+                    backgroundSize: "20px 20px",
+                  }}
+                />
 
-                  return (
-                    <Image
-                      key={project.title + idx + "-img"}
-                      width={project.image.width}
-                      height={project.image.height}
-                      src={project.image.url}
-                      alt={project.image.alt}
-                      className={cn(imageClass, isActive ? "opacity-100 z-10" : "opacity-0 z-0")}
-                    />
-                  );
-                })}
+                <div className="relative w-full aspect-9/16 rounded-2xl overflow-hidden border border-border/80 shadow-2xl bg-muted/30">
+                  {projects.map((project, idx) => {
+                    const isActive = idx === activeIdx;
+
+                    return (
+                      <div
+                        key={project.title + idx + "-img-container"}
+                        className={cn(
+                          "absolute inset-0 transition-all duration-700 ease-in-out",
+                          isActive
+                            ? "opacity-100 scale-100 z-10"
+                            : "opacity-0 scale-95 z-0",
+                        )}
+                      >
+                        <Image
+                          fill
+                          src={project.image.url}
+                          alt={project.image.alt}
+                          className="object-cover grayscale hover:grayscale-0 transition-all duration-700 hover:scale-105"
+                          sizes="450px"
+                          priority={idx === 0}
+                        />
+                        <div className="absolute inset-0 bg-linear-to-t from-background/30 to-transparent pointer-events-none" />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
+
             </div>
           </div>
           {/* Scroll Spacer only visible/active on desktop */}
