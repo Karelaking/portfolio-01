@@ -96,7 +96,8 @@
       "tags": [
         "TypeScript",
         "Node",
-        "Next"
+        "Next",
+        "Tailwindcss"
       ],
       "github": "https://github.com/alexgonzalez/test-sync",
       "demo": "https://test-sync.gonzalez.dev",

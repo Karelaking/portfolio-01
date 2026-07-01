@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { StrokeDraw } from "@/components/stroke-draw";
-import { RiSaveLine, RiRefreshLine, RiDeleteBin6Line } from "@remixicon/react";
+import { RiSaveLine, RiRefreshLine, RiDeleteBin6Line, RiEdit2Line, RiCloseLine } from "@remixicon/react";
 import { useRouter } from "next/navigation";
 import { updateProjectsAction } from "@/app/actions";
 
@@ -39,8 +39,9 @@ type ProjectFormValues = {
 export default function ProjectsManager({ initialProjects }: { initialProjects: ProjectItem[] }) {
   const router = useRouter();
   const [projects, setProjects] = useState<ProjectItem[]>(initialProjects);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
 
-  const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm<ProjectFormValues>({
+  const { register, handleSubmit, reset, setValue, formState: { isSubmitting } } = useForm<ProjectFormValues>({
     defaultValues: {
       title: "",
       tag: "",
@@ -51,8 +52,34 @@ export default function ProjectsManager({ initialProjects }: { initialProjects: 
     }
   });
 
+  const handleEdit = (index: number) => {
+    const p = projects[index];
+    setEditIndex(index);
+    setValue("title", p.title);
+    setValue("tag", p.tag);
+    setValue("description", p.description);
+    setValue("tagsString", p.tags.join(", "));
+    setValue("github", p.github);
+    setValue("demo", p.demo || "");
+  };
+
+  const handleCancelEdit = () => {
+    setEditIndex(null);
+    reset();
+  };
+
   const handleDelete = async (index: number) => {
     if (!confirm("Are you sure you want to delete this project?")) return;
+    
+    // If we delete the project currently being edited, cancel edit mode
+    if (editIndex === index) {
+      setEditIndex(null);
+      reset();
+    } else if (editIndex !== null && editIndex > index) {
+      // Adjust edit index to prevent index mismatch
+      setEditIndex(editIndex - 1);
+    }
+
     const updated = projects.filter((_, idx) => idx !== index);
     setProjects(updated);
 
@@ -71,7 +98,7 @@ export default function ProjectsManager({ initialProjects }: { initialProjects: 
   const onSubmit = async (data: ProjectFormValues) => {
     try {
       const formattedTags = data.tagsString ? data.tagsString.split(",").map(t => t.trim()).filter(Boolean) : [];
-      const newProject: ProjectItem = {
+      const submittedProject: ProjectItem = {
         title: data.title,
         tag: data.tag,
         description: data.description,
@@ -79,19 +106,25 @@ export default function ProjectsManager({ initialProjects }: { initialProjects: 
         github: data.github,
         demo: data.demo || null,
         image: {
-          url: "https://images.unsplash.com/photo-1618401471353-b98aedd07871?w=800&q=80",
+          url: editIndex !== null && projects[editIndex] ? projects[editIndex].image.url : "https://images.unsplash.com/photo-1618401471353-b98aedd07871?w=800&q=80",
           width: 800,
           height: 600,
           alt: data.title
         }
       };
 
-      const updated = [newProject, ...projects];
+      let updated = [...projects];
+      if (editIndex !== null) {
+        updated[editIndex] = submittedProject;
+      } else {
+        updated = [submittedProject, ...updated];
+      }
 
       const res = await updateProjectsAction(updated);
       if (res.success) {
         setProjects(updated);
-        toast.success("Project added successfully!");
+        toast.success(editIndex !== null ? "Project updated successfully!" : "Project added successfully!");
+        setEditIndex(null);
         reset();
         router.refresh();
       }
@@ -108,10 +141,12 @@ export default function ProjectsManager({ initialProjects }: { initialProjects: 
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 w-full md:flex-1 md:min-h-0 items-start md:items-stretch pb-6 md:pb-2 overflow-y-auto md:overflow-visible">
-        {/* Left Column: Add New Project Form (h-fit, no internal scrolling or scrollbars) */}
+        {/* Left Column: Form (h-fit, no internal scrollbars) */}
         <Card className="border border-border/80 bg-card/50 backdrop-blur-xs rounded-xl overflow-hidden h-fit flex flex-col">
           <CardHeader className="border-b border-border/40 bg-muted/10 shrink-0">
-            <CardTitle className="text-base font-bold">Add New Project</CardTitle>
+            <CardTitle className="text-base font-bold">
+              {editIndex !== null ? "Edit Project" : "Add New Project"}
+            </CardTitle>
           </CardHeader>
           <CardContent className="p-5">
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
@@ -195,34 +230,63 @@ export default function ProjectsManager({ initialProjects }: { initialProjects: 
               <Separator className="my-2" />
 
               <div className="flex items-center justify-end gap-3 pb-2">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  className="text-xs gap-1.5 rounded-lg"
-                  onClick={() => reset()}
-                  disabled={isSubmitting}
-                >
-                  <StrokeDraw>
-                    <RiRefreshLine className="size-4" />
-                  </StrokeDraw>
-                  Reset Form
-                </Button>
-                <Button
-                  type="submit"
-                  className="text-xs gap-1.5 rounded-lg"
-                  disabled={isSubmitting}
-                >
-                  <StrokeDraw>
-                    <RiSaveLine className="size-4" />
-                  </StrokeDraw>
-                  {isSubmitting ? "Adding..." : "Add Project"}
-                </Button>
+                {editIndex !== null ? (
+                  <>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      className="text-xs gap-1.5 rounded-lg"
+                      onClick={handleCancelEdit}
+                      disabled={isSubmitting}
+                    >
+                      <StrokeDraw>
+                        <RiCloseLine className="size-4" />
+                      </StrokeDraw>
+                      Cancel Edit
+                    </Button>
+                    <Button
+                      type="submit"
+                      className="text-xs gap-1.5 rounded-lg"
+                      disabled={isSubmitting}
+                    >
+                      <StrokeDraw>
+                        <RiSaveLine className="size-4" />
+                      </StrokeDraw>
+                      {isSubmitting ? "Saving..." : "Save Changes"}
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      className="text-xs gap-1.5 rounded-lg"
+                      onClick={() => reset()}
+                      disabled={isSubmitting}
+                    >
+                      <StrokeDraw>
+                        <RiRefreshLine className="size-4" />
+                      </StrokeDraw>
+                      Reset Form
+                    </Button>
+                    <Button
+                      type="submit"
+                      className="text-xs gap-1.5 rounded-lg"
+                      disabled={isSubmitting}
+                    >
+                      <StrokeDraw>
+                        <RiSaveLine className="size-4" />
+                      </StrokeDraw>
+                      {isSubmitting ? "Adding..." : "Add Project"}
+                    </Button>
+                  </>
+                )}
               </div>
             </form>
           </CardContent>
         </Card>
 
-        {/* Right Column: Existing Projects List (md:h-full, scrollable only on desktop) */}
+        {/* Right Column: Existing Projects List (scrollable only on desktop) */}
         <Card className="border border-border/80 bg-card/50 backdrop-blur-xs rounded-xl overflow-hidden flex flex-col md:h-full">
           <CardHeader className="border-b border-border/40 bg-muted/10 shrink-0">
             <CardTitle className="text-base font-bold">Existing Projects</CardTitle>
@@ -236,18 +300,45 @@ export default function ProjectsManager({ initialProjects }: { initialProjects: 
                 <p className="text-sm text-muted-foreground text-center py-6">No projects currently featured.</p>
               ) : (
                 projects.map((p, idx) => (
-                  <div key={`${p.title}-${idx}`} className="flex items-center justify-between border border-border/80 bg-muted/10 p-3.5 rounded-lg gap-4">
+                  <div 
+                    key={`${p.title}-${idx}`} 
+                    className={`flex items-center justify-between border p-3.5 rounded-lg gap-4 transition-all duration-300 ${
+                      editIndex === idx 
+                        ? "border-primary/50 bg-primary/5 shadow-xs" 
+                        : "border-border/80 bg-muted/10"
+                    }`}
+                  >
                     <div className="min-w-0">
-                      <p className="text-sm font-bold truncate text-foreground">{p.title}</p>
+                      <p className="text-sm font-bold truncate text-foreground flex items-center gap-2">
+                        {p.title}
+                        {editIndex === idx && (
+                          <span className="text-[10px] font-normal px-2 py-0.5 rounded-full bg-primary/20 text-primary uppercase tracking-wider scale-90">
+                            Editing
+                          </span>
+                        )}
+                      </p>
                       <p className="text-xs text-muted-foreground truncate mt-1">{p.description}</p>
                     </div>
-                    <button
-                      onClick={() => handleDelete(idx)}
-                      className="p-1.5 hover:text-destructive transition-colors hover:bg-muted rounded-md shrink-0"
-                      title="Delete Project"
-                    >
-                      <RiDeleteBin6Line className="size-4" />
-                    </button>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <button
+                        onClick={() => handleEdit(idx)}
+                        className={`p-1.5 transition-colors rounded-md ${
+                          editIndex === idx 
+                            ? "text-primary bg-primary/10 hover:bg-primary/20" 
+                            : "text-muted-foreground hover:text-primary hover:bg-muted"
+                        }`}
+                        title="Edit Project"
+                      >
+                        <RiEdit2Line className="size-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(idx)}
+                        className="p-1.5 text-muted-foreground hover:text-destructive hover:bg-muted transition-colors rounded-md"
+                        title="Delete Project"
+                      >
+                        <RiDeleteBin6Line className="size-4" />
+                      </button>
+                    </div>
                   </div>
                 ))
               )}
