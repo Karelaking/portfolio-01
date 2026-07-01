@@ -1,0 +1,508 @@
+{
+  "hero": {
+    "greeting": "HELLO",
+    "name": "Alex Gonzalez",
+    "role": "Senior Software Engineer",
+    "subheading": "I design and build reliable, highly performant systems, custom automation tooling, and beautiful web interfaces.",
+    "resumeUrl": "https://alexgonzalez.dev/resume.pdf",
+    "githubUrl": "https://github.com/alexgonzalez"
+  },
+  "about": {
+    "journeyTitle": "Crafting elegant software architectures and intuitive interfaces",
+    "bioParagraph1": "I am a software engineer dedicated to building clean, maintainable, and highly performant digital systems. My passion lies in bridging the gap between intricate backend systems and beautiful frontend designs.",
+    "bioParagraph2": "Over the past seven years, I have collaborated with startups and established teams to design and implement scalable component libraries, automated CI/CD pipelines, and high-performance server architectures.",
+    "experienceYears": 7,
+    "skillsList": [
+      "TypeScript",
+      "Next.js",
+      "Go",
+      "Python",
+      "Rust",
+      "Tailwind CSS",
+      "PostgreSQL",
+      "Docker"
+    ]
+  },
+  "timelineJobs": [
+    {
+      "role": "Senior Software Engineer",
+      "company": "Stripe",
+      "period": "2024 - Present",
+      "location": "Berlin, Germany (Remote)",
+      "description": "Led the migration of billing pipelines to a serverless gRPC architecture, reducing batch transaction latency by 42%. Collaborated with design and product teams to launch new checkout portals using Next.js and Tailwind CSS.",
+      "tags": [
+        "Go",
+        "TypeScript",
+        "React",
+        "gRPC",
+        "PostgreSQL",
+        "AWS"
+      ],
+      "image": {
+        "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+        "width": 600,
+        "height": 450,
+        "alt": "Stripe billing analytics dashboard interface"
+      }
+    },
+    {
+      "role": "Full Stack Developer",
+      "company": "Linear",
+      "period": "2022 - 2024",
+      "location": "Berlin, Germany (Hybrid)",
+      "description": "Designed and implemented real-time offline sync protocols for high-speed client interfaces. Built highly reusable components for the internal design system, focusing on keyboard navigation and accessibility standards (WCAG).",
+      "tags": [
+        "React",
+        "TypeScript",
+        "Node.js",
+        "GraphQL",
+        "WebSockets",
+        "CSS Modules"
+      ],
+      "image": {
+        "url": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80",
+        "width": 600,
+        "height": 450,
+        "alt": "Developer workspace showing code editor and Linear configurations"
+      }
+    },
+    {
+      "role": "Frontend Engineer",
+      "company": "Vercel",
+      "period": "2020 - 2022",
+      "location": "Remote",
+      "description": "Contributed to Next.js core features, focusing on image optimization and middleware rendering paths. Supported enterprise clients in optimizing codebases to achieve perfect Lighthouse Core Web Vital scores.",
+      "tags": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "Webpack",
+        "Edge Functions"
+      ],
+      "image": {
+        "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+        "width": 600,
+        "height": 450,
+        "alt": "Rendering performance chart analytics and Lighthouse checks"
+      }
+    }
+  ],
+  "projects": [
+    {
+      "title": "Next.js Production Boilerplate",
+      "description": "A complete Next.js starter kit with built-in authentication, database integration (PostgreSQL via Supabase), email workflows, and pre-configured CI/CD deployment scripts.",
+      "tag": "Fullstack",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Supabase",
+        "GitHub Actions"
+      ],
+      "github": "https://github.com",
+      "demo": "https://nextjs.org",
+      "image": {
+        "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+        "width": 600,
+        "height": 450,
+        "alt": "Next.js dashboard web application interface"
+      }
+    },
+    {
+      "title": "Rust Dev-Proxy CLI",
+      "description": "A blazing fast Rust-based command-line tool designed to configure local proxy setups and port routing automatically, accelerating environment setups for microservice architectures.",
+      "tag": "CLI Tool",
+      "tags": [
+        "Rust",
+        "CLI",
+        "Docker",
+        "Networking"
+      ],
+      "github": "https://github.com",
+      "demo": null,
+      "image": {
+        "url": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80",
+        "width": 600,
+        "height": 450,
+        "alt": "Developer workspace showing code IDE and CLI outputs"
+      }
+    },
+    {
+      "title": "Go API Gateway",
+      "description": "A lightweight, high-performance API gateway built in Go, featuring automated rate-limiting, JWT authentication validation, CORS management, and Prometheus metrics tracking.",
+      "tag": "Backend",
+      "tags": [
+        "Go",
+        "Redis",
+        "Prometheus",
+        "Docker",
+        "gRPC"
+      ],
+      "github": "https://github.com",
+      "demo": "https://go.dev",
+      "image": {
+        "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+        "width": 600,
+        "height": 450,
+        "alt": "Go API gateway server analytics logs"
+      }
+    },
+    {
+      "title": "Figma-to-Tailwind Design Engine",
+      "description": "A Node.js build-pipeline package that automatically generates Tailwind CSS design tokens and variables directly from Figma design API specs, keeping code and designs in sync.",
+      "tag": "Tooling",
+      "tags": [
+        "Node.js",
+        "TypeScript",
+        "Figma API",
+        "Tailwind CSS"
+      ],
+      "github": "https://github.com",
+      "demo": "https://npmjs.com",
+      "image": {
+        "url": "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=800&q=80",
+        "width": 600,
+        "height": 450,
+        "alt": "Figma design canvas converting to code"
+      }
+    }
+  ],
+  "galleryTiles": [
+    {
+      "id": 2,
+      "label": "City skyline",
+      "location": "Chicago, IL",
+      "contributor": {
+        "name": "Leo Farris",
+        "initials": "LF",
+        "avatar": "https://i.pravatar.cc/40?img=2"
+      },
+      "tag": "Urban",
+      "featured": false,
+      "src": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&crop=entropy",
+      "full": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80"
+    },
+    {
+      "id": 3,
+      "label": "Forest trail",
+      "location": "Olympic NP, WA",
+      "contributor": {
+        "name": "Sara Kim",
+        "initials": "SK",
+        "avatar": "https://i.pravatar.cc/40?img=5"
+      },
+      "tag": "Nature",
+      "featured": false,
+      "src": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80&crop=entropy",
+      "full": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=1200&q=80"
+    },
+    {
+      "id": 4,
+      "label": "Ocean waves",
+      "location": "Big Sur, CA",
+      "contributor": {
+        "name": "Dante Ruiz",
+        "initials": "DR",
+        "avatar": "https://i.pravatar.cc/40?img=7"
+      },
+      "tag": "Coastal",
+      "featured": true,
+      "src": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80&crop=edges",
+      "full": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80"
+    },
+    {
+      "id": 5,
+      "label": "Desert dunes",
+      "location": "Sahara, Morocco",
+      "contributor": {
+        "name": "Nadia Voss",
+        "initials": "NV",
+        "avatar": "https://i.pravatar.cc/40?img=9"
+      },
+      "tag": "Landscape",
+      "featured": false,
+      "src": "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80&crop=entropy",
+      "full": "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1200&q=80"
+    },
+    {
+      "id": 6,
+      "label": "Snowy peaks",
+      "location": "Lauterbrunnen, CH",
+      "contributor": {
+        "name": "Jin Park",
+        "initials": "JP",
+        "avatar": "https://i.pravatar.cc/40?img=11"
+      },
+      "tag": "Alpine",
+      "featured": false,
+      "src": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80&crop=edges",
+      "full": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
+    },
+    {
+      "id": 7,
+      "label": "Autumn leaves",
+      "location": "Vermont, USA",
+      "contributor": {
+        "name": "Fiona Blake",
+        "initials": "FB",
+        "avatar": "https://i.pravatar.cc/40?img=13"
+      },
+      "tag": "Seasonal",
+      "featured": false,
+      "src": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80&crop=entropy",
+      "full": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&q=80"
+    },
+    {
+      "id": 8,
+      "label": "Wildflower field",
+      "location": "Tuscany, Italy",
+      "contributor": {
+        "name": "Arjun Mehta",
+        "initials": "AM",
+        "avatar": "https://i.pravatar.cc/40?img=15"
+      },
+      "tag": "Nature",
+      "featured": true,
+      "src": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80&crop=edges",
+      "full": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=80"
+    },
+    {
+      "id": 9,
+      "label": "Coastal cliffs",
+      "location": "Moher, Ireland",
+      "contributor": {
+        "name": "Cleo Torres",
+        "initials": "CT",
+        "avatar": "https://i.pravatar.cc/40?img=17"
+      },
+      "tag": "Coastal",
+      "featured": false,
+      "src": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&crop=edges",
+      "full": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80&crop=edges"
+    },
+    {
+      "id": 10,
+      "label": "River valley",
+      "location": "Columbia Gorge, OR",
+      "contributor": {
+        "name": "Eli Grant",
+        "initials": "EG",
+        "avatar": "https://i.pravatar.cc/40?img=19"
+      },
+      "tag": "Landscape",
+      "featured": false,
+      "src": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&crop=edges",
+      "full": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80&crop=edges"
+    },
+    {
+      "id": 11,
+      "label": "Jungle canopy",
+      "location": "Amazon Basin, BR",
+      "contributor": {
+        "name": "Amara Diop",
+        "initials": "AD",
+        "avatar": "https://i.pravatar.cc/40?img=21"
+      },
+      "tag": "Nature",
+      "featured": false,
+      "src": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80&crop=edges",
+      "full": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=1200&q=80&crop=edges"
+    },
+    {
+      "id": 12,
+      "label": "Lakeside dawn",
+      "location": "Lake Bled, SI",
+      "contributor": {
+        "name": "Theo Hartmann",
+        "initials": "TH",
+        "avatar": "https://i.pravatar.cc/40?img=23"
+      },
+      "tag": "Landscape",
+      "featured": false,
+      "src": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80&crop=entropy",
+      "full": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80&crop=entropy"
+    }
+  ],
+  "blogFeatured": {
+    "category": "Engineering",
+    "title": "How I cut API latency by 60% with edge caching",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+    "excerpt": "Our monolith was fast enough, until it wasn't. We traced the bottleneck to cold database reads on every request and rearchitected the caching layer in three weeks.",
+    "author": {
+      "name": "Alex Gonzalez",
+      "initials": "AG",
+      "img": 47
+    },
+    "date": "Jun 9, 2026",
+    "readTime": "7 Min Read"
+  },
+  "blogPosts": [
+    {
+      "category": "Design",
+      "title": "Building a token system that survives a rebrand",
+      "image": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
+      "excerpt": "Semantic tokens feel abstract until your brand color changes overnight.",
+      "author": {
+        "name": "Alex Gonzalez",
+        "initials": "AG",
+        "img": 12
+      },
+      "date": "May 28, 2026",
+      "readTime": "5 Min Read"
+    },
+    {
+      "category": "Product",
+      "title": "What 1,200 user interviews taught us about onboarding",
+      "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
+      "excerpt": "Drop-off at step two had nothing to do with the UI, it was a mental model gap.",
+      "author": {
+        "name": "Alex Gonzalez",
+        "initials": "AG",
+        "img": 45
+      },
+      "date": "May 14, 2026",
+      "readTime": "9 Min Read"
+    },
+    {
+      "category": "Engineering",
+      "title": "Shipping a type-safe API layer without a build step",
+      "image": "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80",
+      "excerpt": "We replaced our codegen pipeline with inferred types and never looked back.",
+      "author": {
+        "name": "Alex Gonzalez",
+        "initials": "AG",
+        "img": 13
+      },
+      "date": "May 2, 2026",
+      "readTime": "6 Min Read"
+    },
+    {
+      "category": "Methodology",
+      "title": "Why I focus on remote-first engineering workflows",
+      "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+      "excerpt": "Three years of hybrid work taught me where collaboration actually happens in distributed projects.",
+      "author": {
+        "name": "Alex Gonzalez",
+        "initials": "AG",
+        "img": 44
+      },
+      "date": "Apr 19, 2026",
+      "readTime": "4 Min Read"
+    },
+    {
+      "category": "Design",
+      "title": "A practical guide to accessible color contrast",
+      "image": "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80",
+      "excerpt": "Pass WCAG without sacrificing the palette your brand team fought for.",
+      "author": {
+        "name": "Alex Gonzalez",
+        "initials": "AG",
+        "img": 15
+      },
+      "date": "Apr 5, 2026",
+      "readTime": "8 Min Read"
+    },
+    {
+      "category": "Product",
+      "title": "Pricing experiments that doubled our trial conversion",
+      "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
+      "excerpt": "Small framing changes on the pricing page moved the needle more than discounts.",
+      "author": {
+        "name": "Alex Gonzalez",
+        "initials": "AG",
+        "img": 41
+      },
+      "date": "Mar 22, 2026",
+      "readTime": "5 Min Read"
+    }
+  ],
+  "expertiseColumns": [
+    {
+      "status": "System Architecture",
+      "icon": "RiCpuLine",
+      "items": [
+        {
+          "title": "Microservices & Serverless",
+          "description": "Designing decoupled, highly available systems utilizing edge computing and serverless architectures.",
+          "tag": "Scalability",
+          "progress": 95,
+          "techIcon": "RiServerLine"
+        },
+        {
+          "title": "Database Design",
+          "description": "Architecting normalized relational databases and NoSQL structures optimized for read/write performance.",
+          "tag": "Data Modeling",
+          "progress": 90,
+          "techIcon": "RiDatabase2Line"
+        },
+        {
+          "title": "API Design & GraphQL",
+          "description": "Building robust, versioned REST APIs and flexible GraphQL endpoints with strict type-safety.",
+          "tag": "Interfaces",
+          "progress": 85,
+          "techIcon": "RiExchangeBoxLine"
+        }
+      ]
+    },
+    {
+      "status": "UI/UX & Design Systems",
+      "icon": "RiLayout3Line",
+      "items": [
+        {
+          "title": "Component Libraries",
+          "description": "Crafting highly reusable, accessible (WCAG compliant) component libraries from scratch using Radix and Tailwind.",
+          "tag": "Design Systems",
+          "progress": 95,
+          "techIcon": "RiLayoutMasonryLine"
+        },
+        {
+          "title": "Micro-Interactions",
+          "description": "Implementing fluid, physics-based animations with Framer Motion to elevate user experience.",
+          "tag": "Motion Design",
+          "progress": 90,
+          "techIcon": "RiMagicLine"
+        },
+        {
+          "title": "Responsive Layouts",
+          "description": "Building complex, adaptive layouts that provide seamless experiences across all device form factors.",
+          "tag": "Responsive UI",
+          "progress": 95,
+          "techIcon": "RiSmartphoneLine"
+        }
+      ]
+    },
+    {
+      "status": "Performance & Security",
+      "icon": "RiRocketLine",
+      "items": [
+        {
+          "title": "Core Web Vitals",
+          "description": "Optimizing LCP, CLS, and INP metrics to achieve perfect Lighthouse scores and improve SEO.",
+          "tag": "Optimization",
+          "progress": 90,
+          "techIcon": "RiRocketLine"
+        },
+        {
+          "title": "Caching Strategies",
+          "description": "Implementing advanced edge caching, stale-while-revalidate, and optimized CDN delivery.",
+          "tag": "Networking",
+          "progress": 85,
+          "techIcon": "RiHardDrive2Line"
+        },
+        {
+          "title": "Web Security",
+          "description": "Securing applications against XSS, CSRF, and implementing robust OAuth/SAML authentication flows.",
+          "tag": "Security",
+          "progress": 90,
+          "techIcon": "RiShieldKeyholeLine"
+        }
+      ]
+    }
+  ],
+  "contact": {
+    "location": "Berlin, Germany",
+    "remoteInfo": "Available worldwide (UTC+1 / UTC+2 timezone alignment)",
+    "email": "alex@gonzalez.dev"
+  }
+}

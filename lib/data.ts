@@ -649,57 +649,236 @@ export const expertiseColumns: SkillColumn[] = [
 // Helper to simulate DB delay
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
+async function readDb() {
+  if (typeof window !== "undefined") {
+    return {
+      hero: {
+        greeting: "HELLO",
+        name: "Alex Gonzalez",
+        role: "FULL-STACK DEVELOPER & SOFTWARE ENGINEER",
+        subheading: "Specialized in crafting premium web applications, custom interactive UI animations, and scalable backend architectures. I translate complex logic into clean, performant, and stunning user experiences.",
+        resumeUrl: "/resume.pdf",
+        githubUrl: "https://github.com/alexgonzalez",
+      },
+      about: {
+        journeyTitle: "Crafting elegant software architectures and intuitive interfaces",
+        bioParagraph1: "I am a software engineer dedicated to building clean, maintainable, and highly performant digital systems. My passion lies in bridging the gap between intricate backend systems and beautiful frontend designs.",
+        bioParagraph2: "Over the past seven years, I have collaborated with startups and established teams to design and implement scalable component libraries, automated CI/CD pipelines, and high-performance server architectures.",
+        experienceYears: 7,
+        skillsList: ["TypeScript", "Next.js", "Go", "Python", "Rust", "Tailwind CSS", "PostgreSQL", "Docker"],
+      },
+      timelineJobs,
+      projects,
+      galleryTiles,
+      blogFeatured,
+      blogPosts,
+      expertiseColumns,
+      contact: {
+        location: "Berlin, Germany",
+        remoteInfo: "Available worldwide (UTC+1 / UTC+2 timezone alignment)",
+        email: "alex@gonzalez.dev",
+      }
+    };
+  }
+
+  const fs = await import("fs/promises");
+  const path = await import("path");
+  const DB_PATH = path.join(process.cwd(), "lib", "db.json");
+
+  try {
+    const file = await fs.readFile(DB_PATH, "utf-8");
+    return JSON.parse(file);
+  } catch (error) {
+    const defaultDb = {
+      hero: {
+        greeting: "HELLO",
+        name: "Alex Gonzalez",
+        role: "FULL-STACK DEVELOPER & SOFTWARE ENGINEER",
+        subheading: "Specialized in crafting premium web applications, custom interactive UI animations, and scalable backend architectures. I translate complex logic into clean, performant, and stunning user experiences.",
+        resumeUrl: "/resume.pdf",
+        githubUrl: "https://github.com/alexgonzalez",
+      },
+      about: {
+        journeyTitle: "Crafting elegant software architectures and intuitive interfaces",
+        bioParagraph1: "I am a software engineer dedicated to building clean, maintainable, and highly performant digital systems. My passion lies in bridging the gap between intricate backend systems and beautiful frontend designs.",
+        bioParagraph2: "Over the past seven years, I have collaborated with startups and established teams to design and implement scalable component libraries, automated CI/CD pipelines, and high-performance server architectures.",
+        experienceYears: 7,
+        skillsList: ["TypeScript", "Next.js", "Go", "Python", "Rust", "Tailwind CSS", "PostgreSQL", "Docker"],
+      },
+      timelineJobs,
+      projects,
+      galleryTiles,
+      blogFeatured,
+      blogPosts,
+      expertiseColumns,
+      contact: {
+        location: "Berlin, Germany",
+        remoteInfo: "Available worldwide (UTC+1 / UTC+2 timezone alignment)",
+        email: "alex@gonzalez.dev",
+      }
+    };
+    try {
+      await fs.mkdir(path.dirname(DB_PATH), { recursive: true });
+      await fs.writeFile(DB_PATH, JSON.stringify(defaultDb, null, 2), "utf-8");
+    } catch (e) {
+      console.error("Failed to write default db.json:", e);
+    }
+    return defaultDb;
+  }
+}
+
+async function writeDb(data: any) {
+  if (typeof window !== "undefined") return;
+  const fs = await import("fs/promises");
+  const path = await import("path");
+  const DB_PATH = path.join(process.cwd(), "lib", "db.json");
+  try {
+    await fs.mkdir(path.dirname(DB_PATH), { recursive: true });
+    await fs.writeFile(DB_PATH, JSON.stringify(data, null, 2), "utf-8");
+  } catch (e) {
+    console.error("Failed to write to db.json:", e);
+  }
+}
+
 export async function getLogos() {
-  await delay(10);
+  await delay(5);
   return logos;
 }
 
 export async function getFaqs() {
-  await delay(10);
+  await delay(5);
   return faqs;
 }
 
 export async function getMembers() {
-  await delay(10);
+  await delay(5);
   return members;
 }
 
+const defaultHero = {
+  greeting: "HELLO",
+  name: "Alex Gonzalez",
+  role: "FULL-STACK DEVELOPER & SOFTWARE ENGINEER",
+  subheading: "Specialized in crafting premium web applications, custom interactive UI animations, and scalable backend architectures. I translate complex logic into clean, performant, and stunning user experiences.",
+  resumeUrl: "/resume.pdf",
+  githubUrl: "https://github.com/alexgonzalez",
+};
+
+const defaultAbout = {
+  journeyTitle: "Crafting elegant software architectures and intuitive interfaces",
+  bioParagraph1: "I am a software engineer dedicated to building clean, maintainable, and highly performant digital systems. My passion lies in bridging the gap between intricate backend systems and beautiful frontend designs.",
+  bioParagraph2: "Over the past seven years, I have collaborated with startups and established teams to design and implement scalable component libraries, automated CI/CD pipelines, and high-performance server architectures.",
+  experienceYears: 7,
+  skillsList: ["TypeScript", "Next.js", "Go", "Python", "Rust", "Tailwind CSS", "PostgreSQL", "Docker"],
+};
+
+const defaultContact = {
+  location: "Berlin, Germany",
+  remoteInfo: "Available worldwide (UTC+1 / UTC+2 timezone alignment)",
+  email: "alex@gonzalez.dev",
+};
+
+export async function getHeroData() {
+  const db = await readDb();
+  return db.hero || defaultHero;
+}
+
+export async function saveHeroData(data: any) {
+  const db = await readDb();
+  db.hero = data;
+  await writeDb(db);
+}
+
+export async function getAboutData() {
+  const db = await readDb();
+  return db.about || defaultAbout;
+}
+
+export async function saveAboutData(data: any) {
+  const db = await readDb();
+  db.about = data;
+  await writeDb(db);
+}
+
 export async function getTimelineJobs() {
-  await delay(10);
-  return timelineJobs;
+  const db = await readDb();
+  return db.timelineJobs || timelineJobs;
+}
+
+export async function saveTimelineJobs(jobs: any[]) {
+  const db = await readDb();
+  db.timelineJobs = jobs;
+  await writeDb(db);
 }
 
 export async function getProjects() {
-  await delay(10);
-  return projects;
+  const db = await readDb();
+  return db.projects || projects;
+}
+
+export async function saveProjects(projects: any[]) {
+  const db = await readDb();
+  db.projects = projects;
+  await writeDb(db);
 }
 
 export async function getGalleryTiles() {
-  await delay(10);
-  return galleryTiles;
+  const db = await readDb();
+  return db.galleryTiles || galleryTiles;
+}
+
+export async function saveGalleryTiles(tiles: any[]) {
+  const db = await readDb();
+  db.galleryTiles = tiles;
+  await writeDb(db);
 }
 
 export async function getBlogFeatured() {
-  await delay(10);
-  return blogFeatured;
+  const db = await readDb();
+  return db.blogFeatured || blogFeatured;
 }
 
 export async function getBlogCategories() {
-  await delay(10);
-  return blogCategories;
+  const db = await readDb();
+  return db.blogCategories || blogCategories;
 }
 
 export async function getBlogPosts() {
-  await delay(10);
-  return blogPosts;
+  const db = await readDb();
+  return db.blogPosts || blogPosts;
+}
+
+export async function saveBlogPosts(posts: any[]) {
+  const db = await readDb();
+  db.blogPosts = posts;
+  await writeDb(db);
 }
 
 export async function getRoadmapColumns() {
-  await delay(10);
-  return roadmapColumns;
+  const db = await readDb();
+  return db.roadmapColumns || roadmapColumns;
 }
 
 export async function getExpertiseColumns() {
-  await delay(10);
-  return expertiseColumns;
+  const db = await readDb();
+  return db.expertiseColumns || expertiseColumns;
 }
+
+export async function saveExpertiseColumns(columns: any[]) {
+  const db = await readDb();
+  db.expertiseColumns = columns;
+  await writeDb(db);
+}
+
+export async function getContactData() {
+  const db = await readDb();
+  return db.contact || defaultContact;
+}
+
+export async function saveContactData(data: any) {
+  const db = await readDb();
+  db.contact = data;
+  await writeDb(db);
+}
+
+

@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 const ALL_TAG = "All";
 
 export default async function GalleryBlock() {
-  const tiles = await getGalleryTiles();
-  const tags = [ALL_TAG, ...Array.from(new Set(tiles.map((t) => t.tag)))];
+  const tiles = (await getGalleryTiles()) as any[];
+  const tags = [ALL_TAG, ...Array.from(new Set(tiles.map((t: any) => t.tag)))] as string[];
 
   return (
     <section className="flex min-h-svh w-full items-center justify-center bg-background py-20 text-foreground">

@@ -5,6 +5,7 @@ import TeamSection from "@/components/sections/team";
 import CtaSection from "@/components/sections/cta";
 import FaqSection from "@/components/sections/faq";
 import { Metadata } from "next";
+import { getHeroData } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -18,11 +19,13 @@ export const metadata: Metadata = {
 
 import { JsonLd, getPersonSchema } from "@/components/json-ld";
 
-export default function Home() {
+export default async function Home() {
+  const heroData = await getHeroData();
+
   return (
     <div className="flex min-h-screen h-full flex-col items-center justify-center">
       <JsonLd schema={getPersonSchema()} />
-      <HeroSection />
+      <HeroSection {...heroData} />
       <TechStackSection />
       <ServicesSection />
       <TeamSection />
@@ -31,3 +34,4 @@ export default function Home() {
     </div>
   );
 }
+

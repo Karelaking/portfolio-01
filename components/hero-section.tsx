@@ -146,7 +146,36 @@ const HeroPortrait = memo(function HeroPortrait() {
   );
 });
 
-export function HeroSection() {
+export function HeroSection({
+  greeting,
+  name,
+  role,
+  subheading,
+  resumeUrl,
+  githubUrl,
+}: {
+  greeting?: string;
+  name?: string;
+  role?: string;
+  subheading?: string;
+  resumeUrl?: string;
+  githubUrl?: string;
+} = {}) {
+  // Split custom greeting if it contains commas, otherwise replace "HELLO" in the GREETINGS cycle with the custom word to preserve the animation.
+  let activeGreetings = GREETINGS;
+  if (greeting) {
+    if (greeting.includes(",")) {
+      activeGreetings = greeting.split(",").map((g) => g.trim().toUpperCase()).filter(Boolean);
+    } else {
+      activeGreetings = GREETINGS.map((g) => g === "HELLO" ? greeting.toUpperCase() : g);
+    }
+  }
+  const displayName = name ? `I'M ${name.toUpperCase()}` : "I'M ALEX GONZALEZ";
+  const displayRole = role ? role.toUpperCase() : "FULL-STACK DEVELOPER & SOFTWARE ENGINEER";
+  const displaySubheading = subheading || "Specialized in crafting premium web applications, custom interactive UI animations, and scalable backend architectures. I translate complex logic into clean, performant, and stunning user experiences.";
+  const displayResumeUrl = resumeUrl || "/resume.pdf";
+
+
   return (
     <section className="relative w-full min-h-[80vh] lg:min-h-[85vh] flex items-center justify-center overflow-hidden py-8 sm:py-12 lg:py-20">
       {/* Background Gradients & Effects */}
@@ -188,7 +217,7 @@ export function HeroSection() {
           <div className="w-full flex flex-col space-y-1">
             <div className="h-17.5 sm:h-20 lg:h-25 flex items-center overflow-hidden">
               <ZoomHollowText
-                words={GREETINGS}
+                words={activeGreetings}
                 className="text-5xl sm:text-6xl lg:text-7xl font-black sm:tracking-tight text-primary uppercase"
                 strokeWidth={1.5}
                 interval={2000}
@@ -201,7 +230,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
               className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-tight"
             >
-              I&apos;M ALEX GONZALEZ
+              {displayName}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -209,7 +238,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.25, ease: "easeOut" }}
               className="text-xs sm:text-base lg:text-lg font-medium text-primary tracking-wide font-mono mt-1"
             >
-              FULL-STACK DEVELOPER &amp; SOFTWARE ENGINEER
+              {displayRole}
             </motion.p>
           </div>
 
@@ -220,9 +249,7 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.35, ease: "easeOut" }}
             className="text-sm sm:text-base lg:text-lg leading-relaxed text-muted-foreground max-w-xl"
           >
-            Specialized in crafting premium web applications, custom interactive
-            UI animations, and scalable backend architectures. I translate
-            complex logic into clean, performant, and stunning user experiences.
+            {displaySubheading}
           </motion.p>
 
           {/* Action Buttons with Micro-animations */}
@@ -245,7 +272,7 @@ export function HeroSection() {
               variant="outline"
               nativeButton={false}
               className="group h-11 sm:h-12 px-5 sm:px-6 text-sm font-semibold border-border bg-background hover:bg-muted/10 rounded-none relative overflow-hidden transition-all duration-300 gap-2"
-              render={<a href="/resume.pdf" download />}
+              render={<a href={displayResumeUrl} download />}
             >
               <StrokeDraw>
                 <RiDownloadLine className="size-4 sm:size-4" />
@@ -261,3 +288,4 @@ export function HeroSection() {
     </section>
   );
 }
+

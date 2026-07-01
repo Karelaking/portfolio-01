@@ -15,7 +15,7 @@ import {
   RiSparkling2Line,
 } from "@remixicon/react";
 
-const tags = ["TypeScript", "Next.js", "Go", "Python", "Rust", "Tailwind CSS", "PostgreSQL", "Docker"];
+const defaultTags = ["TypeScript", "Next.js", "Go", "Python", "Rust", "Tailwind CSS", "PostgreSQL", "Docker"];
 
 // Framer motion animation variants
 const fadeInUp = {
@@ -37,7 +37,19 @@ const staggerContainer = {
   },
 };
 
-export default function AboutContent() {
+export default function AboutContent({
+  journeyTitle,
+  bioParagraph1,
+  bioParagraph2,
+  experienceYears,
+  skillsList,
+}: {
+  journeyTitle?: string;
+  bioParagraph1?: string;
+  bioParagraph2?: string;
+  experienceYears?: number;
+  skillsList?: string[];
+} = {}) {
   const [terminalText, setTerminalText] = useState("");
   const terminalCommand = "alex-cli deploy --prod";
 
@@ -98,16 +110,14 @@ export default function AboutContent() {
             My Journey
           </Badge>
           <h1 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
-            Crafting elegant software architectures and intuitive interfaces
+            {journeyTitle || "Crafting elegant software architectures and intuitive interfaces"}
           </h1>
           <div className="mt-5 flex flex-col gap-4 text-[15px]/relaxed text-muted-foreground">
             <p>
-              I am a software engineer dedicated to building clean, maintainable, and highly performant digital systems. 
-              My passion lies in bridging the gap between intricate backend systems and beautiful frontend designs.
+              {bioParagraph1 || "I am a software engineer dedicated to building clean, maintainable, and highly performant digital systems. My passion lies in bridging the gap between intricate backend systems and beautiful frontend designs."}
             </p>
             <p>
-              Over the past seven years, I have collaborated with startups and established teams to design and implement 
-              scalable component libraries, automated CI/CD pipelines, and high-performance server architectures.
+              {bioParagraph2 || "Over the past seven years, I have collaborated with startups and established teams to design and implement scalable component libraries, automated CI/CD pipelines, and high-performance server architectures."}
             </p>
           </div>
         </motion.div>
@@ -202,7 +212,7 @@ export default function AboutContent() {
             </span>
             <div>
               <p className="text-4xl font-bold tracking-tight sm:text-5xl tabular-nums text-primary">
-                7+ Years
+                {experienceYears !== undefined ? `${experienceYears}+ Years` : "7+ Years"}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
                 Professional software engineering experience
@@ -251,7 +261,7 @@ export default function AboutContent() {
               </p>
             </div>
             <div className="flex flex-wrap gap-2 z-10">
-              {tags.map((tag) => (
+              {(skillsList || defaultTags).map((tag) => (
                 <span
                   key={tag}
                   className="border border-border/80 bg-muted/40 px-2.5 py-1 font-mono text-xs font-semibold text-muted-foreground rounded-full hover:border-primary/45 hover:text-primary transition-all duration-300"

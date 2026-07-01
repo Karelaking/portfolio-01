@@ -16,9 +16,16 @@ import {
   RiTeamLine,
   RiUser3Line,
   RiUserAddLine,
+  RiHome3Line,
+  RiBriefcaseLine,
+  RiCpuLine,
+  RiImageLine,
+  RiArticleLine,
+  RiMailLine,
 } from "@remixicon/react";
 import { toast } from "sonner";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { StrokeDraw } from "@/components/stroke-draw";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -80,10 +87,14 @@ import { Toaster } from "@/components/ui/sonner";
 
 const navItems = [
   { label: "Overview", icon: RiLayoutGridLine },
-  { label: "Analytics", icon: RiBarChartBoxLine },
+  { label: "Hero", icon: RiHome3Line },
+  { label: "About", icon: RiUser3Line },
   { label: "Projects", icon: RiFolder3Line },
-  { label: "Team", icon: RiTeamLine },
-  { label: "Settings", icon: RiSettings3Line },
+  { label: "Experience", icon: RiBriefcaseLine },
+  { label: "Expertise", icon: RiCpuLine },
+  { label: "Gallery", icon: RiImageLine },
+  { label: "Blogs", icon: RiArticleLine },
+  { label: "Contacts", icon: RiMailLine },
 ];
 
 const stats = [
@@ -182,7 +193,29 @@ const commands = [
   { label: "Open settings", icon: RiSettings3Line, shortcut: ["⌘", ","] },
 ];
 
-export default function AppShellBlock({children}: {children: React.ReactNode}): React.ReactNode {
+export default function AppShellBlock({
+  children,
+  overview,
+  home,
+  about,
+  blogs,
+  contact,
+  experience,
+  expertise,
+  gallery,
+  projects,
+}: {
+  children: React.ReactNode;
+  overview: React.ReactNode;
+  home: React.ReactNode;
+  about: React.ReactNode;
+  blogs: React.ReactNode;
+  contact: React.ReactNode;
+  experience: React.ReactNode;
+  expertise: React.ReactNode;
+  gallery: React.ReactNode;
+  projects: React.ReactNode;
+}): React.ReactNode {
   const [activeNav, setActiveNav] = React.useState("Overview");
   const [commandOpen, setCommandOpen] = React.useState(false);
   const [notes, setNotes] = React.useState(notifications);
@@ -227,13 +260,15 @@ export default function AppShellBlock({children}: {children: React.ReactNode}): 
           <SidebarGroup>
             <SidebarMenu>
               {navItems.map((item) => (
-                <SidebarMenuItem key={item.label}>
+                <SidebarMenuItem key={`nav-${item.label}`}>
                   <SidebarMenuButton
                     isActive={activeNav === item.label}
                     tooltip={item.label}
                     onClick={() => setActiveNav(item.label)}
                   >
-                    <item.icon />
+                    <StrokeDraw>
+                      <item.icon />
+                    </StrokeDraw>
                     <span>{item.label}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -324,7 +359,7 @@ export default function AppShellBlock({children}: {children: React.ReactNode}): 
                 <div className="flex flex-1 flex-col overflow-y-auto">
                   {notes.map((note) => (
                     <button
-                      key={note.id}
+                      key={`note-${note.id}`}
                       type="button"
                       onClick={() =>
                         setNotes((prev) =>
@@ -415,7 +450,18 @@ export default function AppShellBlock({children}: {children: React.ReactNode}): 
           </div>
         </header>
 
-        <main className="w-full h-full grid">{children}</main>
+        <main className="w-full h-full p-6 lg:p-8 overflow-y-auto">
+          {activeNav === "Overview" && overview}
+          {activeNav === "Hero" && home}
+          {activeNav === "About" && about}
+          {activeNav === "Projects" && projects}
+          {activeNav === "Experience" && experience}
+          {activeNav === "Expertise" && expertise}
+          {activeNav === "Gallery" && gallery}
+          {activeNav === "Blogs" && blogs}
+          {activeNav === "Contacts" && contact}
+          {!["Overview", "Hero", "About", "Projects", "Experience", "Expertise", "Gallery", "Blogs", "Contacts"].includes(activeNav) && children}
+        </main>
       </SidebarInset>
 
       <CommandDialog open={commandOpen} onOpenChange={setCommandOpen}>
@@ -426,7 +472,7 @@ export default function AppShellBlock({children}: {children: React.ReactNode}): 
             <CommandGroup heading="Recent">
               {recentItems.map((item) => (
                 <CommandItem
-                  key={item.label}
+                  key={`recent-${item.label}`}
                   value={item.label}
                   onSelect={() => {
                     setCommandOpen(false);
@@ -442,7 +488,7 @@ export default function AppShellBlock({children}: {children: React.ReactNode}): 
             <CommandGroup heading="Commands">
               {commands.map((command) => (
                 <CommandItem
-                  key={command.label}
+                  key={`cmd-${command.label}`}
                   value={command.label}
                   onSelect={() => {
                     setCommandOpen(false);
@@ -453,8 +499,8 @@ export default function AppShellBlock({children}: {children: React.ReactNode}): 
                   <span>{command.label}</span>
                   <CommandShortcut>
                     <KbdGroup>
-                      {command.shortcut.map((key) => (
-                        <Kbd key={key}>{key}</Kbd>
+                      {command.shortcut.map((keyVal, idx) => (
+                        <Kbd key={`kbd-${command.label}-${keyVal}-${idx}`}>{keyVal}</Kbd>
                       ))}
                     </KbdGroup>
                   </CommandShortcut>

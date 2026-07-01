@@ -8,13 +8,16 @@ import {
 import { Toaster } from "@/components/ui/sonner";
 import ContactForm from "@/components/contact-form";
 import { Metadata } from "next";
+import { getContactData } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Contact",
   description: "Get in touch with Alex Gonzalez to discuss collaboration opportunities, software engineering projects, or job openings.",
 };
 
-const Page = (): React.ReactNode => {
+const Page = async (): Promise<React.ReactNode> => {
+  const contactData = await getContactData();
+
   return (
     <section className="flex min-h-svh w-full items-center justify-center bg-muted/30 py-12 sm:py-16 text-foreground">
       <Toaster />
@@ -79,7 +82,7 @@ const Page = (): React.ReactNode => {
                   <div className="min-w-0">
                     <p className="text-sm font-medium">Location</p>
                     <p className="mt-0.5 text-xs text-muted-foreground">
-                      Berlin, Germany
+                      {contactData.location}
                     </p>
                   </div>
                 </CardContent>
@@ -96,7 +99,7 @@ const Page = (): React.ReactNode => {
                   <div className="min-w-0">
                     <p className="text-sm font-medium">Remote Work</p>
                     <p className="mt-0.5 text-xs text-muted-foreground">
-                      Available worldwide (UTC+1 / UTC+2 timezone alignment)
+                      {contactData.remoteInfo}
                     </p>
                   </div>
                 </CardContent>
@@ -113,7 +116,7 @@ const Page = (): React.ReactNode => {
                   <div className="min-w-0">
                     <p className="text-sm font-medium">Primary Contact</p>
                     <p className="mt-0.5 text-xs text-muted-foreground">
-                      alex@gonzalez.dev
+                      {contactData.email}
                     </p>
                   </div>
                 </CardContent>
