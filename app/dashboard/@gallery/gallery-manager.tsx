@@ -1,15 +1,14 @@
 "use client";
 "use no memo";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { StrokeDraw } from "@/components/stroke-draw";
-import { RiSaveLine, RiRefreshLine, RiAddLine, RiEdit2Line, RiDeleteBin6Line, RiCloseLine } from "@remixicon/react";
-import GalleryList from "@/components/gallery-list";
+import { RiSaveLine, RiRefreshLine, RiDeleteBin6Line, RiEdit2Line, RiCloseLine } from "@remixicon/react";
 import { useRouter } from "next/navigation";
 import { updateGalleryAction } from "@/app/actions";
 
@@ -39,10 +38,9 @@ type GalleryFormValues = {
 export default function GalleryManager({ initialTiles }: { initialTiles: TileItem[] }) {
   const router = useRouter();
   const [tiles, setTiles] = useState<TileItem[]>(initialTiles);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
-  const { register, handleSubmit, reset, watch, setValue, formState: { isSubmitting } } = useForm<GalleryFormValues>({
+  const { register, handleSubmit, reset, setValue, formState: { isSubmitting } } = useForm<GalleryFormValues>({
     defaultValues: {
       title: "",
       tag: "",
@@ -50,53 +48,31 @@ export default function GalleryManager({ initialTiles }: { initialTiles: TileIte
     }
   });
 
-  const title = watch("title");
-  const tag = watch("tag");
-  const url = watch("url");
-
-  const previewTiles = isEditing
-    ? tiles.map((t, idx) =>
-        idx === editIndex
-          ? {
-              ...t,
-              label: title || t.label,
-              tag: tag || t.tag,
-              src: url || t.src,
-              full: url || t.full,
-            }
-          : t
-      )
-    : title
-    ? [
-        {
-          id: Date.now(),
-          label: title,
-          tag: tag,
-          location: "Berlin, Germany",
-          contributor: {
-            name: "Alex Gonzalez",
-            initials: "AG",
-            avatar: "https://i.pravatar.cc/150?img=15",
-          },
-          featured: true,
-          src: url || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80",
-          full: url || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80",
-        },
-        ...tiles
-      ]
-    : tiles;
-
   const handleEdit = (index: number) => {
     const item = tiles[index];
     setEditIndex(index);
-    setIsEditing(true);
     setValue("title", item.label);
     setValue("tag", item.tag);
     setValue("url", item.src);
   };
 
+  const handleCancelEdit = () => {
+    setEditIndex(null);
+    reset();
+  };
+
   const handleDelete = async (index: number) => {
     if (!confirm("Are you sure you want to delete this gallery item?")) return;
+
+    // If we delete the item currently being edited, cancel edit mode
+    if (editIndex === index) {
+      setEditIndex(null);
+      reset();
+    } else if (editIndex !== null && editIndex > index) {
+      // Adjust edit index to prevent index mismatch
+      setEditIndex(editIndex - 1);
+    }
+
     const updated = tiles.filter((_, idx) => idx !== index);
     setTiles(updated);
 
@@ -130,7 +106,7 @@ export default function GalleryManager({ initialTiles }: { initialTiles: TileIte
       };
 
       let updated = [...tiles];
-      if (isEditing && editIndex !== null) {
+      if (editIndex !== null) {
         updated[editIndex] = submittedTile;
       } else {
         updated = [submittedTile, ...updated];
@@ -139,201 +115,191 @@ export default function GalleryManager({ initialTiles }: { initialTiles: TileIte
       const res = await updateGalleryAction(updated);
       if (res.success) {
         setTiles(updated);
-        toast.success(isEditing ? "Gallery item updated successfully!" : "Gallery item added successfully!");
-        setIsEditing(false);
+        toast.success(editIndex !== null ? "Gallery item updated successfully!" : "Gallery item added successfully!");
         setEditIndex(null);
         reset();
         router.refresh();
       }
     } catch (e) {
       console.error(e);
-      toast.error("Failed to save changes.");
+      toast.error("Failed to save gallery item.");
     }
   };
 
-  const handleCancel = () => {
-    setIsEditing(false);
-    setEditIndex(null);
-    reset();
-  };
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.4);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const observer = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        const width = entry.contentRect.width;
-        setScale(width / 1024);
-      }
-    });
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <div className="flex flex-col gap-6 w-full animate-in fade-in duration-300">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Gallery Settings</h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            Manage your photography portfolio, workspace snaps, and tag streams.
-          </p>
-        </div>
-        {!isEditing && (
-          <Button
-            onClick={() => {
-              setIsEditing(true);
-              setEditIndex(null);
-              reset();
-            }}
-            className="w-fit text-xs gap-1.5 rounded-lg shrink-0"
-          >
-            <RiAddLine className="size-4" />
-            Add New Photo
-          </Button>
-        )}
+    <div className="flex flex-col gap-6 w-full md:h-[calc(100vh-120px)] md:lg:h-[calc(100vh-140px)] md:overflow-hidden animate-in fade-in duration-300">
+      <div className="shrink-0">
+        <h1 className="text-2xl font-bold tracking-tight">Gallery Settings</h1>
+        <p className="text-sm text-muted-foreground mt-1">
+          Add new photography/work assets and manage existing items in your public gallery.
+        </p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-5 w-full items-start">
-        {/* Left Column: Form Editor or Items List (40% width) */}
-        <Card className="lg:col-span-2 border border-border/80 bg-card/50 backdrop-blur-xs rounded-xl overflow-hidden">
-          <CardHeader className="border-b border-border/40 bg-muted/10">
+      <div className="grid gap-6 md:grid-cols-2 w-full md:flex-1 md:min-h-0 items-start md:items-stretch pb-6 md:pb-2 overflow-y-auto md:overflow-visible">
+        {/* Left Column: Form (h-fit, no internal scrollbars) */}
+        <Card className="border border-border/80 bg-card/50 backdrop-blur-xs rounded-xl overflow-hidden h-fit flex flex-col">
+          <CardHeader className="border-b border-border/40 bg-muted/10 shrink-0">
             <CardTitle className="text-base font-bold">
-              {isEditing ? (editIndex !== null ? "Edit Photo" : "Add Photo") : "Photo Gallery Collection"}
+              {editIndex !== null ? "Edit Gallery Item" : "Add New Item"}
             </CardTitle>
             <CardDescription>
-              {isEditing ? "Fill in fields to save changes." : "Grid items currently featured in your photo streams."}
+              {editIndex !== null ? "Modify the gallery fields below to update existing details." : "Create a new visual card to feature on your public gallery page."}
             </CardDescription>
           </CardHeader>
           <CardContent className="p-5">
-            {isEditing ? (
-              <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="title" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Photo Title / Label
-                  </label>
-                  <input
-                    id="title"
-                    {...register("title", { required: true })}
-                    className="w-full bg-background border border-border px-3 py-2 text-sm rounded-lg focus:outline-hidden focus:border-primary/50"
-                  />
-                </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="title" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Item Label / Title
+                </label>
+                <input
+                  id="title"
+                  placeholder="e.g. Workspace Redesign"
+                  {...register("title", { required: true })}
+                  className="w-full bg-background border border-border px-3 py-2 text-sm rounded-lg focus:outline-hidden focus:border-primary/50"
+                />
+              </div>
 
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="tag" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Category Tag (e.g. Workspace, Cityscape)
-                  </label>
-                  <input
-                    id="tag"
-                    {...register("tag", { required: true })}
-                    className="w-full bg-background border border-border px-3 py-2 text-sm rounded-lg focus:outline-hidden focus:border-primary/50"
-                  />
-                </div>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="tag" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Category Tag (e.g. WORKSPACE, CODING, ARCHITECTURE)
+                </label>
+                <input
+                  id="tag"
+                  placeholder="e.g. WORKSPACE"
+                  {...register("tag", { required: true })}
+                  className="w-full bg-background border border-border px-3 py-2 text-sm rounded-lg focus:outline-hidden focus:border-primary/50"
+                />
+              </div>
 
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="url" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Image Unsplash URL
-                  </label>
-                  <input
-                    id="url"
-                    type="url"
-                    {...register("url", { required: true })}
-                    className="w-full bg-background border border-border px-3 py-2 text-sm rounded-lg focus:outline-hidden focus:border-primary/50"
-                  />
-                </div>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="url" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Image Source URL
+                </label>
+                <input
+                  id="url"
+                  type="url"
+                  placeholder="https://images.unsplash.com/photo-..."
+                  {...register("url", { required: true })}
+                  className="w-full bg-background border border-border px-3 py-2 text-sm rounded-lg focus:outline-hidden focus:border-primary/50"
+                />
+              </div>
 
-                <Separator className="my-2" />
+              <Separator className="my-2" />
 
-                <div className="flex items-center justify-end gap-3">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="text-xs gap-1.5 rounded-lg"
-                    onClick={handleCancel}
-                    disabled={isSubmitting}
-                  >
-                    <StrokeDraw>
-                      <RiCloseLine className="size-4" />
-                    </StrokeDraw>
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    className="text-xs gap-1.5 rounded-lg"
-                    disabled={isSubmitting}
-                  >
-                    <StrokeDraw>
-                      <RiSaveLine className="size-4" />
-                    </StrokeDraw>
-                    {isSubmitting ? "Saving..." : "Save Photo"}
-                  </Button>
-                </div>
-              </form>
-            ) : (
-              <div className="flex flex-col gap-3">
-                {tiles.length === 0 ? (
-                  <p className="text-sm text-muted-foreground text-center py-6">No gallery photos found.</p>
+              <div className="flex items-center justify-end gap-3 pb-2">
+                {editIndex !== null ? (
+                  <>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      className="text-xs gap-1.5 rounded-lg"
+                      onClick={handleCancelEdit}
+                      disabled={isSubmitting}
+                    >
+                      <StrokeDraw>
+                        <RiCloseLine className="size-4" />
+                      </StrokeDraw>
+                      Cancel Edit
+                    </Button>
+                    <Button
+                      type="submit"
+                      className="text-xs gap-1.5 rounded-lg"
+                      disabled={isSubmitting}
+                    >
+                      <StrokeDraw>
+                        <RiSaveLine className="size-4" />
+                      </StrokeDraw>
+                      {isSubmitting ? "Saving..." : "Save Changes"}
+                    </Button>
+                  </>
                 ) : (
-                  tiles.map((t, idx) => (
-                    <div key={`${t.label}-${idx}`} className="flex items-center justify-between border border-border/80 bg-muted/10 p-3.5 rounded-lg gap-4">
-                      <div className="min-w-0 flex items-center gap-3">
-                        {/* Thumbnail */}
-                        <div className="size-10 bg-muted border border-border rounded-md overflow-hidden shrink-0">
-                          <img src={t.src} alt={t.label} className="size-full object-cover" />
-                        </div>
-                        <div className="min-w-0">
-                          <p className="text-sm font-bold truncate text-foreground">{t.label}</p>
-                          <p className="text-xs text-muted-foreground truncate mt-0.5">{t.tag}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        <button
-                          onClick={() => handleEdit(idx)}
-                          className="p-1.5 hover:text-primary transition-colors hover:bg-muted rounded-md"
-                          title="Edit"
-                        >
-                          <RiEdit2Line className="size-4" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(idx)}
-                          className="p-1.5 hover:text-destructive transition-colors hover:bg-muted rounded-md"
-                          title="Delete"
-                        >
-                          <RiDeleteBin6Line className="size-4" />
-                        </button>
-                      </div>
-                    </div>
-                  ))
+                  <>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      className="text-xs gap-1.5 rounded-lg"
+                      onClick={() => reset()}
+                      disabled={isSubmitting}
+                    >
+                      <StrokeDraw>
+                        <RiRefreshLine className="size-4" />
+                      </StrokeDraw>
+                      Reset Form
+                    </Button>
+                    <Button
+                      type="submit"
+                      className="text-xs gap-1.5 rounded-lg"
+                      disabled={isSubmitting}
+                    >
+                      <StrokeDraw>
+                        <RiSaveLine className="size-4" />
+                      </StrokeDraw>
+                      {isSubmitting ? "Adding..." : "Add Item"}
+                    </Button>
+                  </>
                 )}
               </div>
-            )}
+            </form>
           </CardContent>
         </Card>
 
-        {/* Right Column: Live Mockup Preview of Actual Page (3/5 width) */}
-        <Card className="lg:col-span-3 border border-border/80 bg-card/50 backdrop-blur-xs rounded-xl overflow-hidden sticky top-6">
-          <CardHeader className="pb-3 border-b border-border/40 bg-muted/20">
-            <CardTitle className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
-              <span className="flex size-2 rounded-full bg-emerald-500 animate-pulse" />
-              Actual Page Preview (Desktop Viewport)
-            </CardTitle>
+        {/* Right Column: Existing Items List (scrollable only on desktop) */}
+        <Card className="border border-border/80 bg-card/50 backdrop-blur-xs rounded-xl overflow-hidden flex flex-col md:h-full">
+          <CardHeader className="border-b border-border/40 bg-muted/10 shrink-0">
+            <CardTitle className="text-base font-bold">Existing Gallery Items</CardTitle>
+            <CardDescription>
+              List of active visual assets rendered in the public gallery.
+            </CardDescription>
           </CardHeader>
-          <CardContent ref={containerRef} className="p-0 overflow-y-auto max-h-[550px] relative bg-background flex flex-col justify-start items-center">
-            {/* Scale wrapper dynamically adjusted to container width */}
-            <div 
-              className="shrink-0 w-full"
-              style={{
-                width: "1024px",
-                transform: `scale(${scale})`,
-                transformOrigin: "top center",
-                paddingBottom: `calc(100% * (1 - ${scale}))`,
-              }}
-            >
-              <div className="py-16">
-                <GalleryList tiles={previewTiles} tags={["All"]} />
-              </div>
+          <CardContent className="p-5 md:flex-1 md:overflow-y-auto">
+            <div className="flex flex-col gap-3">
+              {tiles.length === 0 ? (
+                <p className="text-sm text-muted-foreground text-center py-6">No gallery items currently featured.</p>
+              ) : (
+                tiles.map((t, idx) => (
+                  <div 
+                    key={`${t.label}-${idx}`} 
+                    className={`flex items-center justify-between border p-3.5 rounded-lg gap-4 transition-all duration-300 ${
+                      editIndex === idx 
+                        ? "border-primary/50 bg-primary/5 shadow-xs" 
+                        : "border-border/80 bg-muted/10"
+                    }`}
+                  >
+                    <div className="min-w-0">
+                      <p className="text-sm font-bold truncate text-foreground flex items-center gap-2">
+                        {t.label}
+                        {editIndex === idx && (
+                          <span className="text-[10px] font-normal px-2 py-0.5 rounded-full bg-primary/20 text-primary uppercase tracking-wider scale-90">
+                            Editing
+                          </span>
+                        )}
+                      </p>
+                      <p className="text-xs text-muted-foreground truncate mt-1">{t.tag} • {t.location}</p>
+                    </div>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <button
+                        onClick={() => handleEdit(idx)}
+                        className={`p-1.5 transition-colors rounded-md ${
+                          editIndex === idx 
+                            ? "text-primary bg-primary/10 hover:bg-primary/20" 
+                            : "text-muted-foreground hover:text-primary hover:bg-muted"
+                        }`}
+                        title="Edit Item"
+                      >
+                        <RiEdit2Line className="size-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(idx)}
+                        className="p-1.5 text-muted-foreground hover:text-destructive hover:bg-muted transition-colors rounded-md"
+                        title="Delete Item"
+                      >
+                        <RiDeleteBin6Line className="size-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </CardContent>
         </Card>
