@@ -90,23 +90,21 @@
   ],
   "projects": [
     {
-      "title": "Next.js Production Boilerplate",
-      "description": "A complete Next.js starter kit with built-in authentication, database integration (PostgreSQL via Supabase), email workflows, and pre-configured CI/CD deployment scripts.",
-      "tag": "Fullstack",
+      "title": "Test Dashboard Sync",
+      "tag": "SYNCS",
+      "description": "A simple synchronization verification package designed to ensure that updates in the dashboard propagate immediately to the public routing layers.",
       "tags": [
-        "Next.js",
         "TypeScript",
-        "Tailwind CSS",
-        "Supabase",
-        "GitHub Actions"
+        "Node",
+        "Next"
       ],
-      "github": "https://github.com",
-      "demo": "https://nextjs.org",
+      "github": "https://github.com/alexgonzalez/test-sync",
+      "demo": "https://test-sync.gonzalez.dev",
       "image": {
-        "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-        "width": 600,
-        "height": 450,
-        "alt": "Next.js dashboard web application interface"
+        "url": "https://images.unsplash.com/photo-1618401471353-b98aedd07871?w=800&q=80",
+        "width": 800,
+        "height": 600,
+        "alt": "Test Dashboard Sync"
       }
     },
     {
