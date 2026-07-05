@@ -761,7 +761,7 @@ const defaultHero = {
   role: "FULL-STACK DEVELOPER & SOFTWARE ENGINEER",
   subheading: "Specialized in crafting premium web applications, custom interactive UI animations, and scalable backend architectures. I translate complex logic into clean, performant, and stunning user experiences.",
   resumeUrl: "/resume.pdf",
-  githubUrl: "https://github.com/alexgonzalez",
+  githubUrl: "https://github.com/karelaking",
 };
 
 const defaultAbout = {

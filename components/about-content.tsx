@@ -13,7 +13,13 @@ import {
   RiPulseLine,
   RiShieldKeyholeLine,
   RiSparkling2Line,
+  RiGithubLine,
 } from "@remixicon/react";
+import Heatmap, { HeatmapData } from "@/components/8starlabs-ui/heatmap";
+import { generateGithubMockData } from "@/lib/github-data";
+import { getGithubContributionsAction } from "@/app/actions";
+
+
 
 const defaultTags = ["TypeScript", "Next.js", "Go", "Python", "Rust", "Tailwind CSS", "PostgreSQL", "Docker"];
 
@@ -52,6 +58,36 @@ export default function AboutContent({
 } = {}) {
   const [terminalText, setTerminalText] = useState("");
   const terminalCommand = "alex-cli deploy --prod";
+
+  const [heatmapData, setHeatmapData] = useState<HeatmapData>([]);
+  const [startDate, setStartDate] = useState<Date>(() => {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() - 1);
+    return d;
+  });
+  const [endDate, setEndDate] = useState<Date>(() => new Date());
+
+  useEffect(() => {
+    async function loadData() {
+      const res = await getGithubContributionsAction();
+      if (res.success && res.data && res.data.length > 0) {
+        setHeatmapData(res.data);
+        const firstStr = res.data[0].date;
+        const lastStr = res.data[res.data.length - 1].date;
+        setStartDate(new Date(firstStr + "T00:00:00"));
+        setEndDate(new Date(lastStr + "T00:00:00"));
+      } else {
+        const sDate = new Date();
+        sDate.setFullYear(sDate.getFullYear() - 1);
+        const eDate = new Date();
+        setStartDate(sDate);
+        setEndDate(eDate);
+        setHeatmapData(generateGithubMockData(sDate, eDate));
+      }
+    }
+    loadData();
+  }, []);
+
 
   // Simulate typing effect on mount or card trigger
   useEffect(() => {
@@ -97,7 +133,7 @@ export default function AboutContent({
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/50 via-background/5 to-transparent"
+            className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/50 via-background/5 to-transparent"
           />
           <div
             aria-hidden="true"
@@ -274,7 +310,78 @@ export default function AboutContent({
         </motion.div>
       </div>
 
-      {/* --- Section 3: Scale Stats Block --- */}
+      {/* --- Section 3: GitHub Contributions (Heatmap visualization) --- */}
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        className="mx-auto w-full max-w-6xl flex flex-col gap-6 mt-12"
+      >
+        <motion.div variants={fadeInUp} className="flex flex-col gap-2 justify-center items-center">
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="border-primary/20 text-primary">
+              <StrokeDraw>
+                <RiGithubLine className="size-3.5 mr-1" />
+              </StrokeDraw>
+              Open Source
+            </Badge>
+          </div>
+          <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl mt-1">
+            GitHub Contributions
+          </h2>
+          <p className="text-muted-foreground text-sm mt-1">
+            Real-time tracking of code contributions and open-source activities across public repositories over the past year.
+          </p>
+        </motion.div>
+
+        <motion.div 
+          variants={fadeInUp} 
+          className="border border-border/80 bg-card/50 backdrop-blur-xs rounded-xl p-6 shadow-md overflow-x-auto w-full flex flex-col items-center"
+        >
+          <div className="min-w-max">
+            <Heatmap
+              data={heatmapData}
+              startDate={startDate}
+              endDate={endDate}
+              colorMode="discrete"
+              colorScale={[
+                "var(--heatmap-zero)",
+                "color-mix(in oklch, var(--primary) 25%, var(--heatmap-zero))",
+                "color-mix(in oklch, var(--primary) 50%, var(--heatmap-zero))",
+                "color-mix(in oklch, var(--primary) 75%, var(--heatmap-zero))",
+                "var(--primary)",
+              ]}
+              cellSize={14}
+              gap={3}
+              daysOfTheWeek="MWF"
+              displayStyle="squares"
+              valueDisplayFunction={(val) => {
+                if (val === 0) return "No contributions";
+                if (val === 1) return "Level 1 activity";
+                if (val === 2) return "Level 2 activity";
+                if (val === 3) return "Level 3 activity";
+                return "Level 4 activity";
+              }}
+            />
+          </div>
+          
+          {/* Heatmap Legend */}
+          <div className="flex items-center gap-2 mt-4 text-[10px] text-muted-foreground self-end pr-4">
+            <span>Less</span>
+            <div className="flex gap-1">
+              <span className="size-3 rounded-none border border-border/60" style={{ backgroundColor: "var(--heatmap-zero)" }} />
+              <span className="size-3 rounded-none border border-border/60" style={{ backgroundColor: "color-mix(in oklch, var(--primary) 25%, var(--heatmap-zero))" }} />
+              <span className="size-3 rounded-none border border-border/60" style={{ backgroundColor: "color-mix(in oklch, var(--primary) 50%, var(--heatmap-zero))" }} />
+              <span className="size-3 rounded-none border border-border/60" style={{ backgroundColor: "color-mix(in oklch, var(--primary) 75%, var(--heatmap-zero))" }} />
+              <span className="size-3 rounded-none border border-border/60" style={{ backgroundColor: "var(--primary)" }} />
+            </div>
+            <span>More</span>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      {/* --- Section 4: Scale Stats Block --- */}
       <StatsBlock />
     </section>
   );

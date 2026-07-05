@@ -167,3 +167,40 @@ export async function uploadToS3Action(formData: FormData) {
   }
 }
 
+export async function getGithubContributionsAction() {
+  try {
+    const hero = await db.getHeroData();
+    const githubUrl = hero.githubUrl || "https://github.com/alexgonzalez";
+    const parts = githubUrl.split("/");
+    const username = parts[parts.length - 1] || "alexgonzalez";
+
+    const url = `https://github.com/users/${username}/contributions`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch from GitHub: ${res.status} ${res.statusText}`);
+    }
+
+    const text = await res.text();
+    const rectRegex = /<td[^>]*data-date="([^"]+)"[^>]*data-level="([^"]+)"[^>]*>/g;
+    let match;
+    const data: { date: string; value: number }[] = [];
+    while ((match = rectRegex.exec(text)) !== null) {
+      data.push({
+        date: match[1],
+        value: parseInt(match[2], 10) || 0,
+      });
+    }
+
+    if (data.length === 0) {
+      throw new Error("No contribution cells found in GitHub response");
+    }
+
+    return { success: true, data };
+  } catch (error: unknown) {
+    console.error("Failed to fetch Github contributions:", error);
+    const errorMessage = error instanceof Error ? error.message : "Failed to load contributions";
+    return { success: false, error: errorMessage };
+  }
+}
+
+
