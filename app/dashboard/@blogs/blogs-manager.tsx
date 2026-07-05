@@ -11,6 +11,8 @@ import { StrokeDraw } from "@/components/stroke-draw";
 import { RiSaveLine, RiRefreshLine, RiDeleteBin6Line, RiEdit2Line, RiCloseLine } from "@remixicon/react";
 import { useRouter } from "next/navigation";
 import { updateBlogsAction } from "@/app/actions";
+import { ImageSelector } from "@/components/image-selector";
+
 
 type Author = {
   name: string;
@@ -40,6 +42,7 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
   const router = useRouter();
   const [posts, setPosts] = useState<PostItem[]>(initialPosts);
   const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>("");
 
   const { register, handleSubmit, reset, setValue, formState: { isSubmitting } } = useForm<BlogFormValues>({
     defaultValues: {
@@ -59,11 +62,13 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
     setValue("excerpt", item.excerpt);
     setValue("date", item.date);
     setValue("readTime", item.readTime);
+    setImageUrl(item.image);
   };
 
   const handleCancelEdit = () => {
     setEditIndex(null);
     reset();
+    setImageUrl("");
   };
 
   const handleDelete = async (index: number) => {
@@ -73,6 +78,7 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
     if (editIndex === index) {
       setEditIndex(null);
       reset();
+      setImageUrl("");
     } else if (editIndex !== null && editIndex > index) {
       // Adjust edit index to prevent index mismatch
       setEditIndex(editIndex - 1);
@@ -101,7 +107,7 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
         excerpt: data.excerpt,
         date: data.date || "Jun 30, 2026",
         readTime: data.readTime || "5 min read",
-        image: editIndex !== null && posts[editIndex] ? posts[editIndex].image : "https://images.unsplash.com/photo-1618401471353-b98aedd07871?w=800&q=80",
+        image: imageUrl || "https://images.unsplash.com/photo-1618401471353-b98aedd07871?w=800&q=80",
         author: {
           name: "Alex Gonzalez",
           initials: "AG",
@@ -122,6 +128,7 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
         toast.success(editIndex !== null ? "Blog post updated successfully!" : "Blog post added successfully!");
         setEditIndex(null);
         reset();
+        setImageUrl("");
         router.refresh();
       }
     } catch (e) {
@@ -129,6 +136,7 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
       toast.error("Failed to save blog post.");
     }
   };
+
 
   return (
     <div className="flex flex-col gap-6 w-full md:h-[calc(100vh-120px)] md:lg:h-[calc(100vh-140px)] md:overflow-hidden animate-in fade-in duration-300">
@@ -140,8 +148,8 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 w-full md:flex-1 md:min-h-0 items-start md:items-stretch pb-6 md:pb-2 overflow-y-auto md:overflow-visible">
-        {/* Left Column: Form (h-fit, no internal scrollbars) */}
-        <Card className="border border-border/80 bg-card/50 backdrop-blur-xs rounded-xl overflow-hidden h-fit flex flex-col">
+        {/* Left Column: Form (scrollable on desktop) */}
+        <Card className="border border-border/80 bg-card/50 backdrop-blur-xs rounded-xl overflow-hidden flex flex-col md:h-full">
           <CardHeader className="border-b border-border/40 bg-muted/10 shrink-0">
             <CardTitle className="text-base font-bold">
               {editIndex !== null ? "Edit Blog Post" : "Add New Post"}
@@ -150,7 +158,7 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
               {editIndex !== null ? "Modify the blog fields below to update existing details." : "Create a new blog entry to publish on your public website."}
             </CardDescription>
           </CardHeader>
-          <CardContent className="p-5">
+          <CardContent className="p-5 md:flex-1 md:overflow-y-auto">
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
               <div className="flex flex-col gap-2">
                 <label htmlFor="title" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -215,6 +223,13 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
                 </div>
               </div>
 
+              <ImageSelector
+                value={imageUrl}
+                onChange={setImageUrl}
+                label="Post Cover Image"
+                placeholderUrl="https://images.unsplash.com/photo-1618401471353-b98aedd07871?w=800&q=80"
+              />
+
               <Separator className="my-2" />
 
               <div className="flex items-center justify-end gap-3 pb-2">
@@ -249,7 +264,7 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
                       type="button"
                       variant="ghost"
                       className="text-xs gap-1.5 rounded-lg"
-                      onClick={() => reset()}
+                      onClick={() => { reset(); setImageUrl(""); }}
                       disabled={isSubmitting}
                     >
                       <StrokeDraw>
@@ -270,6 +285,7 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
                   </>
                 )}
               </div>
+
             </form>
           </CardContent>
         </Card>

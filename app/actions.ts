@@ -2,6 +2,16 @@
 
 import { revalidatePath } from "next/cache";
 import * as db from "@/lib/data";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION || "us-east-1",
+  endpoint: process.env.AWS_S3_ENDPOINT || undefined,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
+  },
+});
 
 // 1. Hero Settings
 export async function updateHeroAction(data: {
@@ -126,3 +136,34 @@ function newJobTemplate() {
     },
   };
 }
+
+export async function uploadToS3Action(formData: FormData) {
+  try {
+    const file = formData.get("file") as File;
+    if (!file) {
+      return { success: false, error: "No file provided" };
+    }
+
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const fileName = `${Date.now()}-${file.name.replace(/\s+/g, "-")}`;
+    const bucketName = process.env.AWS_BUCKET_NAME || "";
+
+    const command = new PutObjectCommand({
+      Bucket: bucketName,
+      Key: fileName,
+      Body: buffer,
+      ContentType: file.type,
+    });
+
+    await s3Client.send(command);
+
+    // Return the local dynamic proxy API URL for private S3 bucket support
+    const url = `/api/media/${fileName}`;
+
+    return { success: true, url };
+  } catch (error: any) {
+    console.error("S3 upload error:", error);
+    return { success: false, error: error.message || "Failed to upload file to S3" };
+  }
+}
+

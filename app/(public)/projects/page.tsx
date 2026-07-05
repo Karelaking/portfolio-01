@@ -1,5 +1,4 @@
 import React from "react";
-import { RiArrowDownLine } from "@remixicon/react";
 import { ScrollRevealProjects } from "@/components/scroll-reveal-projects";
 import { getProjects } from "@/lib/data";
 

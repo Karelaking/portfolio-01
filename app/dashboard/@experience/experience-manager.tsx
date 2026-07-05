@@ -11,6 +11,8 @@ import { StrokeDraw } from "@/components/stroke-draw";
 import { RiSaveLine, RiRefreshLine, RiDeleteBin6Line, RiEdit2Line, RiCloseLine } from "@remixicon/react";
 import { useRouter } from "next/navigation";
 import { updateExperienceAction } from "@/app/actions";
+import { ImageSelector } from "@/components/image-selector";
+
 
 type JobItem = {
   company: string;
@@ -39,6 +41,7 @@ export default function ExperienceManager({ initialJobs }: { initialJobs: JobIte
   const router = useRouter();
   const [jobs, setJobs] = useState<JobItem[]>(initialJobs);
   const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>("");
 
   const { register, handleSubmit, reset, setValue, formState: { isSubmitting } } = useForm<ExperienceFormValues>({
     defaultValues: {
@@ -58,11 +61,13 @@ export default function ExperienceManager({ initialJobs }: { initialJobs: JobIte
     setValue("period", item.period);
     setValue("description", item.description);
     setValue("tagsString", item.tags.join(", "));
+    setImageUrl(item.image.url);
   };
 
   const handleCancelEdit = () => {
     setEditIndex(null);
     reset();
+    setImageUrl("");
   };
 
   const handleDelete = async (index: number) => {
@@ -72,6 +77,7 @@ export default function ExperienceManager({ initialJobs }: { initialJobs: JobIte
     if (editIndex === index) {
       setEditIndex(null);
       reset();
+      setImageUrl("");
     } else if (editIndex !== null && editIndex > index) {
       // Adjust edit index to prevent index mismatch
       setEditIndex(editIndex - 1);
@@ -103,7 +109,7 @@ export default function ExperienceManager({ initialJobs }: { initialJobs: JobIte
         description: data.description,
         tags: formattedTags,
         image: {
-          url: editIndex !== null && jobs[editIndex] ? jobs[editIndex].image.url : "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=100&q=80",
+          url: imageUrl || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=100&q=80",
           width: 100,
           height: 100,
           alt: data.company
@@ -123,6 +129,7 @@ export default function ExperienceManager({ initialJobs }: { initialJobs: JobIte
         toast.success(editIndex !== null ? "Milestone updated successfully!" : "Milestone added successfully!");
         setEditIndex(null);
         reset();
+        setImageUrl("");
         router.refresh();
       }
     } catch (e) {
@@ -131,6 +138,7 @@ export default function ExperienceManager({ initialJobs }: { initialJobs: JobIte
     }
   };
 
+
   return (
     <div className="flex flex-col gap-6 w-full md:h-[calc(100vh-120px)] md:lg:h-[calc(100vh-140px)] md:overflow-hidden animate-in fade-in duration-300">
       <div className="shrink-0">
@@ -138,14 +146,14 @@ export default function ExperienceManager({ initialJobs }: { initialJobs: JobIte
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 w-full md:flex-1 md:min-h-0 items-start md:items-stretch pb-6 md:pb-2 overflow-y-auto md:overflow-visible">
-        {/* Left Column: Form (h-fit, no internal scrollbars) */}
-        <Card className="border border-border/80 bg-card/50 backdrop-blur-xs rounded-xl overflow-hidden h-fit flex flex-col">
+        {/* Left Column: Form (scrollable on desktop) */}
+        <Card className="border border-border/80 bg-card/50 backdrop-blur-xs rounded-xl overflow-hidden flex flex-col md:h-full">
           <CardHeader className="border-b border-border/40 bg-muted/10 shrink-0">
             <CardTitle className="text-base font-bold">
               {editIndex !== null ? "Edit Experience" : "Add New Milestone"}
             </CardTitle>
           </CardHeader>
-          <CardContent className="pt-5 px-5">
+          <CardContent className="pt-5 px-5 md:flex-1 md:overflow-y-auto">
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
               <div className="flex flex-col gap-2">
                 <label htmlFor="company" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -208,6 +216,13 @@ export default function ExperienceManager({ initialJobs }: { initialJobs: JobIte
                 />
               </div>
 
+              <ImageSelector
+                value={imageUrl}
+                onChange={setImageUrl}
+                label="Company Logo"
+                placeholderUrl="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=100&q=80"
+              />
+
               <Separator className="my-2" />
 
               <div className="flex items-center justify-end gap-3 pb-2">
@@ -242,7 +257,7 @@ export default function ExperienceManager({ initialJobs }: { initialJobs: JobIte
                       type="button"
                       variant="ghost"
                       className="text-xs gap-1.5 rounded-lg"
-                      onClick={() => reset()}
+                      onClick={() => { reset(); setImageUrl(""); }}
                       disabled={isSubmitting}
                     >
                       <StrokeDraw>
@@ -263,6 +278,7 @@ export default function ExperienceManager({ initialJobs }: { initialJobs: JobIte
                   </>
                 )}
               </div>
+
             </form>
           </CardContent>
         </Card>

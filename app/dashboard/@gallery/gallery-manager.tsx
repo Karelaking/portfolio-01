@@ -11,6 +11,8 @@ import { StrokeDraw } from "@/components/stroke-draw";
 import { RiSaveLine, RiRefreshLine, RiDeleteBin6Line, RiEdit2Line, RiCloseLine } from "@remixicon/react";
 import { useRouter } from "next/navigation";
 import { updateGalleryAction } from "@/app/actions";
+import { ImageSelector } from "@/components/image-selector";
+
 
 type Contributor = {
   name: string;
@@ -39,6 +41,7 @@ export default function GalleryManager({ initialTiles }: { initialTiles: TileIte
   const router = useRouter();
   const [tiles, setTiles] = useState<TileItem[]>(initialTiles);
   const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>("");
 
   const { register, handleSubmit, reset, setValue, formState: { isSubmitting } } = useForm<GalleryFormValues>({
     defaultValues: {
@@ -54,11 +57,13 @@ export default function GalleryManager({ initialTiles }: { initialTiles: TileIte
     setValue("title", item.label);
     setValue("tag", item.tag);
     setValue("url", item.src);
+    setImageUrl(item.src);
   };
 
   const handleCancelEdit = () => {
     setEditIndex(null);
     reset();
+    setImageUrl("");
   };
 
   const handleDelete = async (index: number) => {
@@ -68,6 +73,7 @@ export default function GalleryManager({ initialTiles }: { initialTiles: TileIte
     if (editIndex === index) {
       setEditIndex(null);
       reset();
+      setImageUrl("");
     } else if (editIndex !== null && editIndex > index) {
       // Adjust edit index to prevent index mismatch
       setEditIndex(editIndex - 1);
@@ -89,6 +95,11 @@ export default function GalleryManager({ initialTiles }: { initialTiles: TileIte
   };
 
   const onSubmit = async (data: GalleryFormValues) => {
+    if (!imageUrl) {
+      toast.error("Please upload an image or provide an image URL first.");
+      return;
+    }
+
     try {
       const submittedTile: TileItem = {
         id: editIndex !== null && tiles[editIndex] ? tiles[editIndex].id : Date.now(),
@@ -101,8 +112,8 @@ export default function GalleryManager({ initialTiles }: { initialTiles: TileIte
           avatar: "https://i.pravatar.cc/150?img=15",
         },
         featured: true,
-        src: data.url,
-        full: data.url,
+        src: imageUrl,
+        full: imageUrl,
       };
 
       let updated = [...tiles];
@@ -118,6 +129,7 @@ export default function GalleryManager({ initialTiles }: { initialTiles: TileIte
         toast.success(editIndex !== null ? "Gallery item updated successfully!" : "Gallery item added successfully!");
         setEditIndex(null);
         reset();
+        setImageUrl("");
         router.refresh();
       }
     } catch (e) {
@@ -125,6 +137,7 @@ export default function GalleryManager({ initialTiles }: { initialTiles: TileIte
       toast.error("Failed to save gallery item.");
     }
   };
+
 
   return (
     <div className="flex flex-col gap-6 w-full md:h-[calc(100vh-120px)] md:lg:h-[calc(100vh-140px)] md:overflow-hidden animate-in fade-in duration-300">
@@ -136,8 +149,8 @@ export default function GalleryManager({ initialTiles }: { initialTiles: TileIte
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 w-full md:flex-1 md:min-h-0 items-start md:items-stretch pb-6 md:pb-2 overflow-y-auto md:overflow-visible">
-        {/* Left Column: Form (h-fit, no internal scrollbars) */}
-        <Card className="border border-border/80 bg-card/50 backdrop-blur-xs rounded-xl overflow-hidden h-fit flex flex-col">
+        {/* Left Column: Form (scrollable on desktop) */}
+        <Card className="border border-border/80 bg-card/50 backdrop-blur-xs rounded-xl overflow-hidden flex flex-col md:h-full">
           <CardHeader className="border-b border-border/40 bg-muted/10 shrink-0">
             <CardTitle className="text-base font-bold">
               {editIndex !== null ? "Edit Gallery Item" : "Add New Item"}
@@ -146,7 +159,7 @@ export default function GalleryManager({ initialTiles }: { initialTiles: TileIte
               {editIndex !== null ? "Modify the gallery fields below to update existing details." : "Create a new visual card to feature on your public gallery page."}
             </CardDescription>
           </CardHeader>
-          <CardContent className="p-5">
+          <CardContent className="p-5 md:flex-1 md:overflow-y-auto">
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
               <div className="flex flex-col gap-2">
                 <label htmlFor="title" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -172,18 +185,13 @@ export default function GalleryManager({ initialTiles }: { initialTiles: TileIte
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label htmlFor="url" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                  Image Source URL
-                </label>
-                <input
-                  id="url"
-                  type="url"
-                  placeholder="https://images.unsplash.com/photo-..."
-                  {...register("url", { required: true })}
-                  className="w-full bg-background border border-border px-3 py-2 text-sm rounded-lg focus:outline-hidden focus:border-primary/50"
-                />
-              </div>
+              <ImageSelector
+                value={imageUrl}
+                onChange={setImageUrl}
+                label="Gallery Photo"
+                placeholderUrl="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+              />
+
 
               <Separator className="my-2" />
 
