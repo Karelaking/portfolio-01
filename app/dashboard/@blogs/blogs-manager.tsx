@@ -12,6 +12,7 @@ import { RiSaveLine, RiRefreshLine, RiDeleteBin6Line, RiEdit2Line, RiCloseLine }
 import { useRouter } from "next/navigation";
 import { updateBlogsAction } from "@/app/actions";
 import { ImageSelector } from "@/components/image-selector";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
 
 
 type Author = {
@@ -44,7 +45,7 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
 
-  const { register, handleSubmit, reset, setValue, formState: { isSubmitting } } = useForm<BlogFormValues>({
+  const { register, handleSubmit, reset, setValue, watch, formState: { isSubmitting } } = useForm<BlogFormValues>({
     defaultValues: {
       title: "",
       category: "",
@@ -53,6 +54,8 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
       readTime: "",
     }
   });
+
+  const publishDate = watch("date");
 
   const handleEdit = (index: number) => {
     const item = posts[index];
@@ -202,11 +205,10 @@ export default function BlogsManager({ initialPosts, featuredPost }: { initialPo
                   <label htmlFor="date" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     Publish Date
                   </label>
-                  <input
-                    id="date"
-                    placeholder="e.g. Jun 30, 2026"
-                    {...register("date", { required: true })}
-                    className="w-full bg-background border border-border px-3 py-2 text-sm rounded-lg focus:outline-hidden focus:border-primary/50"
+                  <DateTimePicker
+                    value={publishDate}
+                    onChange={(val) => setValue("date", val)}
+                    placeholder="Select publish date & time"
                   />
                 </div>
 
