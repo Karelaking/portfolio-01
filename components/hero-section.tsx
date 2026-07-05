@@ -41,19 +41,28 @@ const HeroPortrait = memo(function HeroPortrait() {
       className="lg:col-span-5 flex justify-center items-center relative h-80 sm:h-95 lg:h-115 w-full mt-4 lg:mt-0"
       style={{ isolation: "isolate", willChange: "transform" }}
     >
-      {/* Dot-grid background — offset behind the frame to create depth */}
+      {/* Circular gradient glow behind the photo frame */}
+      <div
+        className="absolute w-80 h-80 rounded-full bg-primary/25 blur-[90px] pointer-events-none"
+        style={{ zIndex: 0 }}
+      />
+
+      {/* Grid mesh background — offset behind the frame to create depth */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 translate-x-4 translate-y-4 sm:translate-x-6 sm:translate-y-6"
+        className="absolute inset-0 translate-x-4 translate-y-4 sm:translate-x-6 sm:translate-y-6 pointer-events-none"
         style={{
           zIndex: 0,
-          backgroundImage: `radial-gradient(circle, var(--border) 1.5px, transparent 1.5px)`,
-          backgroundSize: "20px 20px",
+          backgroundImage: `
+            linear-gradient(to right, hsl(var(--foreground) / 0.08) 1px, transparent 1px),
+            linear-gradient(to bottom, hsl(var(--foreground) / 0.08) 1px, transparent 1px)
+          `,
+          backgroundSize: "24px 24px",
           maskImage:
-            "radial-gradient(ellipse 85% 85% at 50% 50%, black 30%, transparent 80%)",
+            "radial-gradient(ellipse 90% 90% at 50% 50%, black 40%, transparent 80%)",
           WebkitMaskImage:
-            "radial-gradient(ellipse 85% 85% at 50% 50%, black 30%, transparent 80%)",
-          opacity: 0.7,
+            "radial-gradient(ellipse 90% 90% at 50% 50%, black 40%, transparent 80%)",
+          opacity: 0.85,
         }}
       />
 
@@ -65,7 +74,17 @@ const HeroPortrait = memo(function HeroPortrait() {
         whileHover={{ scale: 1.02, y: -4, rotate: 1 }}
         className="relative size-57.5 sm:size-65 lg:size-77.5 bg-card border border-border shadow-2xl p-2 sm:p-3 z-10 rounded-none group"
       >
-        <div className="relative w-full h-full overflow-hidden bg-muted">
+        <div 
+          className="relative w-full h-full overflow-hidden bg-background"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at center, hsl(var(--primary) / 0.2) 0%, transparent 80%),
+              linear-gradient(to right, hsl(var(--foreground) / 0.06) 1px, transparent 1px),
+              linear-gradient(to bottom, hsl(var(--foreground) / 0.06) 1px, transparent 1px)
+            `,
+            backgroundSize: "100% 100%, 16px 16px, 16px 16px",
+          }}
+        >
           <Image
             src="/developer_portrait.png"
             alt="Alex Gonzalez Portrait"

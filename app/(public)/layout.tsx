@@ -4,8 +4,10 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import Link from "next/link";
 import type { Route } from "next";
 import React from "react";
+import DesktopNav from "@/components/desktop-nav";
 
 const navLinks: { label: string; href: Route }[] = [
+  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Projects", href: "/projects" },
   { label: "Experience", href: "/experience" },
@@ -28,17 +30,7 @@ const Layout = ({
             <span className="text-lg font-bold uppercase tracking-tight">Alex Gonzalez</span>
           </Link>
 
-          <nav className="ml-auto hidden items-center gap-4 md:flex">
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          <DesktopNav navLinks={navLinks} />
 
           <div className="ml-auto flex shrink-0 items-center gap-6! md:ml-0">
             <ThemeToggle />

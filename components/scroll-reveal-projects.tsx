@@ -241,7 +241,7 @@ export function ScrollRevealProjects({ projects, className, ...props }: ScrollRe
               </div>
 
               {/* Right Side: Sticky Images (Desktop Only) with premium floating frame */}
-              <div className="hidden lg:flex flex-col justify-center items-center w-[45vw]! relative h-[84vh] px-8">
+              <div className="hidden lg:flex flex-col justify-center items-center w-[55vw]! relative h-[84vh] px-8">
                 {/* Floating dot-grid background for depth */}
                 <div
                   aria-hidden="true"

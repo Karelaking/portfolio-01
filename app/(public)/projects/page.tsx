@@ -30,11 +30,6 @@ const Page = async (): Promise<React.ReactNode> => {
 
       {/* Unified Scroll Reveal Projects Component */}
       <ScrollRevealProjects projects={projects} />
-      
-      {/* Scroll indicator for mobile (optional) */}
-      <div className="flex justify-center mt-12 md:hidden">
-         <RiArrowDownLine className="size-6 text-muted-foreground animate-bounce" />
-      </div>
     </section>
   );
 };
